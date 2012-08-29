@@ -15,8 +15,9 @@
         "bcrypt": "latest",
         "handlebars": "latest",
         "mongoose": "latest",
-        "dive": "latest"
-
+        "dive": "latest",
+        "node-uuid": "latest",
+        "redis": "redis"
     },
     "repository": {
         "type" : "git",

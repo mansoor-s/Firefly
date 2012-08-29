@@ -28,6 +28,8 @@ var Config = module.exports = {
 
     DEBUG_ENV: ['dev'], //show errors and debug information to user in these specified enviroments
 
+    SESSION_COOKIE_NAME: 'session',
+
     /*
         Auto start WebSockets server. Set false if you are going to use cluster. You must start it manually (See Docs)
 

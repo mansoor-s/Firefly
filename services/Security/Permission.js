@@ -22,15 +22,15 @@ let bcrypt = require('bcrypt');
 
 let Permission = module.exports = function(app) {
     this._app = app;
+    this._cookieName = app.config.SESSION_COOKIE_NAME;
     app.addInitDependency(this._onInit());
     
-    //app.router.addRouteRequirement('Permissiond', this._getPermissiondChecker());
+    app.router.addRouteRequirement('authenticated', this._getAuthenticatedChecker());
+    app.router.addRouteRequirement('verified', this._getVerifiedChecker());
     app.router.addRouteRequirement('group', this._getGroupChecker());
-    app.router.addRouteRequirement('userType', this._getUserTypeChecker());
 
     
-    this.sessionStore = app.get('SessionStore');
-
+    this.sessionManager = app.get('SessionManager');
 };
 
 /*
@@ -45,51 +45,67 @@ Permission.prototype._onInit = function() {
 };
 
 
-Permission.prototype._getPermissiondChecker = function() {
+Permission.prototype._getAuthenticatedChecker = function() {
     let self = this;
-    //fn takes  ruleSatisfied and end
-    return function(request, response, rule, fn) {
-        console.log('in _getPermissiondChecker');
 
-        if (rule === false) {
-            fn(true, false);
-        } else {
-            let sessionCookie = request.getCookie(self._app.config.SESSION_COOKIE_NAME);
-            if (!sessionCookie) {
+    return function(request, response, rule, fn) {
+        self.hasValidSession(request, function(isValid) {
+            if (isValid === true && rule === true) {
+                fn(true, false);
+            } else if (isValid === false && rule === false) {
+                fn(true, false);
+            } else {
                 response.redirect('/user/login');
                 fn(false, true);
-            } else {
-                let sessionKey = sessionCookie.getValue();
-                if (!sessionKey) {
-                    response.redirect('/user/login');
-                    fn(false, true);
-                } else {
-                    let session = self.sessionStore[sessionKey];
-
-                    if (!session) {
-                        response.redirect('/user/login');
-                        fn(false, true);
-                    } else {
-                        fn(true);
-                    }
-                }
             }
-        }
+        });
     };
 };
 
-Permission.prototype._getAccessLevelChecker = function() {
+
+
+
+Permission.prototype._getVerifiedChecker = function() {
     let self = this;
     //fn takes  ruleSatisfied and end
     return function(request, response, rule, fn) {
-
+        self.hasValidSession(request, function(isValid, session) {
+            let verified;
+            if(isValid === true) {
+                verified = session.verified;
+                if (verified === true && rule === true) {
+                    fn(true, false);
+                } else if (verified === false && rule === false) {
+                    fn(true, false);
+                } else {
+                    //redirect insuficient privilages
+                    fn(false, true);
+                }
+            } else {
+                //redirect insuficient privilages
+                fn(false, true)
+            }
+        });
     };
 };
 
-Permission.prototype._getUserTypeChecker = function() {
-    let self = this;
-    //fn takes  ruleSatisfied and end
-    return function(request, response, rule, fn) {
 
-    };
+/*
+
+
+*/
+Permission.prototype.hasValidSession = function(request, fn) {
+    let sessId = request.getCookie(self._cookieName);
+
+    if (sessId) {
+        fn(false)
+    } else {
+        this.sessionManager.getSession(request, function(session) {
+            if (session) {
+                fn(true, session);
+            } else {
+                fn(false);
+            }
+        });
+    }
 };

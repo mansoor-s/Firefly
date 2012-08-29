@@ -27,6 +27,7 @@ let uuid = require('node-uuid');
         Redis session manager for Firefly
 */
 let SessionManager = module.exports = function(app) {
+    this._cookieName = app.config.SESSION_COOKIE_NAME;
     app.addInitDependency(this._onInit());
     
     this._client = redis.createClient();
@@ -35,7 +36,7 @@ let SessionManager = module.exports = function(app) {
 
 
 /*
-    (TODO: change the redis database from the default 0 according to the config file)
+    (TODO: change the redis database from the default 0 in accordance with the config file)
  
 */
 SessionManager.prototype._onInit = function() {
@@ -53,11 +54,11 @@ SessionManager.prototype._onInit = function() {
 
     Parameters:
 
-        request - {String} session ID
+        request - {String} refrence to Request object
         fn - {Function} callback function taking the session object as the parameter
 */
 SessionManager.prototype.getSession = function( request, fn ) {
-    let sessionId = request.getCookie('sessId');
+    let sessionId = request.getCookie( this._cookieName );
     
     /*
         Do nothing if session ID wasn't found
@@ -94,7 +95,7 @@ SessionManager.prototype.createSession = function(response, data, fn) {
     
     data = data || {};
 
-    response.setCookie({name: 'sessId', value: id});
+    response.setCookie({name: this._cookieName, value: id});
     
     this._client.set(id, data, function(err, res) {
         if(err) {
@@ -120,14 +121,14 @@ SessionManager.prototype.createSession = function(response, data, fn) {
 
 */
 SessionManager.prototype.destroySession = function(request, response, fn) {
-    let sessionId = request.getCookie('sessId');
+    let sessionId = request.getCookie(this._cookieName);
     
     if ( !sessionId ) {
         fn();
         return;
     }
 
-    response.removeCookie('sessId');
+    response.removeCookie(this._cookieName);
     this._client.del(sessionId, function(err) {
         if(err) {
             throw Error(err);

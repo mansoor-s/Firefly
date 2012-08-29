@@ -26,7 +26,8 @@ let UserSchema = module.exports = new Schema({
     password: String,
     created: { type : Date, default: Date.now() },
     lastModified: { type : Date, default: Date.now() },
-    groups: { type: Schema.Types.ObjectId, ref: 'Group'}  //this should be array of ObjectId's
+    groups: { type: Schema.Types.ObjectId, ref: 'Group'},  //this should be array of ObjectId's
+    verified: Boolean
 
 });
 
