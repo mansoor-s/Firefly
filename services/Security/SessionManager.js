@@ -54,7 +54,7 @@ SessionManager.prototype._onInit = function() {
 
     Parameters:
 
-        request - {String} refrence to Request object
+        request - {String} reference to Request object
         fn - {Function} callback function taking the session object as the parameter
 */
 SessionManager.prototype.getSession = function( request, fn ) {
@@ -86,7 +86,7 @@ SessionManager.prototype.getSession = function( request, fn ) {
     
     Parameters:
 
-        response - {Object} refrence to the response object
+        response - {Object} reference to the response object
         data - {Object} object containing data to save for the session. `data` CAN be undefined
         fn - {Function} callback
 */
@@ -115,8 +115,8 @@ SessionManager.prototype.createSession = function(response, data, fn) {
 
     Parameters: 
 
-        request - {Object} refrence to the request object
-        response - {Object} refrence to the response object
+        request - {Object} reference to the request object
+        response - {Object} reference to the response object
         fn - {Function} callback
 
 */

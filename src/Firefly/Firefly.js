@@ -22,7 +22,7 @@ var fs = require( 'fs' );
 var async = require( 'async' );
 
 var Server = require( '../Server/Server.js' );
-var WSServer = require( '../Server/WSServer.js' ).;
+var WSServer = require( '../Server/WSServer.js' );
 var Router = require( '../Router/Router.js' );
 var Request = require( '../Http/Request.js' );
 var Request = require( '../Http/Response.js' );
@@ -36,8 +36,8 @@ var RenderManager = require( '../RenderManager/RenderManager.js' );
 
     Parameters:
 
-        appRoutes - {Object} Refrence to the application routes object
-        config - {Object} Refrence to application config object
+        appRoutes - {Object} reference to the application routes object
+        config - {Object} reference to application config object
 */
 var Firefly = module.exports = function( appRoutes, config ) {
     if ( typeof appRoutes !== 'object' || typeof config !== 'object' ) {
@@ -161,12 +161,12 @@ Firefly.prototype.autoloadApplets = function() {
         
     Parameters:
         
-        applets - {String} Name of the appvar .. as defined on the main application Route file
+        applets - {String} Name of the applet .. as defined on the main application Route file
         
     Returns: {Object} Hash-array contains properties `object` and `routes`
 */
-Firefly.prototype.getAppvar = function( appvar ) {
-    return this._applets[ appvar ];
+Firefly.prototype.getApplet = function( applet ) {
+    return this._applets[ applet ];
 };
 
 
@@ -220,7 +220,7 @@ Firefly.prototype.set = function( name, obj ) {
 /*
     Function: get
 
-        Get a refrence to the requested service
+        Get a reference to the requested service
         
     Parameters:
         
@@ -239,15 +239,15 @@ Firefly.prototype.get = function( name ) {
 /*
     Function: addApplet
 
-        Add an initialized appvar object
+        Add an initialized applet object
         
     Parameters:
         
         name - {String} Name of applet
-        appvar - {Object} Refrence to appvar object
+        applet - {Object} reference to applet object
 */
-Firefly.prototype.addAppvar = function( name, appvar ) {
-    if ( !name || !appvar ) {
+Firefly.prototype.addApplet = function( name, applet ) {
+    if ( !name || !applet ) {
         throw Error( 'name: "Bad Parameter", description: "Expected parameters of types `string` and `object`"' );
     }
 
@@ -382,7 +382,7 @@ Firefly.prototype.catch = function( err, request, response ) {
         
     Parameters:
         
-        engine - refrence to the templating engine object
+        engine - reference to the templating engine object
 */
 Firefly.prototype.setViewEngine = function( engine ) {
     if (this._initialized === true) {

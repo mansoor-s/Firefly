@@ -28,9 +28,9 @@ var ws = require( 'ws' );
 
     Parameters:
 
-        firefly - {Object} Refrence to application's Firefly object
+        firefly - {Object} reference to application's Firefly object
         wsInfo - {Object} Object containing
-        requestHandler - {Function} Fn to call for every client connect. Refrence
+        requestHandler - {Function} Fn to call for every client connect. reference
             to `socket` object is passed to the callback
 */
 var WSServer = module.exports = function( firefly, wsInfo, requestHandler ) {

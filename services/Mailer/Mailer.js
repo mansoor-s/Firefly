@@ -28,7 +28,7 @@ var nodemailer = require('nodemailer');
 
     Parameters:
 
-        firefly - Refrence to the application Firefly object
+        firefly - reference to the application Firefly object
         defaults - {Object} Default configurations for Mailer. Containing properties: from, to, subject, html, attachements
 */
 var Mailer = module.exports = function(firefly, defaults) {

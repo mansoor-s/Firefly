@@ -1018,7 +1018,7 @@ Response.prototype.removeCookie = function( name ) {
         Render the response and end it
 */
 Response.prototype.render = function( viewName, props ) {
-    var appvar = this._request.getApplet();
+    var applet = this._request.getApplet();
     var content = this._firefly.renderer.render( applet, viewName, props );
     this.setContent( content );
     this.send();

@@ -964,11 +964,11 @@ Request.prototype.resume = function() {
 /*
     Function: setRouteObject
     
-        Set the refrence to the route object for the request, useful for getting quick 
+        Set the reference to the route object for the request, useful for getting quick 
         access to the route object 
         
     Parameters:
-        route - {Object} refrence to the route object
+        route - {Object} reference to the route object
 */
 Request.prototype.setRouteObject = function( route ) {
     this._routeObject = route;
@@ -979,11 +979,11 @@ Request.prototype.setRouteObject = function( route ) {
 /*
     Function: getRouteObject
     
-        Get a refrence to the route object for the request, useful for getting
+        Get a reference to the route object for the request, useful for getting
         quick access to the route object 
         
     Returns: 
-        {Object} refrence to route object
+        {Object} reference to route object
 */
 Request.prototype.getRouteObject = function() {
     return this._routeObject;
@@ -993,12 +993,12 @@ Request.prototype.getRouteObject = function() {
 /*
     Function: setApplet
     
-        Set a refrence to the appvar object that the Router has assigned this Request to 
+        Set a reference to the applet object that the Router has assigned this Request to 
         
     Parameters:
-        appvar - {Object} refrence to appvar object
+        applet - {Object} reference to applet object
 */
-Request.prototype.setAppvar = function( appvar ) {
+Request.prototype.setApplet = function( applet ) {
     this._appletObject = applet;
 };
  
@@ -1007,22 +1007,22 @@ Request.prototype.setAppvar = function( appvar ) {
 /*
     Function: getApplet
     
-        Get a refrence to the appvar instance object this request is assigned to
+        Get a reference to the applet instance object this request is assigned to
                 
     Returns: 
-        {Object} refrence to appvar object
+        {Object} reference to applet object
 */
-Request.prototype.getAppvar = function() {
+Request.prototype.getApplet = function() {
     return this._appletObject;
 };
 
 /*
     Function: getFormData
     
-        Get a refrence to the form data sent with user request
+        Get a reference to the form data sent with user request
                 
     Returns: 
-        {Object} refrence to form data object. Object contains properties `files` and `fields`
+        {Object} reference to form data object. Object contains properties `files` and `fields`
             Both are arrays
 */
 Request.prototype.getFormData = function() {

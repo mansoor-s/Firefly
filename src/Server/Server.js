@@ -28,7 +28,7 @@ var https = require( 'https' );
 
    Parameters:
 
-      firefly - Refrence to the application Firefly object
+      firefly - reference to the application Firefly object
       request_handler - Function to call for every client request. The parameters Request and Response are passed to the callback
 */
 var Server = module.exports = function( firefly, requestHandler ) {
@@ -122,7 +122,7 @@ Server.prototype.isSecure = function() {
 
 /*
    Function: getNativeServer
-      Get a refrence to the native HTTP/HTTPS server object
+      Get a reference to the native HTTP/HTTPS server object
    Returns:
 
         {Object} - Native server object

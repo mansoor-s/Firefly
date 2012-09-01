@@ -28,7 +28,7 @@ var path = require( 'path' );
 
     Parameters:
 
-        app - {Object} Refrence to Firefly object
+        app - {Object} reference to Firefly object
 */
 var RenderManager = module.exports = function( app, viewEngine ) {
 	this._app = app;
@@ -51,9 +51,9 @@ RenderManager.prototype.buildViewMap = function( fn ) {
     
     for ( var i = 0, len = appletNames.length; i < len; ++i ) {
         var name = appletNames[ i ];
-        var appvar = rawApplets[ name ];
+        var applet = rawApplets[ name ];
         applet.views = {};
-        //skip loaidng appvar vies if the view folder does not exist
+        //skip loaidng applet vies if the view folder does not exist
         if ( !path.existsSync( applet.appletViewDir ) ) {
             continue;
         }
@@ -77,7 +77,7 @@ RenderManager.prototype.buildViewMap = function( fn ) {
         
     Parameters:
     
-        appvar - {String} Name of the raw appvar to which the view belongs
+        applet - {String} Name of the raw applet to which the view belongs
         viewName - {String} Name of the view
         props - {Object} Object to pass to pass to view engine for the current view
         

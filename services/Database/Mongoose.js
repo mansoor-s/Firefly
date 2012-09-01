@@ -31,7 +31,7 @@ var fs = require('fs'),
 
     Parameters:
 
-        firefly - {Object} refrence to Firefly instance
+        firefly - {Object} reference to Firefly instance
         opts - {Object} mongodb connection options
         servicename - {String} (optional) name for the service. Defaults to `Mongoose` 
 
