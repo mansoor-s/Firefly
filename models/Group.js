@@ -18,9 +18,9 @@
 
 'use strict';
 
-let bcrypt = require('bcrypt'),
+var bcrypt = require('bcrypt'),
     Schema = require('mongoose').Schema;
 
-let GroupSchema = module.exports = new Schema({
+var GroupSchema = module.exports = new Schema({
     name: String,
 });

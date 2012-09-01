@@ -26,12 +26,12 @@
 
         properties - properties of the cookie object. ie {name: 'foo', value:'cookievalue123456798'}
 */
-let Cookie = module.exports = function( properties ) {
+var Cookie = module.exports = function( properties ) {
     this._isSecure = false;
     this._name = '';
     this._value = '';
     
-    for ( let prop in properties ) {
+    for ( var prop in properties ) {
         this[ '_' + prop ] = properties[ prop ];
     }
 };
@@ -48,18 +48,18 @@ let Cookie = module.exports = function( properties ) {
         {String} cookie name
 */
 Cookie.prototype.toString = function() {
-    let secureFlag = this._isSecure ? ' Secure;' : '';
+    var secureFlag = this._isSecure ? ' Secure;' : '';
     
-    let expires = '';
+    var expires = '';
     if ( this._expires !== undefined ) {
         expires = ' Expires=' + this._expires.toString() + ';';
     }
     
-    let domain = this._domain ? ' ' + domain + ';' : '';
+    var domain = this._domain ? ' ' + domain + ';' : '';
     
-    let path = this._path ? ' ' + path + ';' : '';
+    var path = this._path ? ' ' + path + ';' : '';
     
-    let string = this._name + '=' + this._value + ';';
+    var string = this._name + '=' + this._value + ';';
     string += domain + path + expires + secureFlag;
     
     return string;

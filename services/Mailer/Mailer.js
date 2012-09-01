@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-let async = require('async');
-let nodemailer = require('nodemailer');
+var async = require('async');
+var nodemailer = require('nodemailer');
 
 
 
@@ -31,7 +31,7 @@ let nodemailer = require('nodemailer');
         firefly - Refrence to the application Firefly object
         defaults - {Object} Default configurations for Mailer. Containing properties: from, to, subject, html, attachements
 */
-let Mailer = module.exports = function(firefly, defaults) {
+var Mailer = module.exports = function(firefly, defaults) {
     this._firefly = firefly;
     this._defaults = defaults;
 
@@ -53,7 +53,7 @@ let Mailer = module.exports = function(firefly, defaults) {
         fn - Funciton to call when email has been sent
 */
 Mailer.prototype.send = function(addr, subject, body, fn) {
-    let config = Object.create(self._defaults);
+    var config = Object.create(self._defaults);
     config.to = addr;
     config.subject = subject;
     config.html = body;
@@ -84,17 +84,17 @@ Mailer.prototype.send = function(addr, subject, body, fn) {
 */
 Mailer.prototype.batchSend = function(addrs, subject, body, fn) {
     var self = this;
-    let curr = 0;
-    let len = addrs.length;
+    var curr = 0;
+    var len = addrs.length;
 
-    let mailFns = [];
+    var mailFns = [];
 
-    for (let i = 0; i < len; ++i) {
-        let addr = addrs[i];
+    for (var i = 0; i < len; ++i) {
+        var addr = addrs[i];
 
         mailFns.push(function(cb) {
-            let addr = addrs[curr];
-            let config = Object.create(self._defaults);
+            var addr = addrs[curr];
+            var config = Object.create(self._defaults);
             config.to = addr;
             config.subject = subject;
             config.html = body;

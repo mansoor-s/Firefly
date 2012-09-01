@@ -18,8 +18,8 @@
 
 'use strict';
 
-let fs = require( 'fs' );
-let path = require( 'path' );
+var fs = require( 'fs' );
+var path = require( 'path' );
 
 /*
     Function: RenderManager
@@ -30,7 +30,7 @@ let path = require( 'path' );
 
         app - {Object} Refrence to Firefly object
 */
-let RenderManager = module.exports = function( app, viewEngine ) {
+var RenderManager = module.exports = function( app, viewEngine ) {
 	this._app = app;
     this._viewEngine = viewEngine;
     this._views = [];
@@ -45,21 +45,21 @@ let RenderManager = module.exports = function( app, viewEngine ) {
     Parameters: fn - {Function} callback
 */
 RenderManager.prototype.buildViewMap = function( fn ) {
-    let rawApplets = this._app.getAllRawApplets();
+    var rawApplets = this._app.getAllRawApplets();
     
-    let appletNames = Object.keys( rawApplets );
+    var appletNames = Object.keys( rawApplets );
     
-    for ( let i = 0, len = appletNames.length; i < len; ++i ) {
-        let name = appletNames[ i ];
-        let applet = rawApplets[ name ];
+    for ( var i = 0, len = appletNames.length; i < len; ++i ) {
+        var name = appletNames[ i ];
+        var appvar = rawApplets[ name ];
         applet.views = {};
-        //skip loaidng applet vies if the view folder does not exist
+        //skip loaidng appvar vies if the view folder does not exist
         if ( !path.existsSync( applet.appletViewDir ) ) {
             continue;
         }
         
-        let viewFiles = fs.readdirSync( applet.appletViewDir );
-        for (let j = 0, jlen = viewFiles.length; j < jlen; ++j ) {
+        var viewFiles = fs.readdirSync( applet.appletViewDir );
+        for (var j = 0, jlen = viewFiles.length; j < jlen; ++j ) {
             applet.views[ viewFiles[ j ] ] = applet.appletViewDir + viewFiles[ j ];
             this._views.push(applet.views[ viewFiles[ j ] ]);
         }
@@ -77,7 +77,7 @@ RenderManager.prototype.buildViewMap = function( fn ) {
         
     Parameters:
     
-        applet - {String} Name of the raw applet to which the view belongs
+        appvar - {String} Name of the raw appvar to which the view belongs
         viewName - {String} Name of the view
         props - {Object} Object to pass to pass to view engine for the current view
         
@@ -86,6 +86,6 @@ RenderManager.prototype.buildViewMap = function( fn ) {
         {String} Rendered contents of the view
 */
 RenderManager.prototype.render = function( applet, viewName, props ) {
-    let path = applet.__appletProto.views[ viewName ];
+    var path = applet.__appletProto.views[ viewName ];
     return this._viewEngine.render( path, props );
 };

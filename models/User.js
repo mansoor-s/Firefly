@@ -18,10 +18,10 @@
 
 'use strict';
 
-let bcrypt = require('bcrypt'),
+var bcrypt = require('bcrypt'),
 	Schema = require('mongoose').Schema;
 
-let UserSchema = module.exports = new Schema({
+var UserSchema = module.exports = new Schema({
     name: String,
     password: String,
     created: { type : Date, default: Date.now() },
@@ -32,7 +32,7 @@ let UserSchema = module.exports = new Schema({
 });
 
 UserSchema.methods.setPassword = function(password, fn) {
-    let self = this;
+    var self = this;
     
     self._hashPassword(password, function(passwordHash) {
         this.password = passwordHash;

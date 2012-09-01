@@ -18,15 +18,15 @@
 
 'use strict';
 
-let fs = require( 'fs' );
-let async = require( 'async' );
+var fs = require( 'fs' );
+var async = require( 'async' );
 
-let Server = require( '../Server/Server.js' );
-let WSServer = require( '../Server/WSServer.js' ).;
-let Router = require( '../Router/Router.js' );
-let Request = require( '../Http/Request.js' );
-let Request = require( '../Http/Response.js' );
-let RenderManager = require( '../RenderManager/RenderManager.js' );
+var Server = require( '../Server/Server.js' );
+var WSServer = require( '../Server/WSServer.js' ).;
+var Router = require( '../Router/Router.js' );
+var Request = require( '../Http/Request.js' );
+var Request = require( '../Http/Response.js' );
+var RenderManager = require( '../RenderManager/RenderManager.js' );
 
 
 /*
@@ -39,7 +39,7 @@ let RenderManager = require( '../RenderManager/RenderManager.js' );
         appRoutes - {Object} Refrence to the application routes object
         config - {Object} Refrence to application config object
 */
-let Firefly = module.exports = function( appRoutes, config ) {
+var Firefly = module.exports = function( appRoutes, config ) {
     if ( typeof appRoutes !== 'object' || typeof config !== 'object' ) {
         throw Error( 'name: "Bad Parameter", description: "Expecting type `object` for parameters `routes` and `config`."' );
     }
@@ -86,13 +86,13 @@ let Firefly = module.exports = function( appRoutes, config ) {
         fn - {Function} Function to call on HTTP server start
 */
 Firefly.prototype.init = function( fn ) {
-    let self = this;
+    var self = this;
     this._initialized = true;
     
     this.server.start( function() {
         if ( self.config.AUTO_START_WS_SERVER === true ) {
-            let wsRoutes = self.router.getWSRoutes();
-            for ( let wsRoute in wsRoutes ) {
+            var wsRoutes = self.router.getWSRoutes();
+            for ( var wsRoute in wsRoutes ) {
                 self._wsServers[ wsRoute ] = new WSServer( self, wsRoutes[ wsRoute ], self.getWSRequestHandler() );
             }
         }
@@ -117,8 +117,8 @@ Firefly.prototype.init = function( fn ) {
 */
 Firefly.prototype.initWS = function() {
     if ( this.config.AUTO_START_WS_SERVER === false ) {
-        let wsRoutes = this.router.getWSRoutes();
-        for ( let wsRoute in wsRoutes ) {
+        var wsRoutes = this.router.getWSRoutes();
+        for ( var wsRoute in wsRoutes ) {
             this._wsServers[ wsRoute ] = new WSServer( this, wsRoutes[ wsRoute ], this.getWSRequestHandler() );
         }
     }
@@ -133,16 +133,16 @@ Firefly.prototype.initWS = function() {
         Autoload and Use application Applets. This function performes blocking IO (require())
 */
 Firefly.prototype.autoloadApplets = function() {
-    let rawAppletNames = fs.readdirSync( this.config.APPLETS_DIR );
+    var rawAppletNames = fs.readdirSync( this.config.APPLETS_DIR );
     
-    for (let i = 0, len = rawAppletNames.length; i < len; ++i ) {
-        let thisDir = this.config.APPLETS_DIR + rawAppletNames[ i ];
-        let stat = fs.statSync( thisDir );
+    for (var i = 0, len = rawAppletNames.length; i < len; ++i ) {
+        var thisDir = this.config.APPLETS_DIR + rawAppletNames[ i ];
+        var stat = fs.statSync( thisDir );
         if ( !stat.isDirectory() ) {
             continue;
         }
         
-        let appletPath = this.config.APPLETS_DIR + rawAppletNames[ i ];
+        var appletPath = this.config.APPLETS_DIR + rawAppletNames[ i ];
         
         this._appletsRaw[ rawAppletNames[ i ] ] = {
             object: require( appletPath + '/index.js' ),
@@ -161,12 +161,12 @@ Firefly.prototype.autoloadApplets = function() {
         
     Parameters:
         
-        applets - {String} Name of the applet .. as defined on the main application Route file
+        applets - {String} Name of the appvar .. as defined on the main application Route file
         
     Returns: {Object} Hash-array contains properties `object` and `routes`
 */
-Firefly.prototype.getApplet = function( applet ) {
-    return this._applets[ applet ];
+Firefly.prototype.getAppvar = function( appvar ) {
+    return this._applets[ appvar ];
 };
 
 
@@ -239,15 +239,15 @@ Firefly.prototype.get = function( name ) {
 /*
     Function: addApplet
 
-        Add an initialized applet object
+        Add an initialized appvar object
         
     Parameters:
         
         name - {String} Name of applet
-        applet - {Object} Refrence to applet object
+        appvar - {Object} Refrence to appvar object
 */
-Firefly.prototype.addApplet = function( name, applet ) {
-    if ( !name || !applet ) {
+Firefly.prototype.addAppvar = function( name, appvar ) {
+    if ( !name || !appvar ) {
         throw Error( 'name: "Bad Parameter", description: "Expected parameters of types `string` and `object`"' );
     }
 
@@ -281,11 +281,11 @@ Firefly.prototype.getAppRoutes = function() {
         {Function} request handler
 */
 Firefly.prototype.getRequestHandler = function() {
-    let self = this;
+    var self = this;
     return function( req, res ) {
         try {
-            let request = new Request( req );
-            let response = new Response( res, request, self );
+            var request = new Request( req );
+            var response = new Response( res, request, self );
 
             if ( self.server.isSecure() ) {
                 request.setServerSecure( true );
@@ -320,7 +320,7 @@ Firefly.prototype.getRequestHandler = function() {
         {Function} WS request handler
 */
 Firefly.prototype.getWSRequestHandler = function() {
-    let self = this;
+    var self = this;
     // connection handler
     return function( wsInfo, socket ) {
         try {
@@ -332,7 +332,7 @@ Firefly.prototype.getWSRequestHandler = function() {
             //find correct message controller
             socket.on( 'message', function( dataRaw ) {
                 //parse JSON if it is in the notation otherwise pass it as is
-                let data;
+                var data;
                 try {
                     data = JSON.parse( dataRaw );
                 } catch ( e ) {
@@ -369,7 +369,7 @@ Firefly.prototype.getWSRequestHandler = function() {
         {Object} Error object
 */
 Firefly.prototype.catch = function( err, request, response ) {
-    let logger = this.get( 'Logger' );
+    var logger = this.get( 'Logger' );
     logger.log( err );
 
 };

@@ -18,8 +18,8 @@
 
 'use strict';
 
-let http = require( 'http' );
-let https = require( 'https' );
+var http = require( 'http' );
+var https = require( 'https' );
 
 /*
    Function: Server
@@ -31,7 +31,7 @@ let https = require( 'https' );
       firefly - Refrence to the application Firefly object
       request_handler - Function to call for every client request. The parameters Request and Response are passed to the callback
 */
-let Server = module.exports = function( firefly, requestHandler ) {
+var Server = module.exports = function( firefly, requestHandler ) {
     this._serverInitialized = false;
     
     this._webServer = undefined;
@@ -74,7 +74,7 @@ Server.prototype.setRequestHandler = function( fn ) {
 */
 Server.prototype.start = function( fn ) {
     if ( !this._server_initialized ) {
-        let protocol = this._config.PROTOCOL.toLowerCase();
+        var protocol = this._config.PROTOCOL.toLowerCase();
         if ( protocol === 'https' ) {
             this._webServer = https.createServer( { key: this._config.TLS_KEY, cert: this._config.TLS_CERT }, this._requestHandler );
             this._isSecure = true;
@@ -86,7 +86,7 @@ Server.prototype.start = function( fn ) {
         this._serverInitialized = true;
     }
     
-    let serverManager = this._firefly.get( 'ServerManager' );
+    var serverManager = this._firefly.get( 'ServerManager' );
     if ( serverManager ) {
         serverManager.use( this._webServer, fn );
     } else {

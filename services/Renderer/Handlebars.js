@@ -1,13 +1,13 @@
 'use strict';
 
-let fs = require('fs');
-let Handlebars = require('handlebars');
+var fs = require('fs');
+var Handlebars = require('handlebars');
 
 /*
     Wrapper for Handlebars
 
 */
-let Renderer = module.exports = function(app) {
+var Renderer = module.exports = function(app) {
    
     this._views = undefined;
     
@@ -29,7 +29,7 @@ let Renderer = module.exports = function(app) {
         Private function called on application initialization
 */
 Renderer.prototype._onInit = function() {
-    let self = this;
+    var self = this;
     return function(fn) {
         fn();
     };
@@ -62,10 +62,10 @@ Renderer.prototype.setViews = function(views, fn) {
 
 */
 Renderer.prototype.buildCache = function(fn) {
-    for (let i = 0, len = this._views.length; i < len; ++i) {
-        let viewPath = this._views[i];
-        let data = fs.readFileSync(viewPath, 'utf8');
-        let template = Handlebars.compile(data);
+    for (var i = 0, len = this._views.length; i < len; ++i) {
+        var viewPath = this._views[i];
+        var data = fs.readFileSync(viewPath, 'utf8');
+        var template = Handlebars.compile(data);
         
         this.cache[viewPath] = template;
     }
@@ -104,7 +104,7 @@ Renderer.prototype.rebuildCache = function(fn) {
 
 */
 Renderer.prototype.render = function(path, opts) {
-    let template = this.cache[path];
+    var template = this.cache[path];
     if (!template) {
         throw new Error('View `' + path + '` not found');
     }

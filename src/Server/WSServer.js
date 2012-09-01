@@ -18,7 +18,7 @@
 
 'use strict';
 
-let ws = require( 'ws' );
+var ws = require( 'ws' );
 
 
 /*
@@ -33,7 +33,7 @@ let ws = require( 'ws' );
         requestHandler - {Function} Fn to call for every client connect. Refrence
             to `socket` object is passed to the callback
 */
-let WSServer = module.exports = function( firefly, wsInfo, requestHandler ) {
+var WSServer = module.exports = function( firefly, wsInfo, requestHandler ) {
     this._wss = new ws.Server({
         'server': firefly.server.getNativeServer(),
         'path': wsInfo.path

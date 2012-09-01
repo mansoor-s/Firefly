@@ -17,8 +17,8 @@
 */
 
 'use strict';
-let redis = require('redis');
-let uuid = require('node-uuid');
+var redis = require('redis');
+var uuid = require('node-uuid');
 
 
 /*
@@ -26,7 +26,7 @@ let uuid = require('node-uuid');
 
         Redis session manager for Firefly
 */
-let SessionManager = module.exports = function(app) {
+var SessionManager = module.exports = function(app) {
     this._cookieName = app.config.SESSION_COOKIE_NAME;
     app.addInitDependency(this._onInit());
     
@@ -58,7 +58,7 @@ SessionManager.prototype._onInit = function() {
         fn - {Function} callback function taking the session object as the parameter
 */
 SessionManager.prototype.getSession = function( request, fn ) {
-    let sessionId = request.getCookie( this._cookieName );
+    var sessionId = request.getCookie( this._cookieName );
     
     /*
         Do nothing if session ID wasn't found
@@ -91,7 +91,7 @@ SessionManager.prototype.getSession = function( request, fn ) {
         fn - {Function} callback
 */
 SessionManager.prototype.createSession = function(response, data, fn) {
-    let id = uuid.v4(); 
+    var id = uuid.v4(); 
     
     data = data || {};
 
@@ -121,7 +121,7 @@ SessionManager.prototype.createSession = function(response, data, fn) {
 
 */
 SessionManager.prototype.destroySession = function(request, response, fn) {
-    let sessionId = request.getCookie(this._cookieName);
+    var sessionId = request.getCookie(this._cookieName);
     
     if ( !sessionId ) {
         fn();

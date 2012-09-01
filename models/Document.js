@@ -18,9 +18,9 @@
 
 'use strict';
 
-let Schema = require('mongoose').Schema;
+var Schema = require('mongoose').Schema;
 
-let DocumentSchema = module.exports = new Schema({
+var DocumentSchema = module.exports = new Schema({
     creator: { Schema.Types.ObjectId, ref: 'User' },
     created: { type : Date, default: Date.now() },
     lastModified: { type : Date, default: Date.now() },

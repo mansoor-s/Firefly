@@ -18,7 +18,7 @@
 
 'use strict';
 
-let Cookie = require( './Cookie.js' );
+var Cookie = require( './Cookie.js' );
 
 /*
     Function: Response
@@ -29,7 +29,7 @@ let Cookie = require( './Cookie.js' );
 
         res - Native node response object
 */
-let Response = module.exports = function( resNative, fReq, firefly ) {
+var Response = module.exports = function( resNative, fReq, firefly ) {
     this._response = resNative;
     this._request = fReq;
     this._firefly = firefly;
@@ -93,7 +93,7 @@ Response.prototype.getNativeResponse = function() {
             then `undefined` is returned
 */
 Response.prototype.getAge = function() {
-    let age;
+    var age;
     if ( this.get( 'Age' ) !== undefined ) {
         age = this.get( 'Age' ) >> 0;
     }
@@ -192,7 +192,7 @@ Response.prototype.getDate = function() {
         {Date} Requested date
 */
 Response.prototype.getHeaderDate = function( header, defaultValue ) {
-    let date = this.get( header );
+    var date = this.get( header );
     if ( !date ) {
         return defaultValue;
     }
@@ -261,7 +261,7 @@ Response.prototype.getExpires = function() {
         String representation of HTTP response
 */
 Response.prototype.getMaxAge = function() {
-    let age;
+    var age;
     if ( (age = getCacheControlDirective('s-maxage')) !== null ) {
         return age;    
     }
@@ -300,7 +300,7 @@ Response.prototype.getStatusCode = function() {
         {Array} lety values
 */
 Response.prototype.getlety = function() {
-    let lety = this.get( 'lety' ) || '';
+    var lety = this.get( 'lety' ) || '';
 
     return lety.split( ', ' );
 };
@@ -381,7 +381,7 @@ Response.prototype.isValidateable = function() {
             the private TTL be set to 
 */
 Response.prototype.setPrivateTtl = function( seconds ) {
-    let age = this.getAge() >>> 0;
+    var age = this.getAge() >>> 0;
     this.setMaxAge( age + seconds );
 };
 
@@ -397,7 +397,7 @@ Response.prototype.setPrivateTtl = function( seconds ) {
             should the shared TTL be set to 
 */
 Response.prototype.setTtl = function( seconds ) {
-    let age = this.getAge() >>> 0;
+    var age = this.getAge() >>> 0;
     this.setSharedMaxAge( age + seconds );
 };
 
@@ -536,9 +536,9 @@ Response.prototype.setNotModified = function() {
     this.setStatusCode( 304 );
     this.setContent( '' );
     
-    let headersNotAllowed = [ 'Allow', 'Content-Encoding', 'Content-Language',
+    var headersNotAllowed = [ 'Allow', 'Content-Encoding', 'Content-Language',
         'Content-Length', 'Content-MD5', 'Content-Type', 'Last-Modified' ];
-    for ( let i = 0, len = headersNotAllowed.length; i < len; i ++) {
+    for ( var i = 0, len = headersNotAllowed.length; i < len; i ++) {
         this._response.removeHeader( headersNotAllowed[i] );
     }
 };
@@ -601,8 +601,8 @@ Response.prototype.setStatusCode = function( status ) {
 */
 Response.prototype.send = function() {
     //setup response cookies
-    let cookies = [];
-    for ( let cookie in this._cookies ) {
+    var cookies = [];
+    for ( var cookie in this._cookies ) {
         cookies.push( this._cookies[ cookie ].toString() );
     }
     
@@ -625,9 +625,9 @@ Response.prototype.send = function() {
         Cache-Control header value
 */
 Response.prototype._getCacheControlHeader = function() {
-    let parts = [];
-    for ( let directive in this._cacheControl ) {
-        let value = this.cacheControl[ directive ];
+    var parts = [];
+    for ( var directive in this._cacheControl ) {
+        var value = this.cacheControl[ directive ];
         if ( value === true ) {
             parts.push( directive );
         } else {
@@ -730,9 +730,9 @@ Response.prototype._updateCacheControl = function() {
         {Boolean} True if the request and response cache validators match, otherwise false
 */
 Response.prototype.isNotModified = function( request ) {
-    let lastModified = request.get( 'If-Modified-Since' );
-    let notModified = false;
-    let etag = request.getEtag();
+    var lastModified = request.get( 'If-Modified-Since' );
+    var notModified = false;
+    var etag = request.getEtag();
     
     if ( !etag ) {
         notModified = ( ~etags.indexOf( this.getEtag() ) || ~etags.indexOf( '*' ) ) && ( !lastModified || this.getDate( 'Last-Modified' ).valueOf() === lastModified.valueOf() );
@@ -999,7 +999,7 @@ Response.prototype.removeCookie = function( name ) {
         throw Error( 'name: "Bad Cookie", description: "Function requires valid cookie name"' );
     }
 
-    let cookie;
+    var cookie;
     if ( this._cookies[name] ) {
         cookie = this._cookies[name];
         cookie.setValue('');
@@ -1018,8 +1018,8 @@ Response.prototype.removeCookie = function( name ) {
         Render the response and end it
 */
 Response.prototype.render = function( viewName, props ) {
-    let applet = this._request.getApplet();
-    let content = this._firefly.renderer.render( applet, viewName, props );
+    var appvar = this._request.getApplet();
+    var content = this._firefly.renderer.render( applet, viewName, props );
     this.setContent( content );
     this.send();
 };

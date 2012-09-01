@@ -18,9 +18,9 @@
 
 'use strict';
 
-let bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt');
 
-let Permission = module.exports = function(app) {
+var Permission = module.exports = function(app) {
     this._app = app;
     this._cookieName = app.config.SESSION_COOKIE_NAME;
     app.addInitDependency(this._onInit());
@@ -38,7 +38,7 @@ let Permission = module.exports = function(app) {
 
 */
 Permission.prototype._onInit = function() {
-    let self = this;
+    var self = this;
     return function(fn) {
         fn();
     };
@@ -46,7 +46,7 @@ Permission.prototype._onInit = function() {
 
 
 Permission.prototype._getAuthenticatedChecker = function() {
-    let self = this;
+    var self = this;
 
     return function(request, response, rule, fn) {
         self.hasValidSession(request, function(isValid) {
@@ -66,11 +66,11 @@ Permission.prototype._getAuthenticatedChecker = function() {
 
 
 Permission.prototype._getVerifiedChecker = function() {
-    let self = this;
+    var self = this;
     //fn takes  ruleSatisfied and end
     return function(request, response, rule, fn) {
         self.hasValidSession(request, function(isValid, session) {
-            let verified;
+            var verified;
             if(isValid === true) {
                 verified = session.verified;
                 if (verified === true && rule === true) {
@@ -95,7 +95,7 @@ Permission.prototype._getVerifiedChecker = function() {
 
 */
 Permission.prototype.hasValidSession = function(request, fn) {
-    let sessId = request.getCookie(self._cookieName);
+    var sessId = request.getCookie(self._cookieName);
 
     if (sessId) {
         fn(false)

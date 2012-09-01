@@ -18,32 +18,32 @@
 
 'use strict';
 
-let Firefly = require( './src/Firefly/Firefly.js' );
-let config = require( './Config.js' );
-let routes = require( './Routes.js' );
+var Firefly = require( './src/Firefly/Firefly.js' );
+var config = require( './Config.js' );
+var routes = require( './Routes.js' );
 
-let HandleBars = require( './services/Renderer/Handlebars.js' );
-let SessionManager = require( './services/SessionManager.js' );
+var HandleBars = require( './services/Renderer/Handlebars.js' );
+var SessionManager = require( './services/SessionManager.js' );
 
-let Mongoose = require( './services/Database/Mongoose.js' );
-let Authenticate = require( './services/Authenticate.js' );
+var Mongoose = require( './services/Database/Mongoose.js' );
+var Authenticate = require( './services/Authenticate.js' );
 
 //new instance of Firefly
-let firefly = new Firefly( routes, config );
+var firefly = new Firefly( routes, config );
 
 //Redis session store:
-//let sessionManager = new SessionManager(firefly);
+//var sessionManager = new SessionManager(firefly);
 //firefly.set('SessionManager', sessionManager);
 
-let mongoose = new Mongoose(firefly, config.MongoDB);
+//var mongoose = new Mongoose(firefly, config.MongoDB);
 
 //Authentication service:
-let authenticate = new Authenticate(firefly);
-firefly.set('Authenticate', authenticate);
+//var authenticate = new Authenticate(firefly);
+//firefly.set('Authenticate', authenticate);
 
 //set up renderer. wrapper for Handlebars
-let handlebars = new HandleBars(firefly);
-firefly.setViewEngine(handlebars);
+//var handlebars = new HandleBars(firefly);
+//firefly.setViewEngine(handlebars);
 
 
 //Initialize 

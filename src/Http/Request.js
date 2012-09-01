@@ -18,9 +18,9 @@
 
 'use strict';
 
-let url = require('url');
-let UserAgent = require( 'useragent' );
-let Formidable = require('formidable');
+var url = require('url');
+var UserAgent = require( 'useragent' );
+var Formidable = require('formidable');
 
 
 /*
@@ -32,7 +32,7 @@ let Formidable = require('formidable');
 
         req - Native node request object
 */
-let Request = module.exports = function( req ) {
+var Request = module.exports = function( req ) {
     this._isMethodSafe = false;
     this._trustProxyData = false;
     this._isWebSocket = false;
@@ -64,8 +64,8 @@ let Request = module.exports = function( req ) {
         fn - {Functions} callback function to call when upload is finished and has been parsed
 */
 Request.prototype.parseForm =  function(fn) {
-    let form = new Formidable.IncomingForm();
-    let self = this;
+    var form = new Formidable.IncomingForm();
+    var self = this;
     form.parse( this._request, function( err, fields, files ) {
         self._formData.fields = fields || [];
         self._formData.files = files || [];
@@ -91,7 +91,7 @@ Request.prototype.setServerSecure = function( secure ) {
     useragent header field
 */
 Request.prototype._setupUserAgent = function() {
-    let user_agent = this.get( 'user-agent' );
+    var user_agent = this.get( 'user-agent' );
     this._userAgent = UserAgent.parser( user_agent );
 };
 
@@ -242,7 +242,7 @@ Request.prototype.getCharsets = function() {
       {Array} ETags
 */
 Request.prototype.getETags = function() {
-    let etags = this.get( 'If-None-Match' ) || '';
+    var etags = this.get( 'If-None-Match' ) || '';
     return etags.split( ',' );
 };
 
@@ -278,7 +278,7 @@ Request.prototype.getFormat = function() {
         <getHttpHost>
 */
 Request.prototype.getHost = function() {
-    let host = this.get( 'host' );
+    var host = this.get( 'host' );
     return host.split( ':' )[ 0 ];
 };
 
@@ -317,12 +317,12 @@ Request.prototype.getHttpHost = function() {
         <getPreferredLanguage>
 */
 Request.prototype.getLanguages = function() {
-    let languagesRaw = this._request.headers[ 'Accept-Language' ] || '';
+    var languagesRaw = this._request.headers[ 'Accept-Language' ] || '';
     languagesRaw = languagesRaw.split( ',' );
-    let languages = [];
+    var languages = [];
     //return only the language identifier part and not the quality value
-    for (let i = 0, len = languagesRaw.length; i < len; ++i) {
-        let lang = languagesRaw[ i ].split( '' )[ 0 ];
+    for (var i = 0, len = languagesRaw.length; i < len; ++i) {
+        var lang = languagesRaw[ i ].split( '' )[ 0 ];
         languages.push( lang );
     }
     
@@ -345,14 +345,14 @@ Request.prototype.getLanguages = function() {
         <getLanguages>
 */
 Request.prototype.getPreferredLanguage = function() {
-    let languagesRaw = this._request.headers[ 'Accept-Language' ] || '';
+    var languagesRaw = this._request.headers[ 'Accept-Language' ] || '';
     languagesRaw = languagesRaw.split( ',' );
-    let preferredLanguage = '';
+    var preferredLanguage = '';
     
-    let preferredValue = 0;
-    for (let i = 0; i < languagesRaw.length; i++) {
+    var preferredValue = 0;
+    for (var i = 0; i < languagesRaw.length; i++) {
         //if quality value is not specified the default value is 1
-        let langValue = languagesRaw[ i ].split( '' )[ 1 ] || 1;
+        var langValue = languagesRaw[ i ].split( '' )[ 1 ] || 1;
         if (langValue > preferredValue) {
             preferredValue = langValue;
             preferredLanguage = languagesRaw[ i ].split( '' )[ 0 ];
@@ -380,7 +380,7 @@ Request.prototype.getPreferredLanguage = function() {
 */
 Request.prototype.getMethod = function() {
     if ( !this._method ) {
-        let method_override = this.get( 'X-HTTP-METHOD-OVERRIDE' );
+        var method_override = this.get( 'X-HTTP-METHOD-OVERRIDE' );
         if ( this._request.method === 'POST' && typeof( method_override ) === 'string' ) {
             this._method = method_override.toUpperCase();
         } else {
@@ -438,8 +438,8 @@ Request.prototype.getMimeType = function() {
 */
 Request.prototype.getPort = function() {
     if ( !this._port ) {
-        let host = this.get( 'host' );
-        let port = host.split( ':' )[ 1 ];
+        var host = this.get( 'host' );
+        var port = host.split( ':' )[ 1 ];
         /*
             If port is not specified in the `Host` request headr, port 80 is assumed.
         */    
@@ -516,7 +516,7 @@ Request.prototype.getScheme = function() {
       {Boolean} is method safe
 */
 Request.prototype.isMethodSafe = function() {
-    let method = this.getMethod();
+    var method = this.getMethod();
     if ( method === 'GET' || method === 'HEAD') {
         return true;
     } else {
@@ -536,7 +536,7 @@ Request.prototype.isMethodSafe = function() {
       {Boolean} is there a no-cache policy
 */
 Request.prototype.isNoCache = function() {
-    let pragma = this.get( pragma );
+    var pragma = this.get( pragma );
     if( typeof( pragma ) === 'string' ) {
         if ( pragma.indexOf( 'no-cache' ) != -1 ) {
             return true;
@@ -561,8 +561,8 @@ Request.prototype.isSecure = function() {
     if ( this._serverIsSecure ) {
         return true;
     } else if ( this._trustProxyData ) {
-        let SSL_HTTPS = this.get( 'SSL_HTTPS' ) || '';
-        let X_FORWARDED_PROTO = this.get( 'X_FORWARDED_PROTO' ).toLowerCase() || '';
+        var SSL_HTTPS = this.get( 'SSL_HTTPS' ) || '';
+        var X_FORWARDED_PROTO = this.get( 'X_FORWARDED_PROTO' ).toLowerCase() || '';
         if ( SSL_HTTPS.toLowerCase() === 'on' || SSL_HTTPS == 1 || X_FORWARDED_PROTO === 'https' ) {
             return true;
         }
@@ -598,8 +598,8 @@ Request.prototype.isXmlHttpRequest = function() {
       {Boolean} is request WebSocket
 */
 Request.prototype.isWebSocketRequest = function() {
-    let upgrades = this.getUpgrades();
-    for ( let i = 0, len = upgrades.length; i < len; i++ ) {
+    var upgrades = this.getUpgrades();
+    for ( var i = 0, len = upgrades.length; i < len; i++ ) {
         if ( upgrades[i] === 'WebSockets' ) {
             this._isWebSocket = true;
             break;
@@ -793,9 +793,9 @@ Request.prototype.getConnection = function() {
 */
 Request.prototype.getUpgrades = function() {
     if (this._request.length === 0) {
-        let upgrade = this.get( 'Upgrade' ) || '';
+        var upgrade = this.get( 'Upgrade' ) || '';
         this._upgrade = upgrade.split(',');
-        for ( let i = 0, len = this._upgrade.length; i < len; i++ ) {
+        for ( var i = 0, len = this._upgrade.length; i < len; i++ ) {
             this._upgrade[i] = this._upgrade[i].trim();
         }
     }
@@ -874,7 +874,7 @@ Request.prototype.get = function( header ) {
         {Date} Requested date
 */
 Request.prototype.getHeaderDate = function( header, defaultValue ) {
-    let date = this.get( header );
+    var date = this.get( header );
     if ( !date ) {
         return defaultValue;
     }
@@ -897,15 +897,15 @@ Request.prototype.getHeaderDate = function( header, defaultValue ) {
 
 */
 Request.prototype._parseCookies = function() {
-    let cookies = this.get( 'Cookie' ) || '';
+    var cookies = this.get( 'Cookie' ) || '';
     if (cookies.length) {
         cookies = cookies.split( ';' );
-        for (let i = 0, len = cookies.length; i < len; i++ ) {
+        for (var i = 0, len = cookies.length; i < len; i++ ) {
             
             cookies[i] = cookies[i].trim();
-            let cookieParts = cookies[i].split( '=' );
+            var cookieParts = cookies[i].split( '=' );
 
-            let cookie = cookieParts[ 1 ]
+            var cookie = cookieParts[ 1 ]
              
             //set the first part of the cookie, portion before the = as the cookie name
             this._cookies[ cookieParts[ 0 ] ] = cookie;
@@ -993,12 +993,12 @@ Request.prototype.getRouteObject = function() {
 /*
     Function: setApplet
     
-        Set a refrence to the applet object that the Router has assigned this Request to 
+        Set a refrence to the appvar object that the Router has assigned this Request to 
         
     Parameters:
-        applet - {Object} refrence to applet object
+        appvar - {Object} refrence to appvar object
 */
-Request.prototype.setApplet = function( applet ) {
+Request.prototype.setAppvar = function( appvar ) {
     this._appletObject = applet;
 };
  
@@ -1007,12 +1007,12 @@ Request.prototype.setApplet = function( applet ) {
 /*
     Function: getApplet
     
-        Get a refrence to the applet instance object this request is assigned to
+        Get a refrence to the appvar instance object this request is assigned to
                 
     Returns: 
-        {Object} refrence to applet object
+        {Object} refrence to appvar object
 */
-Request.prototype.getApplet = function() {
+Request.prototype.getAppvar = function() {
     return this._appletObject;
 };
 

@@ -19,7 +19,7 @@
 'use strict';
 
 
-let fs = require('fs'),
+var fs = require('fs'),
     path = require('path'),
     mongoose = require('mongoose'),
     dive = require('dive');
@@ -36,7 +36,7 @@ let fs = require('fs'),
         servicename - {String} (optional) name for the service. Defaults to `Mongoose` 
 
 */
-let Mongoose = module.exports = function(firefly, opts, serviceName) {
+var Mongoose = module.exports = function(firefly, opts, serviceName) {
     if (!firefly || !opts) {
         throw Error('`Mongoose` service requires Firefly instance and configuration options as parameters in constructor');
     }
@@ -62,7 +62,7 @@ let Mongoose = module.exports = function(firefly, opts, serviceName) {
         fn - {Function} callback
 */
 Mongoose.prototype._onInit = function() {
-    let self = this;
+    var self = this;
     return function(fn) {
         self.db.open(self.opts.HOST, self.opts.DB_NAME, self.opts.PORT, self.opts.OPTS, function() {
             console.log('Connected to MongoDB');
@@ -84,14 +84,14 @@ Mongoose.prototype._onInit = function() {
         fn - {Function} callback
 */
 Mongoose.prototype._initModels = function(fn) {
-    let self = this;
+    var self = this;
 
     dive(this.opts.MODELS_DIR, { all: true }, function(err, filePath) {
         if (err) {
             throw err
         }
         
-        let filePathParts = file.split(path.sep),
+        var filePathParts = file.split(path.sep),
             len = filePathParts.length,
             fileName = filePathParts[len - 1],
             nameParts = fileName.split('.');
@@ -100,14 +100,14 @@ Mongoose.prototype._initModels = function(fn) {
             return;
         }
 
-        let name = nameParts[0],
+        var name = nameParts[0],
             ext = nameParts[1];
 
         if (ext !== 'js') {
             return;
         }
 
-        let schema = require(filePath);
+        var schema = require(filePath);
         self.db.model(name, schema);
     }, fn);
 };
