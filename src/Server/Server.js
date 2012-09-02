@@ -21,15 +21,15 @@
 var http = require( 'http' );
 var https = require( 'https' );
 
-/*
-   Function: Server
 
-   Server object constructor
-
-   Parameters:
-
-      firefly - reference to the application Firefly object
-      request_handler - Function to call for every client request. The parameters Request and Response are passed to the callback
+/**
+* Server object constructor
+*
+* @class Server
+* @module Core
+* @constructor
+* @param {Object} firefly reference to the Firefly object
+* @param {Function} request_handler Function to call for every client request. The parameters Request and Response are passed to the callback
 */
 var Server = module.exports = function( firefly, requestHandler ) {
     this._serverInitialized = false;
@@ -44,14 +44,11 @@ var Server = module.exports = function( firefly, requestHandler ) {
 
 
 
-/*
-   Function: setRequestHandler
-
-   Set the request handler for the server if it is not passed with the object constructor
-
-   Parameters:
-
-      fn - Request handler function
+/**
+* Set the request handler for the server if it is not passed with the object constructor
+*
+* @method setRequestHandler
+* @param {Function} fn Request handler function
 */
 Server.prototype.setRequestHandler = function( fn ) {
     this._requestHandler = fn;
@@ -59,18 +56,11 @@ Server.prototype.setRequestHandler = function( fn ) {
 
 
 
-/*
-   Function: start
-
-   Start the server
-
-   Parameters:
-
-      fn - function to call when server has started
-
-   See Also:
-
-      <stop>
+/**
+* Start the HTTP server
+*
+* @method start
+* @param {Function} fn Function to call when server has started
 */
 Server.prototype.start = function( fn ) {
     if ( !this._server_initialized ) {
@@ -96,14 +86,10 @@ Server.prototype.start = function( fn ) {
 
 
 
-/*
-   Function: stop
-
-   Stop the server from accepting any new connections
-
-   See Also:
-
-      <start>
+/**
+* Shutdown http server
+*
+* @method stop
 */
 Server.prototype.stop = function() {
     this._webServer.close();
@@ -111,21 +97,23 @@ Server.prototype.stop = function() {
 
 
 
-/*
-   Function: isSecure
-
-   Returns a boolean value indicated whether or not the server is a secure one. i.e HTTPS or HTTP
+/**
+* Returns a boolean value indicated whether or not the server is a secure one. i.e HTTPS or HTTP
+*
+* @method isSecure
+* @return {Boolean} true if server  is secure otherwise false
 */
 Server.prototype.isSecure = function() {
     return this._isSecure;
 };
 
-/*
-   Function: getNativeServer
-      Get a reference to the native HTTP/HTTPS server object
-   Returns:
 
-        {Object} - Native server object
+
+/**
+* Get a reference to the native HTTP/HTTPS server object
+*
+* @method getNativeServer
+* @return {Object} reference to native server object
 */
 Server.prototype.getNativeServer = function() {
     return this._webServer;

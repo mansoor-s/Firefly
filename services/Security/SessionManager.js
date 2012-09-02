@@ -21,23 +21,29 @@ var redis = require('redis');
 var uuid = require('node-uuid');
 
 
-/*
-    SessionManager
-
-        Redis session manager for Firefly
+/**
+* Redis based session manager for Firefly
+*
+* @class SessionManager
+* @module Services
+* @constructor
+* @param {Object} firefly Reference to the application Firefly object
 */
-var SessionManager = module.exports = function(app) {
-    this._cookieName = app.config.SESSION_COOKIE_NAME;
-    app.addInitDependency(this._onInit());
+var SessionManager = module.exports = function(firefly) {
+    this._cookieName = firefly.config.SESSION_COOKIE_NAME;
+    //firefly.addInitDependency(this._onInit());
     
     this._client = redis.createClient();
 };
 
 
 
-/*
-    (TODO: change the redis database from the default 0 in accordance with the config file)
- 
+/**
+* function to be called on application initialization. *Not* registered with firefly.
+*   No use for it at this time (TODO: change the redis database from the default 0 in accordance with the config file)
+*
+* @method _onInit
+* @private
 */
 SessionManager.prototype._onInit = function() {
     return function(fn) {
@@ -47,15 +53,12 @@ SessionManager.prototype._onInit = function() {
 
 
 
-/*
-    Function: getSession
-
-        Get session object for given session ID
-
-    Parameters:
-
-        request - {String} reference to Request object
-        fn - {Function} callback function taking the session object as the parameter
+/**
+* Get session object for given session ID
+*
+* @method getSession
+* @param {String} request Reference to Request object
+* @param {Function} fn Callback function taking the session object as the parameter
 */
 SessionManager.prototype.getSession = function( request, fn ) {
     var sessionId = request.getCookie( this._cookieName );
@@ -79,16 +82,13 @@ SessionManager.prototype.getSession = function( request, fn ) {
 
 
 
-/*
-    Function: createSession
-
-        Create a session and return its session ID
-    
-    Parameters:
-
-        response - {Object} reference to the response object
-        data - {Object} object containing data to save for the session. `data` CAN be undefined
-        fn - {Function} callback
+/**
+* Create a session and return its session ID
+*
+* @method createSession
+* @param {Object} response reference to the response object
+* @param {Object} data Object containing data to save for the session. `data` CAN be undefined
+* @param {Function} fn Callback function
 */
 SessionManager.prototype.createSession = function(response, data, fn) {
     var id = uuid.v4(); 
@@ -108,17 +108,13 @@ SessionManager.prototype.createSession = function(response, data, fn) {
 
 
 
-/*
-    Function: destorySession
-
-        Destroy session with the given session ID
-
-    Parameters: 
-
-        request - {Object} reference to the request object
-        response - {Object} reference to the response object
-        fn - {Function} callback
-
+/**
+* Destroy session with the given session ID
+*
+* @method destorySession
+* @param {Object} response Reference to the response object
+* @param {Object} response Reference to the response object
+* @param {Function} fn Callback function
 */
 SessionManager.prototype.destroySession = function(request, response, fn) {
     var sessionId = request.getCookie(this._cookieName);

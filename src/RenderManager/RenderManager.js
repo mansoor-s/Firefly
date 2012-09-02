@@ -21,14 +21,14 @@
 var fs = require( 'fs' );
 var path = require( 'path' );
 
-/*
-    Function: RenderManager
 
-        RenderManager object constructor.
-
-    Parameters:
-
-        app - {Object} reference to Firefly object
+/**
+* RenderManager object constructor.
+*
+* @class RenderManager
+* @module Core
+* @constructor
+* @param {Object} app reference to Firefly object
 */
 var RenderManager = module.exports = function( app, viewEngine ) {
 	this._app = app;
@@ -37,12 +37,11 @@ var RenderManager = module.exports = function( app, viewEngine ) {
 };
 
 
-/*
-    Function: buildViewMap
-
-        Creates a map of view names and view file path. [Performes sync IO]
-
-    Parameters: fn - {Function} callback
+/**
+* Creates a map of view names and view file path. [Performes sync IO]
+*
+* @method buildViewMap
+* @param {Function} fn callback
 */
 RenderManager.prototype.buildViewMap = function( fn ) {
     var rawApplets = this._app.getAllRawApplets();
@@ -70,20 +69,14 @@ RenderManager.prototype.buildViewMap = function( fn ) {
 
 
 
-/*
-    Function: render
-
-        Get the rendered contents of a view with the given properties
-        
-    Parameters:
-    
-        applet - {String} Name of the raw applet to which the view belongs
-        viewName - {String} Name of the view
-        props - {Object} Object to pass to pass to view engine for the current view
-        
-    Return:
-        
-        {String} Rendered contents of the view
+/**
+* Get the rendered contents of a view with the given properties
+*
+* @method render
+* @param {String} applet Name of the raw applet to which the view belongs
+* @param {String} viewName Name of the view
+* @param {Object} props Object to pass to pass to view engine for the current view
+* @returns {String} Rendered contents of the view
 */
 RenderManager.prototype.render = function( applet, viewName, props ) {
     var path = applet.__appletProto.views[ viewName ];

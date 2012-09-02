@@ -20,14 +20,14 @@
 
 var async = require( 'async' );
 
-/*
-    Function: Router
 
-    Router object constructor
-
-    Parameters:
-
-        firefly - reference to the current instance of the Firefly object
+/**
+* Router object constructor
+*
+* @class Router
+* @module Core
+* @constructor
+* @param {Object} firefly reference to the current instance of the Firefly object
 */
 var Router = module.exports = function( firefly ) {
     this._firefly = firefly;
@@ -47,10 +47,11 @@ var Router = module.exports = function( firefly ) {
 
 
 
-/*
-    Function: buildRoutes
-
-        Build routing patterns for all available applets
+/**
+* Build routing patterns for all available applets
+*
+* @method buildRoutes
+* @TODO break this method up
 */
 Router.prototype.buildRoutes = function() {
     var allAppletsRaw = this._firefly.getAllRawApplets();
@@ -149,15 +150,11 @@ Router.prototype.buildRoutes = function() {
 
 
 
-/*
-    Function: rebuildRoutes
-
-        Rebuilds application route rules. Call this if application's routes are changed
-            post startup.
-    
-    Parameters:
-    
-        appRoute - {Object} reference to the app route object
+/**
+* Rebuilds application route rules. Call this if application's routes are changed
+            post init.
+*
+* @method rebuildRoutes
 */
 Router.prototype.rebuildRoutes = function() {
     this._routes = {};
@@ -167,15 +164,15 @@ Router.prototype.rebuildRoutes = function() {
 };
 
 
-/*
-    Function: _buildWSRoute
 
-        Create routes (callbacks for given event name) for a given websocket route. 
+/**
+* Create routes (callbacks for given event name) for a given websocket route. 
             No rich route rules for ws routes to reduce overhead
-    
-    Parameters:
-    
-        appRoute - {Object} reference to the app route object
+*
+* @method _buildWSRoute
+* @private
+* @param {Object} appRoute Reference to application route object
+* @param {Object} routes Reference to the applet's routes object
 */
 Router.prototype._buildWSRoute = function( appRoute, routes ) {
     var allAppletsRaw = this._firefly.getAllRawApplets();
@@ -193,15 +190,12 @@ Router.prototype._buildWSRoute = function( appRoute, routes ) {
 
 
 
-/*
-    Function: findRoute
-
-        Find the appropriate controller for the incoming client request
-        
-    Parameters:
-    
-        request - {Object} Client's Request object
-        response - {Object} Client's Response object
+/**
+* Find the appropriate controller for the incoming client request
+*
+* @method findRoute
+* @param {Object} request Reference to Request object
+* @param {Object} response Reference to Response object
 */
 Router.prototype.findRoute = function( request, response ) {
     var routeFound;
@@ -255,15 +249,16 @@ Router.prototype.findRoute = function( request, response ) {
 };
 
 
-/*
-    Function: _testRouteRules
 
-        Find the appropriate controller for the WebSocket event
-        
-    Parameters:
-    
-        request - {Object} Client's Request object
-        response - {Object} Client's Response object
+/**
+* Makes sure that the request meets all of the requirements of the route
+*
+* @method _testRouteRules
+* @private
+* @param {Object} request Reference to Request object
+* @param {Object} response Reference to Response object
+* @param {Object} route Reference to the route object
+* @param {Function} fn callback function
 */
 Router.prototype._testRouteRules = function( request, response, route, fn ) {
     var rules = Object.keys(this._routeRules);
@@ -304,16 +299,13 @@ Router.prototype._testRouteRules = function( request, response, route, fn ) {
 
 
 
-/*
-    Function: findWSRoute
-
-        Find the appropriate controller for the WebSocket event
-        
-    Parameters:
-    
-        wsInfo - {Object} reference to winsocket info object
-        socket - {Object} reference to the websocket object
-        data - {Object} reference to data recieved from client
+/**
+* Find the appropriate controller for the WebSocket event
+*
+* @method findWSRoute
+* @param {Object} wsInfo reference to winsocket info object
+* @param {Object} socket reference to the websocket object
+* @param {Object} data reference to data recieved from client
 */
 Router.prototype.findWSRoute = function( wsInfo, socket, data ) {
     var routeFound = false;
@@ -342,18 +334,13 @@ Router.prototype.findWSRoute = function( wsInfo, socket, data ) {
 
 
 
-/*
-    Function: generateUrl
-
-        Generate url based on the route name and specified URL parameters
-    
-    Parameters:
-    
-        routeName - {String} Name of the route based which to generate the URL
-        params - {Object} Object literal containing name and values for URL parameters
-
-    Returns
-        {String} Generated URL
+/**
+* Generate url based on the route name and specified URL parameters
+*
+* @method generateUrl
+* @param {String} routeName Name of the route based which to generate the URL
+* @param {Object} params Object literal containing name and values for URL parameters
+* @return {String} Generated URL
 */
 Router.prototype.generateUrl = function( routeName, params ) {
     var route = this._routes[ routeName ];
@@ -379,18 +366,14 @@ Router.prototype.generateUrl = function( routeName, params ) {
 
 
 
-/*
-    Function: _methodRule
-
-        Test for the _method route rule
-    
-    Parameters:
-    
-        request - {Object} Instance of request objecr for the current request
-        rule - {Array|String} value of rule as specified in the route file
-
-    Returns
-        {Boolean} True if the rule requrements are met, otherwise false
+/**
+* Test for the _method route rule
+*
+* @method _methodRule
+* @private
+* @param {Object} request Instance of request objecr for the current request
+* @param {Array|String} rule value of rule as specified in the route file
+* @param {Function} callback function taking result of the test as its parameter
 */
 Router.prototype._methodRule = function( request, response, rule, fn ) {
     var method = request.getMethod();
@@ -412,18 +395,14 @@ Router.prototype._methodRule = function( request, response, rule, fn ) {
 
 
 
-/*
-    Function: _transportRule
-
-        Test for the _transport route rule
-    
-    Parameters:
-    
-        request - {Object} Instance of request objecr for the current request
-        rule - {Array|String} value of rule as specified in the route file
-
-    Returns
-        {Boolean} True if the rule requrements are met, otherwise false
+/**
+* Test for the _transport route rule
+*
+* @method _transportRule
+* @private
+* @param {Object} request Instance of request objecr for the current request
+* @param {Array|String} rule value of rule as specified in the route file
+* @param {Function} callback function taking result of the test as its parameter
 */
 Router.prototype._transportRule = function( request, response, rule, fn ) {
     var transport = request.getTransport();
@@ -439,18 +418,16 @@ Router.prototype._transportRule = function( request, response, rule, fn ) {
         }
     }
     
-    return(false);
+    fn(false);
 };
 
 
 
-/*
-    Function: getWSRoutes
-
-        Get a reference to the object holding the routes for websockets
-
-    Returns
-        {Object} reference to WS routes object
+/**
+* Get a reference to the object holding the routes for websockets
+*
+* @method getWSRoutes
+* @return {Object} reference to WS routes object for the entire appliction
 */
 Router.prototype.getWSRoutes = function() {
     return this._wsRoutes;    
@@ -458,33 +435,12 @@ Router.prototype.getWSRoutes = function() {
 
 
 
-/*
-    Function: setServiceHandler
-
-        Set a function as the request handler for a given service. If a route is registered to 
-            the specified service, then this function will be called with an instance of 
-            the Request and Response objects before calling the controller.
-
-    Parameters
-        name - {Object} Name of the service
-        fn - {Function} listener function to be used as the request handler
-*/
-Router.prototype.setServiceHandler = function( name, fn ) {
-    this._serviceHandlers[ name ] = fn;
-}
-
-
-
-
-/*
-    Function: routeNotFound
-
-        Method called by router if no route is found for the request
-
-    Parameters:
-
-        request - {Object} instance of Request object
-        response - {Object} instance of the Response object
+/**
+* Method called by router if no route is found for the request
+*
+* @method routeNotFound
+* @param {Object} request Reference to requst object
+* @param {Object} response Reference to response object
 */
 Router.prototype.routeNotFound = function( request, response ) {
     // give 404 error
@@ -495,15 +451,12 @@ Router.prototype.routeNotFound = function( request, response ) {
 
 
 
-/*
-    Function: wsRouteNotFound
-
-        Method called by router if no route is found for the request
-
-    Parameters:
-
-        socket - {Object} reference to client's socket object
-        data - {Object} reference to object holding data
+/**
+* Method called by router if no route is found for the websocket request
+*
+* @method wsRouteNotFound
+* @param {Object} socket reference to client's socket object
+* @param {Object} data reference to object holding data
 */
 Router.prototype.wsRouteNotFound = function( socket, data ) {
     socket.send(JSON.stringify({status: '404'}));
@@ -511,15 +464,27 @@ Router.prototype.wsRouteNotFound = function( socket, data ) {
 
 
 
-/*
-    Function: addRouteRequirement
-
-        Add 
-
-    Parameters:
-
-        name - {String} Name of route rule. An _ (underscore) is prepended to the name route
-        fn - {Function} Callback with parameters: request, response, function
+/**
+* Set a function as the request handler for a service. If a route is registered to 
+            the specified service, then this function will be called with an instance of 
+            the Request and Response objects before calling the controller. Firefly will
+            prepend the 
+* @example
+        addRouteRequirement('useraccess', function(req, res, rule, fn) {
+            fn(true) //passes test
+            fn(false, true) //failed test. hault routing. the service will take care of showing error touser
+            fn(false, false) // failed test. continue routing
+        });
+        
+        
+        //In routes file useraccess will be declared as:
+        _useraccess: 'admin'
+        //thus the value of `rule` in the service handler will be 'admin'
+        
+*
+* @method addRouteRequirement
+* @param {String} name Name of the rule. An _ (underscore) is prepended to the name
+* @param {Function} fn listener function to be used as the request handler
 */
 Router.prototype.addRouteRequirement = function( name, fn ) {
     this._routeRules[ '_' + name ] = fn;

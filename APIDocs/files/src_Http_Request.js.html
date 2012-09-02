@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src\Http\Request.js - Firefly</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.5.1&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title="Firefly"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Cookie.html">Cookie</a></li>
+            
+                <li><a href="..&#x2F;classes/Firefly.html">Firefly</a></li>
+            
+                <li><a href="..&#x2F;classes/Handlebars.html">Handlebars</a></li>
+            
+                <li><a href="..&#x2F;classes/Mailer.html">Mailer</a></li>
+            
+                <li><a href="..&#x2F;classes/Mongoose.html">Mongoose</a></li>
+            
+                <li><a href="..&#x2F;classes/Permission.html">Permission</a></li>
+            
+                <li><a href="..&#x2F;classes/RenderManager.html">RenderManager</a></li>
+            
+                <li><a href="..&#x2F;classes/Request.html">Request</a></li>
+            
+                <li><a href="..&#x2F;classes/Response.html">Response</a></li>
+            
+                <li><a href="..&#x2F;classes/Router.html">Router</a></li>
+            
+                <li><a href="..&#x2F;classes/Server.html">Server</a></li>
+            
+                <li><a href="..&#x2F;classes/SessionManager.html">SessionManager</a></li>
+            
+                <li><a href="..&#x2F;classes/WSServer.html">WSServer</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/Core.html">Core</a></li>
+            
+                <li><a href="..&#x2F;modules/Services.html">Services</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src\Http\Request.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;*
+    Firefly - Node.js CMS
+    Copyright (C) &lt;2012&gt;  &lt;Mansoor Sayed&gt;
+
+    This program is free software: you can redistribute it and&#x2F;or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see &lt;http:&#x2F;&#x2F;www.gnu.org&#x2F;licenses&#x2F;&gt;.
+*&#x2F;
+
+&#x27;use strict&#x27;;
+
+var url = require(&#x27;url&#x27;);
+var UserAgent = require( &#x27;useragent&#x27; );
+var Formidable = require(&#x27;formidable&#x27;);
+
+
+
+&#x2F;**
+* Request object constructor
+*
+* @class Request
+* @module Core
+* @constructor
+* @param {Object} req Native node request object
+*&#x2F;
+var Request = module.exports = function( req ) {
+    this._isMethodSafe = false;
+    this._trustProxyData = false;
+    this._isWebSocket = false;
+    this._charSets = [];
+    this._upgrade = [];
+    this._cookies = {};
+    this._request = req;
+    this._parsedUrl = url.parse( this._request.url, true );
+    this._queryString = url.parse( this._request.url ).query;
+    this._parseCookies();
+
+    this._formData = {
+        fields: [],
+        files: []
+    };
+    
+    this._routeObject = undefined;
+};
+
+
+
+&#x2F;**
+* Parses form fields and files. This method is called by Firefly
+*
+* @method parseForm
+* @param {Function} fn callback function to call when upload is finished and has been parsed
+*&#x2F;
+Request.prototype.parseForm =  function(fn) {
+    var form = new Formidable.IncomingForm();
+    var self = this;
+    form.parse( this._request, function( err, fields, files ) {
+        self._formData.fields = fields || [];
+        self._formData.files = files || [];
+        fn();
+    });
+};
+
+
+
+&#x2F;**
+* Explicitly tell the Request object that the connection with the client is secure (HTTPS)
+*
+* @method setServerSecure
+* @param {Function} fn callback function to call when upload is finished and has been parsed
+*&#x2F;
+Request.prototype.setServerSecure = function( secure ) {
+    this._serverIsSecure = secure;
+}; 
+
+
+
+&#x2F;**
+* Figures out the client&#x27;s useragent by parsing the &#x60;user-agent&#x60; header field
+*
+* @method _setupUserAgent
+* @private
+*&#x2F;
+Request.prototype._setupUserAgent = function() {
+    var user_agent = this.get( &#x27;user-agent&#x27; );
+    this._userAgent = UserAgent.parser( user_agent );
+};
+
+
+
+&#x2F;**
+* Figures out the client&#x27;s operating system by parsing the &#x60;user-agent&#x60; header field
+*
+* @method getOs
+*&#x2F;
+Request.prototype.getOs = function() {
+    if ( !this._userAgent ) {
+        this._setupuserAgent();        
+    }
+    return this._userAgent.prettyOs();
+};
+
+
+
+&#x2F;**
+* Returns the client Browser and version as specified in the user-agent header field
+*
+* @method getBrowser
+* @return {String} Client&#x27;s Browser and version
+*&#x2F;
+Request.prototype.getBrowser = function() {
+    if ( !this._userAgent ) {
+        this._setupuserAgent();        
+    }
+    return this._userAgent.pretty();
+};
+
+
+
+&#x2F;**
+* Finds the client&#x27;s IP address. If there is a proxy sitting
+*   in front of web server then &#x60;HTTP_X_FORWARDED_FOR&#x60; is looked at.
+*
+* @method getClientIpAddress
+* @param {Boolean} [proxy=false] Boolean value indicating whether there is a
+*   proxy sitting in front of the server.
+* @return {String} Client&#x27;s IP Address
+*&#x2F;
+Request.prototype.getClientIpAddress = function( proxy ) {
+    if ( proxy &amp;&amp; this._trustProxyData ) {
+        return this.get( &#x27;HTTP_X_FORWARDED_FOR&#x27; );
+    }
+    return this._request.client.remoteAddress;
+};
+
+
+
+&#x2F;**
+* Finds the port from which the client is requesting from
+*
+* @method getClientPort
+* @return {Number} Client&#x27;s port number
+*&#x2F;
+Request.prototype.getClientPort = function() {
+    return this._request.client.remotePort;
+};
+
+
+
+&#x2F;**
+* Get the base path of the request URI
+*
+* @method getBasePath
+* @return {String} Base path of the request URI
+*&#x2F;
+Request.prototype.getBasePath = function() {
+    return this._parsedUrl.pathname;
+};
+
+
+&#x2F;**
+* Get the base URL of the request URI
+*
+* @method getBaseUrl
+* @return {String} Base path of the request URI
+*&#x2F;
+Request.prototype.getBaseUrl = function() {
+    return this._parsedUrl.protocol + this._parsedUrl.host + this._parsedUrl.pathname;
+};
+
+
+
+&#x2F;**
+* Get the charsets supported by the client
+*
+* @method getCharsets
+* @return {Array} Charsets
+*&#x2F;
+Request.prototype.getCharsets = function() {
+    if (this._charSets === undefined) {
+        this._charSets = this.get( &#x27;Accept-Charset&#x27; ) || &#x27;&#x27;;
+    }
+    return this._charSets;
+};
+
+
+
+&#x2F;**
+* Get the base ETags header
+*
+* @method getETags
+* @return {Array} ETags
+*&#x2F;
+Request.prototype.getETags = function() {
+    var etags = this.get( &#x27;If-None-Match&#x27; ) || &#x27;&#x27;;
+    return etags.split( &#x27;,&#x27; );
+};
+
+
+
+&#x2F;**
+* Get the host header in the client request. If a port number is appended to the host, it will be omitted.
+*    This is the case if a non-standard port is used for the http server.
+*
+* @method getHost
+* @return {String} host
+*&#x2F;
+Request.prototype.getHost = function() {
+    var host = this.get( &#x27;host&#x27; );
+    return host.split( &#x27;:&#x27; )[ 0 ];
+};
+
+
+
+&#x2F;**
+* Get the host header in the request. Includes the port port number if sent by the client.
+*
+* @method getHTTPHost
+* @return {String} host
+*&#x2F;
+Request.prototype.getHttpHost = function() {
+    return this.get( &#x27;host&#x27; );
+};
+
+
+
+&#x2F;**
+*  Get the languages supported by the client by reading the &#x60;Accept-Language&#x60; header
+*
+* @method getLanguages
+* @return {Array} languages supported. If no no languages are specified, an empty array is returned
+*&#x2F;
+Request.prototype.getLanguages = function() {
+    var languagesRaw = this._request.headers[ &#x27;Accept-Language&#x27; ] || &#x27;&#x27;;
+    languagesRaw = languagesRaw.split( &#x27;,&#x27; );
+    var languages = [];
+    &#x2F;&#x2F;return only the language identifier part and not the quality value
+    for (var i = 0, len = languagesRaw.length; i &lt; len; ++i) {
+        var lang = languagesRaw[ i ].split( &#x27;&#x27; )[ 0 ];
+        languages.push( lang );
+    }
+    
+    return languages;
+};
+
+
+
+&#x2F;**
+*  Get the prefered language for the client based on the language&#x27;s quality value
+*
+* @method getPreferredLanguage
+* @return {String} prefered language
+*&#x2F;
+Request.prototype.getPreferredLanguage = function() {
+    var languagesRaw = this._request.headers[ &#x27;Accept-Language&#x27; ] || &#x27;&#x27;;
+    languagesRaw = languagesRaw.split( &#x27;,&#x27; );
+    var preferredLanguage = &#x27;&#x27;;
+    
+    var preferredValue = 0;
+    for (var i = 0; i &lt; languagesRaw.length; i++) {
+        &#x2F;&#x2F;if quality value is not specified the default value is 1
+        var langValue = languagesRaw[ i ].split( &#x27;&#x27; )[ 1 ] || 1;
+        if (langValue &gt; preferredValue) {
+            preferredValue = langValue;
+            preferredLanguage = languagesRaw[ i ].split( &#x27;&#x27; )[ 0 ];
+        }
+        
+    }
+    
+    return preferredLanguage;
+};
+
+
+
+&#x2F;**
+*  Get request method (i.e POST, GET, PUT..). If the &#x60;X-HTTP-METHOD-OVERRIDE&#x60; header is found, it is returned instead.
+*     Returned string is upper case.
+*
+* @method getMethod
+* @return {String} request method
+*&#x2F;
+Request.prototype.getMethod = function() {
+    if ( !this._method ) {
+        var method_override = this.get( &#x27;X-HTTP-METHOD-OVERRIDE&#x27; );
+        if ( this._request.method === &#x27;POST&#x27; &amp;&amp; typeof( method_override ) === &#x27;string&#x27; ) {
+            this._method = method_override.toUpperCase();
+        } else {
+            this._method = this._request.method;
+        }
+    }
+    return this._method;
+};
+
+
+
+&#x2F;**
+*  Get request method. This is different from &lt;getMethod&gt; in that it will return the actual method used in the http request
+*     as apposed to returning the &#x60;X-HTTP-METHOD-OVERRIDE&#x60; header field if it is found. Returned string is upper case.
+*
+* @method getMethodActual
+* @return {String} request method
+*&#x2F;
+Request.prototype.getMethodActual = function() {
+    return this._request.method;
+};
+
+
+
+&#x2F;**
+*  Get the mime type specified by the client
+*
+* @method getMimeType
+* @return {String} mime type
+*&#x2F;
+Request.prototype.getMimeType = function() {
+    return this.get(&#x27;Content-Type&#x27;);
+};
+
+
+
+
+&#x2F;**
+*  Get the host port specified by the request header
+*
+* @method getPort
+* @return {Number} Port Number
+*&#x2F;
+Request.prototype.getPort = function() {
+    if ( !this._port ) {
+        var host = this.get( &#x27;host&#x27; );
+        var port = host.split( &#x27;:&#x27; )[ 1 ];
+        &#x2F;*
+            If port is not specified in the &#x60;Host&#x60; request headr, port 80 is assumed.
+        *&#x2F;    
+        this._port = ( port &gt;&gt;&gt; 0 ) || 80;
+    }
+    
+    return this._port;
+};
+
+
+
+&#x2F;**
+*  Get the query portion of the requested URL.  i.e &#x27;field=value&#x27;
+*
+* @method getQueryString
+* @return {String} query string
+*&#x2F;
+Request.prototype.getQueryString = function() {
+    return this._queryString;
+};
+
+
+
+&#x2F;**
+*  Get the query portion of the requested URL as an object.  i.e &#x27;field=value&#x27; becomes {&#x27;field&#x27;: &#x27;value&#x27;} 
+*
+* @method getQuery
+* @return {Object} query
+*&#x2F;
+Request.prototype.getQuery = function() {
+    &#x2F;&#x2F;return this._parsedUrl.query;
+    return this._parsedUrl.query;
+};
+
+
+
+
+&#x2F;**
+*  Get the request scheme (&#x27;http&#x27; or &#x27;https&#x27;)  
+*
+* @method getScheme
+* @return {String} scheme
+*&#x2F;
+Request.prototype.getScheme = function() {
+    return this.isSecure() ? &#x27;https&#x27; : &#x27;http&#x27;;
+};
+
+
+
+&#x2F;**
+*  Check whether or not the requested method is a &#x60;safe&#x60; one (GET, HEAD).
+*
+* @method isMethodSafe
+* @return {Boolean} is method safe
+*&#x2F;
+Request.prototype.isMethodSafe = function() {
+    var method = this.getMethod();
+    if ( method === &#x27;GET&#x27; || method === &#x27;HEAD&#x27;) {
+        return true;
+    } else {
+        return false;
+    }    
+};
+
+
+
+&#x2F;**
+*  Determaine whether the client has a no-cache policy
+*
+* @method isMethodSafe
+* @return {Boolean} True if there is a no-cache policy otherwise false
+*&#x2F;
+Request.prototype.isNoCache = function() {
+    var pragma = this.get( pragma );
+    if( typeof( pragma ) === &#x27;string&#x27; ) {
+        if ( pragma.indexOf( &#x27;no-cache&#x27; ) != -1 ) {
+            return true;
+        }
+    }
+    return false;
+};
+
+
+
+
+&#x2F;**
+*  Determaine whether the connection to the client is secure
+*
+* @method isSecure
+* @return {Boolean} is connection secure
+*&#x2F;
+Request.prototype.isSecure = function() {
+    if ( this._serverIsSecure ) {
+        return true;
+    } else if ( this._trustProxyData ) {
+        var SSL_HTTPS = this.get( &#x27;SSL_HTTPS&#x27; ) || &#x27;&#x27;;
+        var X_FORWARDED_PROTO = this.get( &#x27;X_FORWARDED_PROTO&#x27; ).toLowerCase() || &#x27;&#x27;;
+        if ( SSL_HTTPS.toLowerCase() === &#x27;on&#x27; || SSL_HTTPS == 1 || X_FORWARDED_PROTO === &#x27;https&#x27; ) {
+            return true;
+        }
+    }
+    return false;
+};
+
+
+
+&#x2F;**
+*  Determaine whether the request is an AJAX&#x2F;XHR request. It determines this by checking the X-Requested-With header.
+*     The header is specified by the javascript framework. Works with Prototype, Mootools and jQuery.
+*
+* @method isXmlHttpRequest
+* @return {Boolean} True if request is &#x60;AJAX&#x60; otherwise false
+*&#x2F;
+Request.prototype.isXmlHttpRequest = function() {
+    return ( this.get( &#x27;X-Requested-With&#x27; ) || &#x27;&#x27; ).toLowerCase() === &#x27;xmlhttprequest&#x27;;
+};
+
+
+
+&#x2F;**
+*  Determaine whether the request is a websocket request. It determines this by checking the &#x60;Upgrade&#x60; header field.
+*
+* @method isWebSocketRequest
+* @return {Boolean} True if request is a WebSocket upgrade request otherwise false
+*&#x2F;
+Request.prototype.isWebSocketRequest = function() {
+    var upgrades = this.getUpgrades();
+    for ( var i = 0, len = upgrades.length; i &lt; len; i++ ) {
+        if ( upgrades[i] === &#x27;WebSockets&#x27; ) {
+            this._isWebSocket = true;
+            break;
+        }
+    }
+    return this._isWebSocket;
+};
+
+
+
+&#x2F;**
+*  Determine the HTTP protocol version in the client request.
+*
+* @method getVersion
+* @return {Number} HTTP verions
+*&#x2F;
+Request.prototype.getVersion = function() {
+    return parseInt( this._request.httpVersion );
+};
+
+
+
+
+&#x2F;**
+* Returns a reference to the net.Socket object associated with the current connection
+*
+* @method getConnectionSocket
+* @return {Object} Reference to the net.Socket object for current connection
+*&#x2F;
+Request.prototype.getConnectionSocket = function() {
+    return this._request.connection;
+};
+
+
+
+&#x2F;**
+* Returns the value for the Upgrade request header.
+*
+* @method getUpgrade
+* @return {String} upgrade
+*&#x2F;
+Request.prototype.getUpgrade = function() {
+    return this._request.upgrade;
+};
+
+
+
+&#x2F;**
+* Set the encoding for the request body. 
+*
+* @method setEncoding
+* @param {String|Null} encoding=null &#x60;utf8&#x60; or &#x60;binary&#x60;. Defaults to null,
+            which means that the &#x60;data&#x60; event will emit a Buffer object
+*&#x2F;
+Request.prototype.setEncoding = function( encoding ) {
+    this._request.setEncoding( encoding );
+};
+
+
+
+&#x2F;**
+* Should Firefly trust data coming from a proxy. (i.e &#x60;HTTP_X_FORWARDED_FOR&#x60; header)
+*
+* @method trustProxyData
+* @param {Boolean} trust Set true if you have any reverse proxys in front of your server. 
+*&#x2F;
+Request.prototype.trustProxyData = function( trust ) {
+    this._trustProxyData = trust;
+};
+
+
+
+&#x2F;**
+* Get the referrer URL
+*
+* @method getReferrer
+* @return {String} referrer
+*&#x2F;
+Request.prototype.getReferrer = function() {
+    return this.get( &#x27;Referer&#x27; ) || &#x27;&#x27;;
+};
+
+
+
+&#x2F;**
+* Get the referrer URL. Same as &lt;Referrer&gt; but misspelled as it is in the specs
+*
+* @method getReferer
+* @return {String} referrer
+*&#x2F;
+Request.prototype.getReferer = Request.prototype.getReferrer;
+
+
+
+&#x2F;**
+* Determine whether the client is sending a Do-Not-Track request header
+*
+* @method hasDoNotTrack
+* @return {Boolean} true if the header exists, otherwise false
+*&#x2F;
+Request.prototype.hasDoNotTrack = function() {
+    return this.get( &#x27;DNT&#x27; ) == 1 ? true : false;
+};
+
+
+
+&#x2F;**
+* Get the value of the &#x60;Connection&#x60; header field of client request
+*
+* @method getConnection
+* @return {String} connection header value
+*&#x2F;
+Request.prototype.getConnection = function() {
+    return this.get( &#x27;Connection&#x27; ) || &#x27;&#x27;;
+};
+
+
+
+&#x2F;**
+* Get values of the &#x60;Upgrade&#x60; field of the request header
+*
+* @method getUpgrades
+* @return {Array} values of the &#x60;Upgrade&#x60; header
+*&#x2F;
+Request.prototype.getUpgrades = function() {
+    if (this._request.length === 0) {
+        var upgrade = this.get( &#x27;Upgrade&#x27; ) || &#x27;&#x27;;
+        this._upgrade = upgrade.split(&#x27;,&#x27;);
+        for ( var i = 0, len = this._upgrade.length; i &lt; len; i++ ) {
+            this._upgrade[i] = this._upgrade[i].trim();
+        }
+    }
+    return this._upgrade;
+};
+
+
+
+&#x2F;**
+* Determine whether the client is asking for a protocol upgrade
+*
+* @method hasUpgrade
+* @return {Boolean} true if upgrade field is set otherwise false
+*&#x2F;
+Request.prototype.hasUpgrade = function() {
+    return this.getConnection().toLowerCase() === &#x27;upgrade&#x27; ? true : false;
+};
+
+
+
+&#x2F;**
+* Get the value of a specified HTTP request header
+*
+* @method get
+* @return {String} Value of HTTP header
+*&#x2F;
+Request.prototype.get = function( header ) {
+    return this._request.headers[ (header || &#x27;&#x27;).toLowerCase() ];
+};
+
+
+
+&#x2F;**
+* Get the value of a HTTP header as a Date object.. if it is a valid representaion of a date
+*
+* @method getHeaderDate
+* @param {String} header Name of http header for which to get date value
+* @param {Date} defaultValue Date object to be returned incase the specified HTTP header does not exist or is empty
+* @return {Date} Requested date
+*&#x2F;
+Request.prototype.getHeaderDate = function( header, defaultValue ) {
+    var date = this.get( header );
+    if ( !date ) {
+        return defaultValue;
+    }
+    
+    date = Date.parse( date );
+    if ( isNaN( date ) ) {
+        throw Error( &#x27;&quot;name&quot;: &quot;Bad  Date&quot;, &quot;description&quot;: &quot;Cannot parse malformed date representation&quot;&#x27; );
+    }
+    
+    return new Date( date );
+};
+
+
+
+&#x2F;**
+* Parse the cookies sent by the client and create a &#x60;Cookie&#x60; object for each of them
+*
+* @method _parseCookies
+* @private
+*&#x2F;
+Request.prototype._parseCookies = function() {
+    var cookies = this.get( &#x27;Cookie&#x27; ) || &#x27;&#x27;;
+    if (cookies.length) {
+        cookies = cookies.split( &#x27;;&#x27; );
+        for (var i = 0, len = cookies.length; i &lt; len; i++ ) {
+            
+            cookies[i] = cookies[i].trim();
+            var cookieParts = cookies[i].split( &#x27;=&#x27; );
+
+            var cookie = cookieParts[ 1 ]
+             
+            &#x2F;&#x2F;set the first part of the cookie, portion before the = as the cookie name
+            this._cookies[ cookieParts[ 0 ] ] = cookie;
+        }
+    }
+    
+};
+
+
+
+&#x2F;**
+* Get the specified cookie as a &#x60;Cookie&#x60; object
+*
+* @method getCookie
+* @param {String} name Name of cookie
+* @return {String} the value of the cookie
+*&#x2F;
+Request.prototype.getCookie = function( name ) {
+    return this._cookies[ name ].getValue();
+};
+
+
+
+
+&#x2F;**
+* Pause a client request. Calls native request.pause() method. Stops the request from
+            emmiting any new events until &#x60;resume&#x60; is called. Usefull to make sure 
+            events not be missed while performing IO operationa.
+*
+* @method pause
+*&#x2F;
+Request.prototype.pause = function() {
+    this._request.pause();
+};
+
+
+
+
+&#x2F;**
+* Resume a paused request
+*
+* @method resume
+*&#x2F;
+Request.prototype.resume = function() {
+    this._request.resume();
+};
+
+
+
+&#x2F;**
+* Set the reference to the route object for the request, useful for getting quick 
+        access to the route object 
+*
+* @method setRouteObject
+* @param {Object} route Reference to the route object
+* @return {String} the value of the cookie
+*&#x2F;
+Request.prototype.setRouteObject = function( route ) {
+    this._routeObject = route;
+};
+
+
+
+&#x2F;**
+* Get a reference to the route object for the request, useful for getting
+        quick access to the route object 
+*
+* @method getRouteObject
+* @return {Object} reference to route object
+*&#x2F;
+Request.prototype.getRouteObject = function() {
+    return this._routeObject;
+};
+
+
+
+&#x2F;**
+* Set a reference to the applet object to which the Router has assigned this Request
+*
+* @method setApplet
+* @param {Object} route Reference to the route object
+* @return {Object} applet Reference to applet object
+*&#x2F;
+Request.prototype.setApplet = function( applet ) {
+    this._appletObject = applet;
+};
+ 
+ 
+
+&#x2F;**
+* Get a reference to the applet instance object this request is assigned to
+*
+* @method getApplet
+* @return {Object} reference to applet object
+*&#x2F;
+Request.prototype.getApplet = function() {
+    return this._appletObject;
+};
+
+
+&#x2F;**
+* Get a reference to the form data sent with user request
+*
+* @method getFormData
+* @return {Object} reference to form data object. Object contains properties &#x60;files&#x60; and &#x60;fields&#x60;
+            Both are arrays
+*&#x2F;
+Request.prototype.getFormData = function() {
+    return this._formData;
+};   
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

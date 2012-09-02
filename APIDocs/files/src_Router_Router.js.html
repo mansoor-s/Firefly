@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src\Router\Router.js - Firefly</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.5.1&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title="Firefly"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Cookie.html">Cookie</a></li>
+            
+                <li><a href="..&#x2F;classes/Firefly.html">Firefly</a></li>
+            
+                <li><a href="..&#x2F;classes/Handlebars.html">Handlebars</a></li>
+            
+                <li><a href="..&#x2F;classes/Mailer.html">Mailer</a></li>
+            
+                <li><a href="..&#x2F;classes/Mongoose.html">Mongoose</a></li>
+            
+                <li><a href="..&#x2F;classes/Permission.html">Permission</a></li>
+            
+                <li><a href="..&#x2F;classes/RenderManager.html">RenderManager</a></li>
+            
+                <li><a href="..&#x2F;classes/Request.html">Request</a></li>
+            
+                <li><a href="..&#x2F;classes/Response.html">Response</a></li>
+            
+                <li><a href="..&#x2F;classes/Router.html">Router</a></li>
+            
+                <li><a href="..&#x2F;classes/Server.html">Server</a></li>
+            
+                <li><a href="..&#x2F;classes/SessionManager.html">SessionManager</a></li>
+            
+                <li><a href="..&#x2F;classes/WSServer.html">WSServer</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/Core.html">Core</a></li>
+            
+                <li><a href="..&#x2F;modules/Services.html">Services</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src\Router\Router.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;*
+    Firefly - Node.js CMS
+    Copyright (C) &lt;2012&gt;  &lt;Mansoor Sayed&gt;
+
+    This program is free software: you can redistribute it and&#x2F;or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see &lt;http:&#x2F;&#x2F;www.gnu.org&#x2F;licenses&#x2F;&gt;.
+*&#x2F;
+
+&#x27;use strict&#x27;;
+
+var async = require( &#x27;async&#x27; );
+
+
+&#x2F;**
+* Router object constructor
+*
+* @class Router
+* @module Core
+* @constructor
+* @param {Object} firefly reference to the current instance of the Firefly object
+*&#x2F;
+var Router = module.exports = function( firefly ) {
+    this._firefly = firefly;
+    this._routes = {};
+    this._wsRoutes = {};
+    this._serviceRoutes = [];
+    
+    this._serviceHandlers = {};
+
+    this._routeRules = {
+        &#x27;_method&#x27;: this._methodRule,
+        &#x27;_transport&#x27;: this._transportRule
+    };
+
+    firefly.set(&#x27;Router&#x27;, this);
+};
+
+
+
+&#x2F;**
+* Build routing patterns for all available applets
+*
+* @method buildRoutes
+* @TODO break this method up
+*&#x2F;
+Router.prototype.buildRoutes = function() {
+    var allAppletsRaw = this._firefly.getAllRawApplets();
+    var appRoutes = this._firefly.getAppRoutes();
+    
+    for ( var appRoute in appRoutes ) {
+        if ( allAppletsRaw[ appRoute.applet ] === undefined ) {
+            &#x2F;&#x2F;check if route is registered to a service
+            var thisRoute = appRoutes[ appRoute ];
+            if ( thisRoute.service !== undefined ) {
+                this._serviceRoutes.push( {
+                    &#x27;pattern&#x27;: new RegExp( thisRoute.basePattern + &#x27;.*&#x27; ),
+                    &#x27;handler&#x27;: this._serviceHandlers[ thisRoute.service ],
+                    &#x27;service&#x27;: this._firefly.get( thisRoute.service )
+                } );
+                continue;
+            }
+        }
+
+        var appletBasePattern = appRoutes[ appRoute ].basePattern;
+        var appletName = appRoutes[ appRoute ].applet;
+        
+        if ( allAppletsRaw[ appletName ] === undefined ) {
+            throw Error( &#x27;Applet &#x60;&#x27; + appletName + &#x27;&#x60; does not exist!&#x27;);
+        }
+
+        var routes = allAppletsRaw[ appletName ].routes;
+        
+        var applet = {
+            object: new allAppletsRaw[ appletName ].object( this._firefly ),
+            appletProto: allAppletsRaw[ appletName ]
+        };
+
+        applet.object.__appletProto = allAppletsRaw[ appletName ];
+        
+        &#x2F;&#x2F;register the instance of the applet and name with firefly
+        this._firefly.addApplet( appRoute, applet );
+
+        appRoutes[ appRoute ].requirements = appRoutes[ appRoute ].requirements || {};
+
+        &#x2F;&#x2F;if the route is for websocket connections, there is no need to create normal routes for it
+        if ( ( appRoutes[ appRoute ].requirements._transport || &#x27;&#x27; ).toLowerCase() === &#x27;ws&#x27; ) {
+            appRoutes[ appRoute ]._applet = applet.object;
+            appRoutes[appRoute].applet = appRoute;
+            appRoutes[appRoute].appletRaw = allAppletsRaw[ appletName ];
+            this._buildWSRoute( appRoutes[ appRoute ], routes );
+            continue;
+        }
+        
+        for ( var route in routes ) {
+            if ( typeof routes[ route ].pattern !== &#x27;string&#x27; ) {
+                throw Error( &#x27;name: &quot;Bad Route&quot;, description: &quot;Expecting applet route rule to be of type &#x60;String&#x60;&quot;&#x27; );
+            }
+
+            routes[ route ].requirements = routes[ route ].requirements || {};
+             
+            &#x2F;&#x2F;parse for route parameters
+            var params = routes[ route ].pattern.match( &#x2F;:\w+&#x2F;g ) || [];
+            var tempExp = routes[ route ].pattern;
+            for ( var i = 0, len = params.length; i &lt; len; ++i ) {
+                var param = params[ i ].substr( 1 );
+                
+                &#x2F;&#x2F; if a reqirement rule exists for the param, use it, otherwise, use &#x2F;.*&#x2F;
+                var paramRule;
+                if ( routes[ route ].requirements.hasOwnProperty( param ) ) {
+                    paramRule = routes[ route ].requirements[ param ];
+                    if ( !paramRule instanceof RegExp ) {
+                        throw Error( &#x27;name: &quot;Bad Route&quot;, description: &quot;Expecting parameter letiable rule to be of type &#x60;RegExp&#x60;&quot;&#x27; );
+                    }
+                    paramRule = &#x27;(&#x27; + paramRule.source + &#x27;)&#x27;;
+                } else {
+                    paramRule = &#x27;(.*)&#x27;;
+                }
+                tempExp = tempExp.replace( &#x2F;:\w+&#x2F;, paramRule );
+            }
+            
+            var controller = routes[ route ].controller;
+            routes[ route ]._patternRegex = new RegExp( &#x27;^&#x27; +  appletBasePattern + tempExp + &#x27;$&#x27; );
+            
+            &#x2F;&#x2F;action controller function
+            routes[ route ]._actionController = applet.object[ controller ];
+            
+            &#x2F;&#x2F;reference to instance of applet object
+            routes[ route ]._applet = applet.object
+            routes[ route ]._fullRoute = appletBasePattern + routes[ route ].pattern;
+            
+            &#x2F;&#x2F;applet base route
+            routes[ route ]._baseRoute = appRoutes[ appRoute ];
+            
+            this._routes[ route ] = routes[ route ];
+
+            this.routeKeys = Object.keys( this._routes );
+        }
+    }
+};
+
+
+
+&#x2F;**
+* Rebuilds application route rules. Call this if application&#x27;s routes are changed
+            post init.
+*
+* @method rebuildRoutes
+*&#x2F;
+Router.prototype.rebuildRoutes = function() {
+    this._routes = {};
+    this._serviceRoutes = {};
+    this._wsRoutes = {};
+    this.buildRoutes();
+};
+
+
+
+&#x2F;**
+* Create routes (callbacks for given event name) for a given websocket route. 
+            No rich route rules for ws routes to reduce overhead
+*
+* @method _buildWSRoute
+* @private
+* @param {Object} appRoute Reference to application route object
+* @param {Object} routes Reference to the applet&#x27;s routes object
+*&#x2F;
+Router.prototype._buildWSRoute = function( appRoute, routes ) {
+    var allAppletsRaw = this._firefly.getAllRawApplets();
+    var wsRoutes = this._wsRoutes[ appRoute.applet ] = {
+        &#x27;applet&#x27;: appRoute.applet,
+        &#x27;path&#x27;: appRoute.basePattern,
+        &#x27;routes&#x27;: {}
+    };
+    
+    for ( var route in routes ) {
+        wsRoutes.routes[ route ] = appRoute._applet[ routes[ route ].controller ];
+    }
+};
+
+
+
+
+&#x2F;**
+* Find the appropriate controller for the incoming client request
+*
+* @method findRoute
+* @param {Object} request Reference to Request object
+* @param {Object} response Reference to Response object
+*&#x2F;
+Router.prototype.findRoute = function( request, response ) {
+    var routeFound;
+    var basePath = request.getBasePath();
+    var self = this;
+
+    &#x2F;&#x2F;test for service routes
+    for ( var i = 0, len = this._serviceRoutes.length; i &lt; len; ++i ) {
+        var serviceRoute = this._serviceRoutes[ i ];
+        if ( serviceRoute.pattern.test( basePath ) ) {
+            serviceRoute.handler.call( serviceRoute.service, request, response );
+            routeFound = true;
+        }
+    }
+
+    &#x2F;&#x2F;test for normal routes
+    if ( !routeFound &amp;&amp; self.routeKeys.length ) {
+        ( function routesIttr( currRoute ) {
+            var route = self._routes[ self.routeKeys[ currRoute ] ];
+            
+            var routeTest = route._patternRegex.test( basePath );
+            if ( !routeTest &amp;&amp; ( currRoute === self.routeKeys.length - 1 ) ) {
+                self.routeNotFound( request, response );
+                return;
+            } else if ( !routeTest ) {
+                routesIttr( ++currRoute );
+                return;
+            }
+
+            self._testRouteRules( request, response, route, function( pass ) {
+                if ( pass ) {
+                    var params = route._patternRegex.exec( basePath ) || [];
+                    var applet = route._applet;
+                    params.unshift( request, response );
+                    
+                    request.setRouteObject( route );
+                    request.setApplet( applet );
+
+                    &#x2F;&#x2F;call action controller
+                    route._actionController.apply( applet, params );
+                    
+                &#x2F;&#x2F; if it is the last route and it&#x27;s rules were not met, then give 404
+                } else if ( !pass &amp;&amp; ( currRoute === self.routeKeys.length - 1 ) ) {
+                    self.routeNotFound( request, response ); 
+                } else {
+                    routesIttr( ++currRoute );
+                }
+            } );
+        } )( 0 );
+    }
+};
+
+
+
+&#x2F;**
+* Makes sure that the request meets all of the requirements of the route
+*
+* @method _testRouteRules
+* @private
+* @param {Object} request Reference to Request object
+* @param {Object} response Reference to Response object
+* @param {Object} route Reference to the route object
+* @param {Function} fn callback function
+*&#x2F;
+Router.prototype._testRouteRules = function( request, response, route, fn ) {
+    var rules = Object.keys(this._routeRules);
+    var self = this;
+    if ( rules.length ) {
+        ( function rulesIttr( curr ) {
+            var ruleName = rules[ curr ];
+            var rule;
+            if (route.requirements[ ruleName ] !== undefined) {
+                rule = route.requirements[ ruleName ];
+            } else {
+                rule = route._baseRoute.requirements[ ruleName ];
+            }
+
+            if ( rule !== undefined) {
+                self._routeRules[ ruleName ]( request, response, rule,  function( ruleSatisfied, end ) {
+                    if ( end ) {
+                        return;
+                    }
+
+                    if ( ( curr === rules.length - 1 ) &amp;&amp; ruleSatisfied ) {
+                        fn( true );
+                    } else if ( ruleSatisfied ) {
+                        rulesIttr( ++curr );
+                    } else {
+                        fn( false );
+                    }
+                    
+                } );
+            } else if ( !rule &amp;&amp; ( curr === rules.length - 1 ) ) {
+                fn( true );
+            } else {
+                rulesIttr( ++curr );
+            }
+        } )( 0 );
+    }
+};
+
+
+
+&#x2F;**
+* Find the appropriate controller for the WebSocket event
+*
+* @method findWSRoute
+* @param {Object} wsInfo reference to winsocket info object
+* @param {Object} socket reference to the websocket object
+* @param {Object} data reference to data recieved from client
+*&#x2F;
+Router.prototype.findWSRoute = function( wsInfo, socket, data ) {
+    var routeFound = false;
+    var paths = this._wsRoutes[ wsInfo.applet ].routes;
+
+    for ( var path in paths ) {
+        if (typeof data === &#x27;string&#x27;) {
+            break;
+        } else if ( path === data.id ) {
+            var allApplets = this._firefly.getAllApplets();
+            var applet = allApplets[ wsInfo.applet ];
+            
+            &#x2F;&#x2F; call action controller
+            paths[ path ].call( applet, socket, data );
+            
+            routeFound = true;
+            break;
+        }
+    }
+    
+    if( !routeFound ) {
+        this.wsRouteNotFound( socket, data );
+    }
+};
+
+
+
+
+&#x2F;**
+* Generate url based on the route name and specified URL parameters
+*
+* @method generateUrl
+* @param {String} routeName Name of the route based which to generate the URL
+* @param {Object} params Object literal containing name and values for URL parameters
+* @return {String} Generated URL
+*&#x2F;
+Router.prototype.generateUrl = function( routeName, params ) {
+    var route = this._routes[ routeName ];
+    
+    if ( route === undefined) {
+        throw Error( &#x27;Name: &quot;Bad Route Name&quot;, Description, &quot;Specified route name &#x60;&#x27; 
+            + routeName + &#x27;&#x60; does not correspond to any routes&quot;&#x27; );
+    }
+    
+    var config = this._firefly.config;
+    var fullRoute =  this._routes[ routeName ]._fullRoute;
+    for ( var param in params ) {
+        if ( !params.hasOwnProperty( param ) ) {
+            continue;    
+        }
+        
+        fullRoute.replace( &#x27;:&#x27; + param, params[ param ]);
+    }
+    
+    return config.PROTOCOL + &#x27;:&#x2F;&#x2F;&#x27; + config.PUB_HOST + route._fullRoute;
+};
+
+
+
+
+&#x2F;**
+* Test for the _method route rule
+*
+* @method _methodRule
+* @private
+* @param {Object} request Instance of request objecr for the current request
+* @param {Array|String} rule value of rule as specified in the route file
+* @param {Function} callback function taking result of the test as its parameter
+*&#x2F;
+Router.prototype._methodRule = function( request, response, rule, fn ) {
+    var method = request.getMethod();
+    if ( rule instanceof Array ) {
+        if ( rule.indexOf( method ) !== -1 ) {
+            fn(true);
+            return;
+        }
+    } else if ( typeof rule === &#x27;string&#x27; ) {
+        if ( rule === method ) {
+            fn(true);
+            return;
+        }
+    }
+    
+    fn(false);
+};
+
+
+
+
+&#x2F;**
+* Test for the _transport route rule
+*
+* @method _transportRule
+* @private
+* @param {Object} request Instance of request objecr for the current request
+* @param {Array|String} rule value of rule as specified in the route file
+* @param {Function} callback function taking result of the test as its parameter
+*&#x2F;
+Router.prototype._transportRule = function( request, response, rule, fn ) {
+    var transport = request.getTransport();
+    if ( rule instanceof Array ) {
+        if ( rule.indexOf( transport ) !== -1 ) {
+            fn(true);
+            return;   
+        }
+    } else if ( typeof rule === &#x27;string&#x27; ) {
+        if ( rule === transport ) {
+            fn(true);
+            return;  
+        }
+    }
+    
+    fn(false);
+};
+
+
+
+&#x2F;**
+* Get a reference to the object holding the routes for websockets
+*
+* @method getWSRoutes
+* @return {Object} reference to WS routes object for the entire appliction
+*&#x2F;
+Router.prototype.getWSRoutes = function() {
+    return this._wsRoutes;    
+};
+
+
+
+&#x2F;**
+* Method called by router if no route is found for the request
+*
+* @method routeNotFound
+* @param {Object} request Reference to requst object
+* @param {Object} response Reference to response object
+*&#x2F;
+Router.prototype.routeNotFound = function( request, response ) {
+    &#x2F;&#x2F; give 404 error
+    response.setStatusCode(404)
+    response.setContent(&#x27;&lt;html&gt;&lt;head&gt;&lt;&#x2F;head&gt;&lt;body&gt;&lt;h1&gt;404&lt;&#x2F;h1&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;&#x27;);
+    response.send();
+};
+
+
+
+&#x2F;**
+* Method called by router if no route is found for the websocket request
+*
+* @method wsRouteNotFound
+* @param {Object} socket reference to client&#x27;s socket object
+* @param {Object} data reference to object holding data
+*&#x2F;
+Router.prototype.wsRouteNotFound = function( socket, data ) {
+    socket.send(JSON.stringify({status: &#x27;404&#x27;}));
+};
+
+
+
+&#x2F;**
+* Set a function as the request handler for a service. If a route is registered to 
+            the specified service, then this function will be called with an instance of 
+            the Request and Response objects before calling the controller. Firefly will
+            prepend the 
+* @example
+        addRouteRequirement(&#x27;useraccess&#x27;, function(req, res, rule, fn) {
+            fn(true) &#x2F;&#x2F;passes test
+            fn(false, true) &#x2F;&#x2F;failed test. hault routing. the service will take care of showing error touser
+            fn(false, false) &#x2F;&#x2F; failed test. continue routing
+        });
+        
+        
+        &#x2F;&#x2F;In routes file useraccess will be declared as:
+        _useraccess: &#x27;admin&#x27;
+        &#x2F;&#x2F;thus the value of &#x60;rule&#x60; in the service handler will be &#x27;admin&#x27;
+        
+*
+* @method addRouteRequirement
+* @param {String} name Name of the rule. An _ (underscore) is prepended to the name
+* @param {Function} fn listener function to be used as the request handler
+*&#x2F;
+Router.prototype.addRouteRequirement = function( name, fn ) {
+    this._routeRules[ &#x27;_&#x27; + name ] = fn;
+};
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

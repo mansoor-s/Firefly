@@ -1,0 +1,3267 @@
+{
+    "project": {
+        "name": "Firefly",
+        "description": "A Node.js CMF",
+        "version": "0.1.0",
+        "url": "https://github.com/mansoor-s/Firefly"
+    },
+    "files": {
+        "services\\Database\\Mongoose.js": {
+            "name": "services\\Database\\Mongoose.js",
+            "modules": {
+                "Services": 1
+            },
+            "classes": {
+                "Mongoose": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "services\\Mailer\\Mailer.js": {
+            "name": "services\\Mailer\\Mailer.js",
+            "modules": {},
+            "classes": {
+                "Mailer": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "services\\Renderer\\Handlebars.js": {
+            "name": "services\\Renderer\\Handlebars.js",
+            "modules": {},
+            "classes": {
+                "Handlebars": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "services\\Security\\Permission.js": {
+            "name": "services\\Security\\Permission.js",
+            "modules": {},
+            "classes": {
+                "Permission": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "services\\Security\\SessionManager.js": {
+            "name": "services\\Security\\SessionManager.js",
+            "modules": {},
+            "classes": {
+                "SessionManager": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src\\Firefly\\Firefly.js": {
+            "name": "src\\Firefly\\Firefly.js",
+            "modules": {
+                "Core": 1
+            },
+            "classes": {
+                "Firefly": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src\\Http\\Cookie.js": {
+            "name": "src\\Http\\Cookie.js",
+            "modules": {},
+            "classes": {
+                "Cookie": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src\\Http\\Request.js": {
+            "name": "src\\Http\\Request.js",
+            "modules": {},
+            "classes": {
+                "Request": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src\\Http\\Response.js": {
+            "name": "src\\Http\\Response.js",
+            "modules": {},
+            "classes": {
+                "Response": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src\\RenderManager\\RenderManager.js": {
+            "name": "src\\RenderManager\\RenderManager.js",
+            "modules": {},
+            "classes": {
+                "RenderManager": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src\\Router\\Router.js": {
+            "name": "src\\Router\\Router.js",
+            "modules": {},
+            "classes": {
+                "Router": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src\\Server\\Server.js": {
+            "name": "src\\Server\\Server.js",
+            "modules": {},
+            "classes": {
+                "Server": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src\\Server\\WSServer.js": {
+            "name": "src\\Server\\WSServer.js",
+            "modules": {},
+            "classes": {
+                "WSServer": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "Services": {
+            "name": "Services",
+            "submodules": {},
+            "classes": {
+                "Mongoose": 1,
+                "Mailer": 1,
+                "Handlebars": 1,
+                "Permission": 1,
+                "SessionManager": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "services\\Security\\SessionManager.js",
+            "line": 24,
+            "description": "Initialize Mongoose and set it as a service named 'Mongoose' with Firefly"
+        },
+        "Core": {
+            "name": "Core",
+            "submodules": {},
+            "classes": {
+                "Firefly": 1,
+                "Cookie": 1,
+                "Request": 1,
+                "Response": 1,
+                "RenderManager": 1,
+                "Router": 1,
+                "Server": 1,
+                "WSServer": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src\\Server\\WSServer.js",
+            "line": 24,
+            "description": "Firefly object constructor"
+        }
+    },
+    "classes": {
+        "Mongoose": {
+            "name": "Mongoose",
+            "shortname": "Mongoose",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Services",
+            "file": "services\\Database\\Mongoose.js",
+            "line": 29,
+            "description": "Initialize Mongoose and set it as a service named 'Mongoose' with Firefly",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "firefly",
+                    "description": "reference to Firefly instance",
+                    "type": "Object"
+                },
+                {
+                    "name": "opts",
+                    "description": "mongodb connection options",
+                    "type": "Object"
+                },
+                {
+                    "name": "serviceName",
+                    "description": "name for the service",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "'Mongoose'"
+                }
+            ]
+        },
+        "Mailer": {
+            "name": "Mailer",
+            "shortname": "Mailer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Services",
+            "namespace": "",
+            "file": "services\\Mailer\\Mailer.js",
+            "line": 24,
+            "description": "Handles mailing for Firefly",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "firefly",
+                    "description": "reference to the application Firefly object",
+                    "type": "Object"
+                },
+                {
+                    "name": "defaults",
+                    "description": "Default configurations for Mailer. Containing properties: from, to, subject, html, attachements",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Handlebars": {
+            "name": "Handlebars",
+            "shortname": "Handlebars",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Services",
+            "namespace": "",
+            "file": "services\\Renderer\\Handlebars.js",
+            "line": 24,
+            "description": "Wrapper for Handlebars",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "firefly",
+                    "description": "Reference to the application Firefly object",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Permission": {
+            "name": "Permission",
+            "shortname": "Permission",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Services",
+            "namespace": "",
+            "file": "services\\Security\\Permission.js",
+            "line": 24,
+            "description": "Permission system for Firefly",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "firefly",
+                    "description": "Reference to the application Firefly object",
+                    "type": "Object"
+                }
+            ]
+        },
+        "SessionManager": {
+            "name": "SessionManager",
+            "shortname": "SessionManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Services",
+            "namespace": "",
+            "file": "services\\Security\\SessionManager.js",
+            "line": 24,
+            "description": "Redis based session manager for Firefly",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "firefly",
+                    "description": "Reference to the application Firefly object",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Firefly": {
+            "name": "Firefly",
+            "shortname": "Firefly",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Core",
+            "namespace": "",
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 32,
+            "description": "Firefly object constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "appRoutes",
+                    "description": "reference to the application routes object",
+                    "type": "Object"
+                },
+                {
+                    "name": "config",
+                    "description": "reference to application config object",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Cookie": {
+            "name": "Cookie",
+            "shortname": "Cookie",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Core",
+            "namespace": "",
+            "file": "src\\Http\\Cookie.js",
+            "line": 22,
+            "description": "Cookie object constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "properties",
+                    "description": "Properties of the cookie object. ie {name: 'foo', value:'cookievalue123456798'}",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Request": {
+            "name": "Request",
+            "shortname": "Request",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Core",
+            "namespace": "",
+            "file": "src\\Http\\Request.js",
+            "line": 27,
+            "description": "Request object constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "req",
+                    "description": "Native node request object",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Response": {
+            "name": "Response",
+            "shortname": "Response",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Core",
+            "namespace": "",
+            "file": "src\\Http\\Response.js",
+            "line": 24,
+            "description": "Response object constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "res",
+                    "description": "Native node response object",
+                    "type": "Object"
+                }
+            ]
+        },
+        "RenderManager": {
+            "name": "RenderManager",
+            "shortname": "RenderManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Core",
+            "namespace": "",
+            "file": "src\\RenderManager\\RenderManager.js",
+            "line": 25,
+            "description": "RenderManager object constructor.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "app",
+                    "description": "reference to Firefly object",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Router": {
+            "name": "Router",
+            "shortname": "Router",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Core",
+            "namespace": "",
+            "file": "src\\Router\\Router.js",
+            "line": 24,
+            "description": "Router object constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "firefly",
+                    "description": "reference to the current instance of the Firefly object",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Server": {
+            "name": "Server",
+            "shortname": "Server",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Core",
+            "namespace": "",
+            "file": "src\\Server\\Server.js",
+            "line": 25,
+            "description": "Server object constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "firefly",
+                    "description": "reference to the Firefly object",
+                    "type": "Object"
+                },
+                {
+                    "name": "request_handler",
+                    "description": "Function to call for every client request. The parameters Request and Response are passed to the callback",
+                    "type": "Function"
+                }
+            ]
+        },
+        "WSServer": {
+            "name": "WSServer",
+            "shortname": "WSServer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Core",
+            "namespace": "",
+            "file": "src\\Server\\WSServer.js",
+            "line": 24,
+            "description": "WSServer object constructor",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "firefly",
+                    "description": "Reference to the Firefly object",
+                    "type": "Object"
+                },
+                {
+                    "name": "wsInfo",
+                    "description": "Object containing properties for `WS` module",
+                    "type": "Object"
+                },
+                {
+                    "name": "requestHandler",
+                    "description": "Funciton to call for every client connect. reference\n           to `socket` object is passed to the callback",
+                    "type": "Function"
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "services\\Database\\Mongoose.js",
+            "line": 56,
+            "description": "The function returned by this method gets called on application init",
+            "itemtype": "method",
+            "name": "_onInit",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "will return a callback function which itself takes a callback function",
+                "type": "Function"
+            },
+            "class": "Mongoose",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Database\\Mongoose.js",
+            "line": 77,
+            "description": "Initialize mongoose models from schema directory",
+            "itemtype": "method",
+            "name": "_initModels",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "callback",
+                    "type": "Function"
+                }
+            ],
+            "class": "Mongoose",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Mailer\\Mailer.js",
+            "line": 42,
+            "description": "Send a single email",
+            "itemtype": "method",
+            "name": "send",
+            "params": [
+                {
+                    "name": "addr",
+                    "description": "Email address of the recipient",
+                    "type": "String"
+                },
+                {
+                    "name": "subject",
+                    "description": "Email subject",
+                    "type": "String"
+                },
+                {
+                    "name": "Body",
+                    "description": "of the email",
+                    "type": "String"
+                },
+                {
+                    "name": "Funciton",
+                    "description": "to call when email has been sent",
+                    "type": "Function"
+                }
+            ],
+            "class": "Mailer",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Mailer\\Mailer.js",
+            "line": 69,
+            "description": "Send an email to multiple recipients",
+            "itemtype": "method",
+            "name": "batchSend",
+            "params": [
+                {
+                    "name": "addr",
+                    "description": "Array containing email addresses of the recipients",
+                    "type": "String"
+                },
+                {
+                    "name": "subject",
+                    "description": "Email subject",
+                    "type": "String"
+                },
+                {
+                    "name": "Body",
+                    "description": "of the email",
+                    "type": "String"
+                },
+                {
+                    "name": "Funciton",
+                    "description": "to call when the emails have been sent",
+                    "type": "Function"
+                }
+            ],
+            "class": "Mailer",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Renderer\\Handlebars.js",
+            "line": 48,
+            "description": "function to be called on application initialization. *Not* registered with firefly.\n  No use for it at this time",
+            "itemtype": "method",
+            "name": "_onInit",
+            "access": "private",
+            "tagname": "",
+            "class": "Handlebars",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Renderer\\Handlebars.js",
+            "line": 63,
+            "description": "Set an internal map of view names and file paths. This function will call buildCache",
+            "itemtype": "method",
+            "name": "setViews",
+            "params": [
+                {
+                    "name": "views",
+                    "description": "Object containing map of view names and file paths",
+                    "type": "Object"
+                },
+                {
+                    "name": "fn",
+                    "description": "Callback",
+                    "type": "Function"
+                }
+            ],
+            "class": "Handlebars",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Renderer\\Handlebars.js",
+            "line": 77,
+            "description": "Build a cache of filepaths and its contents in memory. So not to hit the disk for every request.",
+            "itemtype": "method",
+            "name": "buildCache",
+            "params": [
+                {
+                    "name": "views",
+                    "description": "Object containing map of view names and file paths",
+                    "type": "Object"
+                },
+                {
+                    "name": "fn",
+                    "description": "Callback",
+                    "type": "Function"
+                }
+            ],
+            "class": "Handlebars",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Renderer\\Handlebars.js",
+            "line": 98,
+            "description": "Rebuild cache. Clears the file contents cach and calls buildCache",
+            "itemtype": "method",
+            "name": "rebuildCache",
+            "params": [
+                {
+                    "name": "views",
+                    "description": "Object containing map of view names and file paths",
+                    "type": "Object"
+                },
+                {
+                    "name": "fn",
+                    "description": "Callback",
+                    "type": "Function"
+                }
+            ],
+            "class": "Handlebars",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Renderer\\Handlebars.js",
+            "line": 112,
+            "description": "Render a view",
+            "itemtype": "method",
+            "name": "render",
+            "params": [
+                {
+                    "name": "view",
+                    "description": "file path",
+                    "type": "String"
+                },
+                {
+                    "name": "fn",
+                    "description": "Callback",
+                    "type": "Function"
+                }
+            ],
+            "class": "Handlebars",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Security\\Permission.js",
+            "line": 47,
+            "description": "function to be called on application initialization. *Not* registered with firefly.",
+            "itemtype": "method",
+            "name": "_onInit",
+            "access": "private",
+            "tagname": "",
+            "class": "Permission",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Security\\Permission.js",
+            "line": 62,
+            "description": "Returns a function that checks to make sure user is authenticated",
+            "itemtype": "method",
+            "name": "_getAuthenticatedChecker",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "fn",
+                "type": "Function"
+            },
+            "example": [
+                "\n      //the function returned takes four parameters:\n       function(request, response, rule, fn) {\n           \n       }"
+            ],
+            "class": "Permission",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Security\\Permission.js",
+            "line": 94,
+            "description": "Returns a function that checks to make sure user is verified (Email.. or any other means)",
+            "itemtype": "method",
+            "name": "_getVerifiedChecker",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "fn",
+                "type": "Function"
+            },
+            "example": [
+                "\n      //the function returned takes four parameters:\n       function(request, response, rule, fn) {\n           \n       }"
+            ],
+            "class": "Permission",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Security\\Permission.js",
+            "line": 132,
+            "description": "Checks if client has a valid session",
+            "itemtype": "method",
+            "name": "hasValidSession",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "Reference to request object",
+                    "type": "Object"
+                },
+                {
+                    "name": "callback",
+                    "description": "function which will take a boolean as its argument.\n  The argument will be true if the session is valid, otherwise false",
+                    "type": "Function"
+                }
+            ],
+            "class": "Permission",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Security\\SessionManager.js",
+            "line": 41,
+            "description": "function to be called on application initialization. *Not* registered with firefly.\n  No use for it at this time (TODO: change the redis database from the default 0 in accordance with the config file)",
+            "itemtype": "method",
+            "name": "_onInit",
+            "access": "private",
+            "tagname": "",
+            "class": "SessionManager",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Security\\SessionManager.js",
+            "line": 56,
+            "description": "Get session object for given session ID",
+            "itemtype": "method",
+            "name": "getSession",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "Reference to Request object",
+                    "type": "String"
+                },
+                {
+                    "name": "fn",
+                    "description": "Callback function taking the session object as the parameter",
+                    "type": "Function"
+                }
+            ],
+            "class": "SessionManager",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Security\\SessionManager.js",
+            "line": 85,
+            "description": "Create a session and return its session ID",
+            "itemtype": "method",
+            "name": "createSession",
+            "params": [
+                {
+                    "name": "response",
+                    "description": "reference to the response object",
+                    "type": "Object"
+                },
+                {
+                    "name": "data",
+                    "description": "Object containing data to save for the session. `data` CAN be undefined",
+                    "type": "Object"
+                },
+                {
+                    "name": "fn",
+                    "description": "Callback function",
+                    "type": "Function"
+                }
+            ],
+            "class": "SessionManager",
+            "module": "Services"
+        },
+        {
+            "file": "services\\Security\\SessionManager.js",
+            "line": 111,
+            "description": "Destroy session with the given session ID",
+            "itemtype": "method",
+            "name": "destorySession",
+            "params": [
+                {
+                    "name": "response",
+                    "description": "Reference to the response object",
+                    "type": "Object"
+                },
+                {
+                    "name": "response",
+                    "description": "Reference to the response object",
+                    "type": "Object"
+                },
+                {
+                    "name": "fn",
+                    "description": "Callback function",
+                    "type": "Function"
+                }
+            ],
+            "class": "SessionManager",
+            "module": "Services"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 78,
+            "description": "Initialize the application. Caches's all views and starts HTTP and WebSocket servers",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "Function to call on HTTP server start",
+                    "type": "Function"
+                }
+            ],
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 109,
+            "description": "Initialize WebSocket servers. Use this seperatly if using application with cluster. (NOTE: set AUTO_START_WS_SERVER to false in app config object)",
+            "itemtype": "method",
+            "name": "initWS",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 126,
+            "description": "Autoload and Use application Applets. This function performes blocking IO (require())",
+            "itemtype": "method",
+            "name": "autoloadApplets",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 153,
+            "description": "Get a reference to an applet",
+            "itemtype": "method",
+            "name": "getApplet",
+            "params": [
+                {
+                    "name": "applets",
+                    "description": "Name of the applet instance.. as defined on the main application Route file",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Reference to applet",
+                "type": "Object"
+            },
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 167,
+            "description": "Return all un-initialized applets",
+            "itemtype": "method",
+            "name": "getAllRawApplets",
+            "return": {
+                "description": "Hash-array contains properties `object`, `routes` and `viewPath`.",
+                "type": "Object"
+            },
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 179,
+            "description": "Return information about all of the registered applets",
+            "itemtype": "method",
+            "name": "getAllApplets",
+            "return": {
+                "description": "Hash-array contains properties `object` and `routes`.",
+                "type": "Object"
+            },
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 191,
+            "description": "Set an object as a service, accessable application wide",
+            "itemtype": "method",
+            "name": "set",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Name of service being set",
+                    "type": "String"
+                },
+                {
+                    "name": "refrence",
+                    "description": "to service object",
+                    "type": "String"
+                }
+            ],
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 208,
+            "description": "Get a reference to the requested service",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Name of service being requested",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Requested service or undefined if none exist by that handle",
+                "type": "Object"
+            },
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 221,
+            "description": "Add an initialized applet object",
+            "itemtype": "method",
+            "name": "addApplet",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Name of applet",
+                    "type": "String"
+                },
+                {
+                    "name": "applet",
+                    "description": "reference to applet object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Requested service or undefined if none exist by that handle",
+                "type": "Object"
+            },
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 239,
+            "description": "Get the application routes object that was passed to Firefly by the app",
+            "itemtype": "method",
+            "name": "getAppRoutes",
+            "return": {
+                "description": "Application routes object",
+                "type": "Object"
+            },
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 251,
+            "description": "Wrapper for the request handler of all client requests",
+            "itemtype": "method",
+            "name": "getRequestHandler",
+            "return": {
+                "description": "request handler",
+                "type": "Function"
+            },
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 288,
+            "description": "Returns call back to be used for all WS client connections",
+            "itemtype": "method",
+            "name": "getWSRequestHandler",
+            "return": {
+                "description": "WS request handler",
+                "type": "Function"
+            },
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 330,
+            "description": "Handle application-wide exceptions",
+            "itemtype": "method",
+            "name": "catch",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "Reference to request object",
+                    "type": "Object"
+                },
+                {
+                    "name": "response",
+                    "description": "Reference to response object",
+                    "type": "Object"
+                }
+            ],
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 345,
+            "description": "Set a view/templating engine for Firefly to use",
+            "itemtype": "method",
+            "name": "setViewEngine",
+            "params": [
+                {
+                    "name": "engine",
+                    "description": "reference to the templating engine object",
+                    "type": "Object"
+                }
+            ],
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 361,
+            "description": "Add a callback function to be called when Firefly is initialized. These functions are executed in sequence.",
+            "itemtype": "method",
+            "name": "addInitDependency",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "callback function to call with another callback function as its parameter which it must call\n           to continue the init sequence",
+                    "type": "Function"
+                }
+            ],
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 374,
+            "description": "Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)",
+            "itemtype": "method",
+            "name": "trustProxyData",
+            "params": [
+                {
+                    "name": "trust",
+                    "description": "Set true if you have any reverse proxys in front of your server.",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 42,
+            "description": "String representation of the cookie for setting in HTTP header",
+            "itemtype": "method",
+            "name": "toString",
+            "return": {
+                "description": "String representation of the cookie",
+                "type": "String"
+            },
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 68,
+            "description": "Get the cookie's `Expires` directive.",
+            "itemtype": "method",
+            "name": "getExpires",
+            "return": {
+                "description": "cookie expires value as a Date object",
+                "type": "Date"
+            },
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 80,
+            "description": "Set the cookie's `Expires` directive.",
+            "itemtype": "method",
+            "name": "setExpires",
+            "params": [
+                {
+                    "name": "expires",
+                    "description": "value to set as the cookie's expires value",
+                    "type": "Date"
+                }
+            ],
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 92,
+            "description": "Returns the name of the Cookie",
+            "itemtype": "method",
+            "name": "getName",
+            "return": {
+                "description": "cookie name",
+                "type": "String"
+            },
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 104,
+            "description": "Set the cookie's name",
+            "itemtype": "method",
+            "name": "setName",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "cookie name",
+                    "type": "String"
+                }
+            ],
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 117,
+            "description": "Returns the cookie value",
+            "itemtype": "method",
+            "name": "getValue",
+            "return": {
+                "description": "cookie value",
+                "type": "String"
+            },
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 129,
+            "description": "Set the cookie value",
+            "itemtype": "method",
+            "name": "setValue",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "The value to set",
+                    "type": "String"
+                }
+            ],
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 141,
+            "description": "Returns the cookie's domain restriction",
+            "itemtype": "method",
+            "name": "getDomain",
+            "return": {
+                "description": "cookie domain",
+                "type": "String"
+            },
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 153,
+            "description": "Set the cookie's domain restriction",
+            "itemtype": "method",
+            "name": "setDomain",
+            "params": [
+                {
+                    "name": "domain",
+                    "description": "cookie domain",
+                    "type": "String"
+                }
+            ],
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 166,
+            "description": "Returns the cookies path restriction",
+            "itemtype": "method",
+            "name": "getPath",
+            "return": {
+                "description": "cookie path restriction",
+                "type": "String"
+            },
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 178,
+            "description": "Set the cookie's path restriction",
+            "itemtype": "method",
+            "name": "setPath",
+            "params": [
+                {
+                    "name": "path",
+                    "description": "cookie path",
+                    "type": "String"
+                }
+            ],
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 191,
+            "description": "Determine if the `Secure` flag is set on the cookie",
+            "itemtype": "method",
+            "name": "isSecure",
+            "return": {
+                "description": "true if it is a secure cookie otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Cookie.js",
+            "line": 203,
+            "description": "Set a boolean value that will determine if the `Secure` flag is set on the cookie\n           Defaults to false",
+            "itemtype": "method",
+            "name": "setSecure",
+            "params": [
+                {
+                    "name": "isSecure",
+                    "description": "Is cookie secure",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Cookie",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 57,
+            "description": "Parses form fields and files. This method is called by Firefly",
+            "itemtype": "method",
+            "name": "parseForm",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "callback function to call when upload is finished and has been parsed",
+                    "type": "Function"
+                }
+            ],
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 75,
+            "description": "Explicitly tell the Request object that the connection with the client is secure (HTTPS)",
+            "itemtype": "method",
+            "name": "setServerSecure",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "callback function to call when upload is finished and has been parsed",
+                    "type": "Function"
+                }
+            ],
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 87,
+            "description": "Figures out the client's useragent by parsing the `user-agent` header field",
+            "itemtype": "method",
+            "name": "_setupUserAgent",
+            "access": "private",
+            "tagname": "",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 100,
+            "description": "Figures out the client's operating system by parsing the `user-agent` header field",
+            "itemtype": "method",
+            "name": "getOs",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 114,
+            "description": "Returns the client Browser and version as specified in the user-agent header field",
+            "itemtype": "method",
+            "name": "getBrowser",
+            "return": {
+                "description": "Client's Browser and version",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 129,
+            "description": "Finds the client's IP address. If there is a proxy sitting\n  in front of web server then `HTTP_X_FORWARDED_FOR` is looked at.",
+            "itemtype": "method",
+            "name": "getClientIpAddress",
+            "params": [
+                {
+                    "name": "proxy",
+                    "description": "Boolean value indicating whether there is a\n  proxy sitting in front of the server.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                }
+            ],
+            "return": {
+                "description": "Client's IP Address",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 147,
+            "description": "Finds the port from which the client is requesting from",
+            "itemtype": "method",
+            "name": "getClientPort",
+            "return": {
+                "description": "Client's port number",
+                "type": "Number"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 159,
+            "description": "Get the base path of the request URI",
+            "itemtype": "method",
+            "name": "getBasePath",
+            "return": {
+                "description": "Base path of the request URI",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 170,
+            "description": "Get the base URL of the request URI",
+            "itemtype": "method",
+            "name": "getBaseUrl",
+            "return": {
+                "description": "Base path of the request URI",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 182,
+            "description": "Get the charsets supported by the client",
+            "itemtype": "method",
+            "name": "getCharsets",
+            "return": {
+                "description": "Charsets",
+                "type": "Array"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 197,
+            "description": "Get the base ETags header",
+            "itemtype": "method",
+            "name": "getETags",
+            "return": {
+                "description": "ETags",
+                "type": "Array"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 210,
+            "description": "Get the host header in the client request. If a port number is appended to the host, it will be omitted.\n   This is the case if a non-standard port is used for the http server.",
+            "itemtype": "method",
+            "name": "getHost",
+            "return": {
+                "description": "host",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 224,
+            "description": "Get the host header in the request. Includes the port port number if sent by the client.",
+            "itemtype": "method",
+            "name": "getHTTPHost",
+            "return": {
+                "description": "host",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 236,
+            "description": "Get the languages supported by the client by reading the `Accept-Language` header",
+            "itemtype": "method",
+            "name": "getLanguages",
+            "return": {
+                "description": "languages supported. If no no languages are specified, an empty array is returned",
+                "type": "Array"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 257,
+            "description": "Get the prefered language for the client based on the language's quality value",
+            "itemtype": "method",
+            "name": "getPreferredLanguage",
+            "return": {
+                "description": "prefered language",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 284,
+            "description": "Get request method (i.e POST, GET, PUT..). If the `X-HTTP-METHOD-OVERRIDE` header is found, it is returned instead.\n   Returned string is upper case.",
+            "itemtype": "method",
+            "name": "getMethod",
+            "return": {
+                "description": "request method",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 305,
+            "description": "Get request method. This is different from <getMethod> in that it will return the actual method used in the http request\n   as apposed to returning the `X-HTTP-METHOD-OVERRIDE` header field if it is found. Returned string is upper case.",
+            "itemtype": "method",
+            "name": "getMethodActual",
+            "return": {
+                "description": "request method",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 318,
+            "description": "Get the mime type specified by the client",
+            "itemtype": "method",
+            "name": "getMimeType",
+            "return": {
+                "description": "mime type",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 331,
+            "description": "Get the host port specified by the request header",
+            "itemtype": "method",
+            "name": "getPort",
+            "return": {
+                "description": "Port Number",
+                "type": "Number"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 352,
+            "description": "Get the query portion of the requested URL.  i.e 'field=value'",
+            "itemtype": "method",
+            "name": "getQueryString",
+            "return": {
+                "description": "query string",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 364,
+            "description": "Get the query portion of the requested URL as an object.  i.e 'field=value' becomes {'field': 'value'}",
+            "itemtype": "method",
+            "name": "getQuery",
+            "return": {
+                "description": "query",
+                "type": "Object"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 378,
+            "description": "Get the request scheme ('http' or 'https')",
+            "itemtype": "method",
+            "name": "getScheme",
+            "return": {
+                "description": "scheme",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 390,
+            "description": "Check whether or not the requested method is a `safe` one (GET, HEAD).",
+            "itemtype": "method",
+            "name": "isMethodSafe",
+            "return": {
+                "description": "is method safe",
+                "type": "Boolean"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 407,
+            "description": "Determaine whether the client has a no-cache policy",
+            "itemtype": "method",
+            "name": "isMethodSafe",
+            "return": {
+                "description": "True if there is a no-cache policy otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 426,
+            "description": "Determaine whether the connection to the client is secure",
+            "itemtype": "method",
+            "name": "isSecure",
+            "return": {
+                "description": "is connection secure",
+                "type": "Boolean"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 447,
+            "description": "Determaine whether the request is an AJAX/XHR request. It determines this by checking the X-Requested-With header.\n   The header is specified by the javascript framework. Works with Prototype, Mootools and jQuery.",
+            "itemtype": "method",
+            "name": "isXmlHttpRequest",
+            "return": {
+                "description": "True if request is `AJAX` otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 460,
+            "description": "Determaine whether the request is a websocket request. It determines this by checking the `Upgrade` header field.",
+            "itemtype": "method",
+            "name": "isWebSocketRequest",
+            "return": {
+                "description": "True if request is a WebSocket upgrade request otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 479,
+            "description": "Determine the HTTP protocol version in the client request.",
+            "itemtype": "method",
+            "name": "getVersion",
+            "return": {
+                "description": "HTTP verions",
+                "type": "Number"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 492,
+            "description": "Returns a reference to the net.Socket object associated with the current connection",
+            "itemtype": "method",
+            "name": "getConnectionSocket",
+            "return": {
+                "description": "Reference to the net.Socket object for current connection",
+                "type": "Object"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 504,
+            "description": "Returns the value for the Upgrade request header.",
+            "itemtype": "method",
+            "name": "getUpgrade",
+            "return": {
+                "description": "upgrade",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 516,
+            "description": "Set the encoding for the request body.",
+            "itemtype": "method",
+            "name": "setEncoding",
+            "params": [
+                {
+                    "name": "encoding=null",
+                    "description": "`utf8` or `binary`. Defaults to null,\n           which means that the `data` event will emit a Buffer object",
+                    "type": "String|Null"
+                }
+            ],
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 529,
+            "description": "Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)",
+            "itemtype": "method",
+            "name": "trustProxyData",
+            "params": [
+                {
+                    "name": "trust",
+                    "description": "Set true if you have any reverse proxys in front of your server.",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 541,
+            "description": "Get the referrer URL",
+            "itemtype": "method",
+            "name": "getReferrer",
+            "return": {
+                "description": "referrer",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 553,
+            "description": "Get the referrer URL. Same as <Referrer> but misspelled as it is in the specs",
+            "itemtype": "method",
+            "name": "getReferer",
+            "return": {
+                "description": "referrer",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 563,
+            "description": "Determine whether the client is sending a Do-Not-Track request header",
+            "itemtype": "method",
+            "name": "hasDoNotTrack",
+            "return": {
+                "description": "true if the header exists, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 575,
+            "description": "Get the value of the `Connection` header field of client request",
+            "itemtype": "method",
+            "name": "getConnection",
+            "return": {
+                "description": "connection header value",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 587,
+            "description": "Get values of the `Upgrade` field of the request header",
+            "itemtype": "method",
+            "name": "getUpgrades",
+            "return": {
+                "description": "values of the `Upgrade` header",
+                "type": "Array"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 606,
+            "description": "Determine whether the client is asking for a protocol upgrade",
+            "itemtype": "method",
+            "name": "hasUpgrade",
+            "return": {
+                "description": "true if upgrade field is set otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 618,
+            "description": "Get the value of a specified HTTP request header",
+            "itemtype": "method",
+            "name": "get",
+            "return": {
+                "description": "Value of HTTP header",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 630,
+            "description": "Get the value of a HTTP header as a Date object.. if it is a valid representaion of a date",
+            "itemtype": "method",
+            "name": "getHeaderDate",
+            "params": [
+                {
+                    "name": "header",
+                    "description": "Name of http header for which to get date value",
+                    "type": "String"
+                },
+                {
+                    "name": "defaultValue",
+                    "description": "Date object to be returned incase the specified HTTP header does not exist or is empty",
+                    "type": "Date"
+                }
+            ],
+            "return": {
+                "description": "Requested date",
+                "type": "Date"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 654,
+            "description": "Parse the cookies sent by the client and create a `Cookie` object for each of them",
+            "itemtype": "method",
+            "name": "_parseCookies",
+            "access": "private",
+            "tagname": "",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 680,
+            "description": "Get the specified cookie as a `Cookie` object",
+            "itemtype": "method",
+            "name": "getCookie",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Name of cookie",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the value of the cookie",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 694,
+            "description": "Pause a client request. Calls native request.pause() method. Stops the request from\n           emmiting any new events until `resume` is called. Usefull to make sure \n           events not be missed while performing IO operationa.",
+            "itemtype": "method",
+            "name": "pause",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 708,
+            "description": "Resume a paused request",
+            "itemtype": "method",
+            "name": "resume",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 719,
+            "description": "Set the reference to the route object for the request, useful for getting quick \n       access to the route object",
+            "itemtype": "method",
+            "name": "setRouteObject",
+            "params": [
+                {
+                    "name": "route",
+                    "description": "Reference to the route object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the value of the cookie",
+                "type": "String"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 733,
+            "description": "Get a reference to the route object for the request, useful for getting\n       quick access to the route object",
+            "itemtype": "method",
+            "name": "getRouteObject",
+            "return": {
+                "description": "reference to route object",
+                "type": "Object"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 746,
+            "description": "Set a reference to the applet object to which the Router has assigned this Request",
+            "itemtype": "method",
+            "name": "setApplet",
+            "params": [
+                {
+                    "name": "route",
+                    "description": "Reference to the route object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "applet Reference to applet object",
+                "type": "Object"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 759,
+            "description": "Get a reference to the applet instance object this request is assigned to",
+            "itemtype": "method",
+            "name": "getApplet",
+            "return": {
+                "description": "reference to applet object",
+                "type": "Object"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 770,
+            "description": "Get a reference to the form data sent with user request",
+            "itemtype": "method",
+            "name": "getFormData",
+            "return": {
+                "description": "reference to form data object. Object contains properties `files` and `fields`\n           Both are arrays",
+                "type": "Object"
+            },
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 54,
+            "description": "Creates a string represnetaion of the response object including both \n           content and header sections. **This is broken**",
+            "itemtype": "method",
+            "name": "toString",
+            "params": [
+                {
+                    "name": "String",
+                    "description": "representation of HTTP response",
+                    "type": "String"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 67,
+            "description": "Exposes the native Node response object",
+            "itemtype": "method",
+            "name": "getNativeResponse",
+            "params": [
+                {
+                    "name": "Native",
+                    "description": "Node esponse object",
+                    "type": "Object"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 79,
+            "description": "Get age of the response",
+            "itemtype": "method",
+            "name": "getAge",
+            "return": {
+                "description": "Header's value as a type Number, if none is found \n          then `undefined` is returned",
+                "type": "Number | undefined"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 96,
+            "description": "Get the name of the encoding",
+            "itemtype": "method",
+            "name": "getEncoding",
+            "return": {
+                "description": "encoding",
+                "type": "String"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 108,
+            "description": "Change the value of the response's encoding, default is `utf8`",
+            "itemtype": "method",
+            "name": "setEncoding",
+            "return": {
+                "description": "encoding to use",
+                "type": "String"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 120,
+            "description": "Get content of the response object",
+            "itemtype": "method",
+            "name": "getContent",
+            "return": {
+                "description": "Content of response object",
+                "type": "String"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 131,
+            "description": "Set the value of the `Date` HTTP header",
+            "itemtype": "method",
+            "name": "setDate",
+            "params": [
+                {
+                    "name": "date",
+                    "description": "Value to set as the value of `Date` header",
+                    "type": "Date"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 143,
+            "description": "Get a Date object with the value of the `Date` HTTP header",
+            "itemtype": "method",
+            "name": "getDate",
+            "return": {
+                "description": "value of `Date` header",
+                "type": "Date"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 155,
+            "description": "Get the value of a HTTP header as a Date object.. if it is a valid representaion of a date",
+            "itemtype": "method",
+            "name": "getHeaderDate",
+            "params": [
+                {
+                    "name": "header",
+                    "description": "Name of http header for which to get date value",
+                    "type": "String"
+                },
+                {
+                    "name": "defaultValue",
+                    "description": "Date object to be returned incase the specified HTTP header\n           does not exist or is empty",
+                    "type": "Date"
+                }
+            ],
+            "return": {
+                "description": "Requested date",
+                "type": "Date"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 179,
+            "description": "Set the value of the specified header to the value of the specified Date object (UTC representation)",
+            "itemtype": "method",
+            "name": "setHeaderDate",
+            "params": [
+                {
+                    "name": "header",
+                    "description": "Name of header field",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "date value",
+                    "type": "Date"
+                }
+            ],
+            "return": {
+                "description": "value of `Date` header",
+                "type": "Date"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 193,
+            "description": "Get the value of the Etag header value",
+            "itemtype": "method",
+            "name": "getEtag",
+            "return": {
+                "description": "value of `Etag` HTTP header",
+                "type": "String"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 205,
+            "description": "Get the value of the `Expires` header as a Date object",
+            "itemtype": "method",
+            "name": "getExpires",
+            "return": {
+                "description": "Response expiration date",
+                "type": "Date"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 217,
+            "description": "Get the maximum time after which the response will be considered stale as a Date object.\n          First, it checks for a `s-maxage` directive, then a `max-age` directive, and then it falls\n          back on an `expires` header. `undefined` is returned when no maximum age can be established.",
+            "itemtype": "method",
+            "name": "getMaxAge",
+            "return": {
+                "description": "String representation of HTTP response",
+                "type": "String"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 241,
+            "description": "Get the response's HTTP status code",
+            "itemtype": "method",
+            "name": "getStatusCode",
+            "return": {
+                "description": "Status code",
+                "type": "Number"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 254,
+            "description": "Get the lety HTTP header's values in an array",
+            "itemtype": "method",
+            "name": "getlety",
+            "return": {
+                "description": "lety values",
+                "type": "Array"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 268,
+            "description": "Set the `lety` header",
+            "itemtype": "method",
+            "name": "setlety",
+            "params": [
+                {
+                    "name": "headers",
+                    "description": "An Array or String containing list of headers.\n           if it is a string then the headers must be comma seperated",
+                    "type": "Array | String"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 281,
+            "description": "Determin if the response is cachable",
+            "itemtype": "method",
+            "name": "isCachable",
+            "return": {
+                "description": "is response cachable",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 293,
+            "description": "Determine if the response is fresh",
+            "itemtype": "method",
+            "name": "isFresh",
+            "return": {
+                "description": "True if it is fresh, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 305,
+            "description": "Determine if the response includes headers that can be used to validate\n           the response with the origin server using a conditional GET request.",
+            "itemtype": "method",
+            "name": "isValidateable",
+            "return": {
+                "description": "True if response is validateable otherwise, false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 322,
+            "description": "Set the time to live for the Response's private cache. This method sets the \n          Cache-Control and max-age directives",
+            "itemtype": "method",
+            "name": "setClientTtl",
+            "params": [
+                {
+                    "name": "seconds",
+                    "description": "Set the number of seconds (added to the existing age) should \n           the private TTL be set to",
+                    "type": "Number"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 336,
+            "description": "Set the time to live for the Response's shared cache. This method sets the \n          Cache-Control and s-maxage directives",
+            "itemtype": "method",
+            "name": "setTtl",
+            "params": [
+                {
+                    "name": "seconds",
+                    "description": "Set the number of seconds (added to the existing age) \n           should the shared TTL be set to",
+                    "type": "Number"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 351,
+            "description": "Set the response content",
+            "itemtype": "method",
+            "name": "setContent",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "String containing content",
+                    "type": "String"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 363,
+            "description": "Set the ETag header",
+            "itemtype": "method",
+            "name": "setEtag",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "value to be set for the ETag header",
+                    "type": "String"
+                },
+                {
+                    "name": "weak",
+                    "description": "boolean value indicating it is a weak Etag",
+                    "type": "Bool"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 388,
+            "description": "Set the vlaue of the `Expires` HTTP header.",
+            "itemtype": "method",
+            "name": "setExpires",
+            "params": [
+                {
+                    "name": "date",
+                    "description": "Date object containing the time value to be set",
+                    "type": "Date"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 404,
+            "description": "Marks the response stale by setting the Age header to be equal to the maximum age of the response.",
+            "itemtype": "method",
+            "name": "setExpired",
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 417,
+            "description": "Set the value of the `Last-Modified` HTTP header with the specified Date object",
+            "itemtype": "method",
+            "name": "setLastModified",
+            "params": [
+                {
+                    "name": "date",
+                    "description": "Instance of Date object holding date-time to be set as the last modified header",
+                    "type": "Date"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 434,
+            "description": "Sets the number of seconds after which the response should no longer be considered fresh",
+            "itemtype": "method",
+            "name": "setMaxAge",
+            "params": [
+                {
+                    "name": "seconds",
+                    "description": "Number of seconds",
+                    "type": "Number"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 447,
+            "description": "Sets the number of seconds after which the response should no longer be \n           considered fresh by shared caches.\n           This methods sets the Cache-Control s-maxage directive.",
+            "itemtype": "method",
+            "name": "setSharedMaxAge",
+            "params": [
+                {
+                    "name": "seconds",
+                    "description": "Number of seconds",
+                    "type": "Number"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 467,
+            "description": "Set the response as a not modified (304). Will remove any HTTP headers that \n       might contradict this: 'Allow', 'Content-Encoding', 'Content-Language',\n       'Content-Length', 'Content-MD5', 'Content-Type', 'Last-Modified'",
+            "itemtype": "method",
+            "name": "setNotModified",
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 487,
+            "description": "Set reponse as private. This makes the response ineligible for serving other clients.",
+            "itemtype": "method",
+            "name": "setPrivate",
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 499,
+            "description": "Set reponse as public. This makes the response eligible for serving other clients.",
+            "itemtype": "method",
+            "name": "setPublic",
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 523,
+            "description": "Set HTTP status code to response",
+            "itemtype": "method",
+            "name": "setStatusCode",
+            "params": [
+                {
+                    "name": "status",
+                    "description": "Status code",
+                    "type": "Number"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 535,
+            "description": "Send headers + content to client thus ending the client's request",
+            "itemtype": "method",
+            "name": "send",
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 559,
+            "description": "Send headers + content to client thus ending the client's request",
+            "itemtype": "method",
+            "name": "send",
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 589,
+            "description": "Get the value of the `Cache-Control` header",
+            "itemtype": "method",
+            "name": "_getCacheControlHeader",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Cache-Control header value",
+                "type": "String"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 615,
+            "description": "Add a cache directive to `Cache-Control` header",
+            "itemtype": "method",
+            "name": "addCacheControlDirective",
+            "params": [
+                {
+                    "name": "directie",
+                    "description": "Directive",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "Optional value for cache directive",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 633,
+            "description": "Remove a cache directive to `Cache-Control` header",
+            "itemtype": "method",
+            "name": "removeCacheControlDirective",
+            "params": [
+                {
+                    "name": "directie",
+                    "description": "name of directive to remove form header",
+                    "type": "String"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 647,
+            "description": "Get a cache directive to `Cache-Control` header",
+            "itemtype": "method",
+            "name": "getCacheControlDirective",
+            "params": [
+                {
+                    "name": "directie",
+                    "description": "name of directive to remove form header",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Value of specified directive",
+                "type": "String"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 660,
+            "description": "Updates the `Cache-Control` header to user specified properties using Response's methods",
+            "itemtype": "method",
+            "name": "_updateCacheControl",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "directie",
+                    "description": "name of directive to remove form header",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Value of specified directive",
+                "type": "String"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 675,
+            "description": "Determines if the Response validators (ETag, Last-Modified) matches a conditional \n           value specified in the Request. If the response is not modified, it sets the \n           status code to 304 and removes the response content by calling the `setNotModified` method",
+            "itemtype": "method",
+            "name": "isNotModified",
+            "return": {
+                "description": "True if the request and response cache validators match, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 703,
+            "description": "Determine if the response is invalid by looking at the status code",
+            "itemtype": "method",
+            "name": "isInvalid",
+            "return": {
+                "description": "true if the response is invalid, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 715,
+            "description": "Determine if the response is just informative by looking at the status code",
+            "itemtype": "method",
+            "name": "isInformational",
+            "return": {
+                "description": "true if the response is informative, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 727,
+            "description": "Determine if the response is successful by looking at the status code",
+            "itemtype": "method",
+            "name": "isSuccessful",
+            "return": {
+                "description": "true if the response is successful, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 739,
+            "description": "Determine if the response is a redirect by looking at the status code",
+            "itemtype": "method",
+            "name": "isRedirection",
+            "return": {
+                "description": "true if the response is a redirect, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 750,
+            "description": "Determine if the response is a client error by looking at the status code",
+            "itemtype": "method",
+            "name": "isClientError",
+            "return": {
+                "description": "true if the response is a client error, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 762,
+            "description": "Determine if the response is a server error by looking at the status code",
+            "itemtype": "method",
+            "name": "isServerError",
+            "return": {
+                "description": "true if the response is a server error, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 774,
+            "description": "Determine if the response is OK by looking at the status code (200)",
+            "itemtype": "method",
+            "name": "isOk",
+            "return": {
+                "description": "true if the response is OK, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 786,
+            "description": "Determine if the response is forbidden by looking at the status code",
+            "itemtype": "method",
+            "name": "isForbidden",
+            "return": {
+                "description": "true if the response is forbidden, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 798,
+            "description": "Determine if the response is a `not found` by looking at the status code (404)",
+            "itemtype": "method",
+            "name": "isNotFound",
+            "return": {
+                "description": "true if the response is 'not found', otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 809,
+            "description": "Determine if the response is empty by looking at the status code",
+            "itemtype": "method",
+            "name": "isEmpty",
+            "return": {
+                "description": "true if the response is valid, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 822,
+            "description": "Set HTTP header and it's value",
+            "itemtype": "method",
+            "name": "set",
+            "params": [
+                {
+                    "name": "header",
+                    "description": "HTTP Header name",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "Header value",
+                    "type": "String"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 836,
+            "description": "Get the specified HTTP header's value",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "header",
+                    "description": "HTTP Header name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Specified Header's value",
+                "type": "String"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 849,
+            "description": "Remove the specified HTTP header",
+            "itemtype": "method",
+            "name": "remove",
+            "params": [
+                {
+                    "name": "header",
+                    "description": "HTTP Header name",
+                    "type": "String"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 862,
+            "description": "Set a cookie by passing in its properties, including it's name. \n           see <Cookie> for the supported properties",
+            "itemtype": "method",
+            "name": "addCookie",
+            "params": [
+                {
+                    "name": "Properties/directives",
+                    "description": "of the cookie",
+                    "type": "Object"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 878,
+            "description": "Get the specified cookie as a `Cookie` object",
+            "itemtype": "method",
+            "name": "getCookie",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Name of cookie",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "requested cookie",
+                "type": "Object/Cookie"
+            },
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 891,
+            "description": "Remove a cookie from client browser by setting its `Expires` directive",
+            "itemtype": "method",
+            "name": "removeCookie",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Name of cookie",
+                    "type": "String"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 915,
+            "description": "Render the response and end it",
+            "itemtype": "method",
+            "name": "render",
+            "params": [
+                {
+                    "name": "viewName",
+                    "description": "Name of the view to render",
+                    "type": "String"
+                },
+                {
+                    "name": "props",
+                    "description": "Object holding values to pass to rendering engine",
+                    "type": "Object"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 931,
+            "description": "Set response `Content-Type` header's value. firefly, by default sets it to text/html",
+            "itemtype": "method",
+            "name": "setContentType",
+            "params": [
+                {
+                    "name": "contentType",
+                    "description": "Value of Content-Type header",
+                    "type": "String"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 943,
+            "description": "Get response `Content-Type` header's value",
+            "itemtype": "method",
+            "name": "getContentType",
+            "params": [
+                {
+                    "name": "contentType",
+                    "description": "Value of Content-Type header",
+                    "type": "String"
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Response.js",
+            "line": 955,
+            "description": "Redirect user to another URL",
+            "itemtype": "method",
+            "name": "redirect",
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\RenderManager\\RenderManager.js",
+            "line": 40,
+            "description": "Creates a map of view names and view file path. [Performes sync IO]",
+            "itemtype": "method",
+            "name": "buildViewMap",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "callback",
+                    "type": "Function"
+                }
+            ],
+            "class": "RenderManager",
+            "module": "Core"
+        },
+        {
+            "file": "src\\RenderManager\\RenderManager.js",
+            "line": 72,
+            "description": "Get the rendered contents of a view with the given properties",
+            "itemtype": "method",
+            "name": "render",
+            "params": [
+                {
+                    "name": "applet",
+                    "description": "Name of the raw applet to which the view belongs",
+                    "type": "String"
+                },
+                {
+                    "name": "viewName",
+                    "description": "Name of the view",
+                    "type": "String"
+                },
+                {
+                    "name": "props",
+                    "description": "Object to pass to pass to view engine for the current view",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Rendered contents of the view",
+                "type": "String"
+            },
+            "class": "RenderManager",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 50,
+            "description": "Build routing patterns for all available applets",
+            "itemtype": "method",
+            "name": "buildRoutes",
+            "todo": [
+                "break this method up"
+            ],
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 153,
+            "description": "Rebuilds application route rules. Call this if application's routes are changed\n           post init.",
+            "itemtype": "method",
+            "name": "rebuildRoutes",
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 168,
+            "description": "Create routes (callbacks for given event name) for a given websocket route. \n           No rich route rules for ws routes to reduce overhead",
+            "itemtype": "method",
+            "name": "_buildWSRoute",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "appRoute",
+                    "description": "Reference to application route object",
+                    "type": "Object"
+                },
+                {
+                    "name": "routes",
+                    "description": "Reference to the applet's routes object",
+                    "type": "Object"
+                }
+            ],
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 193,
+            "description": "Find the appropriate controller for the incoming client request",
+            "itemtype": "method",
+            "name": "findRoute",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "Reference to Request object",
+                    "type": "Object"
+                },
+                {
+                    "name": "response",
+                    "description": "Reference to Response object",
+                    "type": "Object"
+                }
+            ],
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 253,
+            "description": "Makes sure that the request meets all of the requirements of the route",
+            "itemtype": "method",
+            "name": "_testRouteRules",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "Reference to Request object",
+                    "type": "Object"
+                },
+                {
+                    "name": "response",
+                    "description": "Reference to Response object",
+                    "type": "Object"
+                },
+                {
+                    "name": "route",
+                    "description": "Reference to the route object",
+                    "type": "Object"
+                },
+                {
+                    "name": "fn",
+                    "description": "callback function",
+                    "type": "Function"
+                }
+            ],
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 302,
+            "description": "Find the appropriate controller for the WebSocket event",
+            "itemtype": "method",
+            "name": "findWSRoute",
+            "params": [
+                {
+                    "name": "wsInfo",
+                    "description": "reference to winsocket info object",
+                    "type": "Object"
+                },
+                {
+                    "name": "socket",
+                    "description": "reference to the websocket object",
+                    "type": "Object"
+                },
+                {
+                    "name": "data",
+                    "description": "reference to data recieved from client",
+                    "type": "Object"
+                }
+            ],
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 337,
+            "description": "Generate url based on the route name and specified URL parameters",
+            "itemtype": "method",
+            "name": "generateUrl",
+            "params": [
+                {
+                    "name": "routeName",
+                    "description": "Name of the route based which to generate the URL",
+                    "type": "String"
+                },
+                {
+                    "name": "params",
+                    "description": "Object literal containing name and values for URL parameters",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Generated URL",
+                "type": "String"
+            },
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 369,
+            "description": "Test for the _method route rule",
+            "itemtype": "method",
+            "name": "_methodRule",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "Instance of request objecr for the current request",
+                    "type": "Object"
+                },
+                {
+                    "name": "rule",
+                    "description": "value of rule as specified in the route file",
+                    "type": "Array|String"
+                },
+                {
+                    "name": "callback",
+                    "description": "function taking result of the test as its parameter",
+                    "type": "Function"
+                }
+            ],
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 398,
+            "description": "Test for the _transport route rule",
+            "itemtype": "method",
+            "name": "_transportRule",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "Instance of request objecr for the current request",
+                    "type": "Object"
+                },
+                {
+                    "name": "rule",
+                    "description": "value of rule as specified in the route file",
+                    "type": "Array|String"
+                },
+                {
+                    "name": "callback",
+                    "description": "function taking result of the test as its parameter",
+                    "type": "Function"
+                }
+            ],
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 426,
+            "description": "Get a reference to the object holding the routes for websockets",
+            "itemtype": "method",
+            "name": "getWSRoutes",
+            "return": {
+                "description": "reference to WS routes object for the entire appliction",
+                "type": "Object"
+            },
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 438,
+            "description": "Method called by router if no route is found for the request",
+            "itemtype": "method",
+            "name": "routeNotFound",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "Reference to requst object",
+                    "type": "Object"
+                },
+                {
+                    "name": "response",
+                    "description": "Reference to response object",
+                    "type": "Object"
+                }
+            ],
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 454,
+            "description": "Method called by router if no route is found for the websocket request",
+            "itemtype": "method",
+            "name": "wsRouteNotFound",
+            "params": [
+                {
+                    "name": "socket",
+                    "description": "reference to client's socket object",
+                    "type": "Object"
+                },
+                {
+                    "name": "data",
+                    "description": "reference to object holding data",
+                    "type": "Object"
+                }
+            ],
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Router\\Router.js",
+            "line": 467,
+            "description": "Set a function as the request handler for a service. If a route is registered to \n           the specified service, then this function will be called with an instance of \n           the Request and Response objects before calling the controller. Firefly will\n           prepend the",
+            "example": [
+                "\n       addRouteRequirement('useraccess', function(req, res, rule, fn) {\n           fn(true) //passes test\n           fn(false, true) //failed test. hault routing. the service will take care of showing error touser\n           fn(false, false) // failed test. continue routing\n       });\n       \n       \n       //In routes file useraccess will be declared as:\n       _useraccess: 'admin'\n       //thus the value of `rule` in the service handler will be 'admin'"
+            ],
+            "itemtype": "method",
+            "name": "addRouteRequirement",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "Name of the rule. An _ (underscore) is prepended to the name",
+                    "type": "String"
+                },
+                {
+                    "name": "fn",
+                    "description": "listener function to be used as the request handler",
+                    "type": "Function"
+                }
+            ],
+            "class": "Router",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Server\\Server.js",
+            "line": 47,
+            "description": "Set the request handler for the server if it is not passed with the object constructor",
+            "itemtype": "method",
+            "name": "setRequestHandler",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "Request handler function",
+                    "type": "Function"
+                }
+            ],
+            "class": "Server",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Server\\Server.js",
+            "line": 59,
+            "description": "Start the HTTP server",
+            "itemtype": "method",
+            "name": "start",
+            "params": [
+                {
+                    "name": "fn",
+                    "description": "Function to call when server has started",
+                    "type": "Function"
+                }
+            ],
+            "class": "Server",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Server\\Server.js",
+            "line": 89,
+            "description": "Shutdown http server",
+            "itemtype": "method",
+            "name": "stop",
+            "class": "Server",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Server\\Server.js",
+            "line": 100,
+            "description": "Returns a boolean value indicated whether or not the server is a secure one. i.e HTTPS or HTTP",
+            "itemtype": "method",
+            "name": "isSecure",
+            "return": {
+                "description": "true if server  is secure otherwise false",
+                "type": "Boolean"
+            },
+            "class": "Server",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Server\\Server.js",
+            "line": 112,
+            "description": "Get a reference to the native HTTP/HTTPS server object",
+            "itemtype": "method",
+            "name": "getNativeServer",
+            "return": {
+                "description": "reference to native server object",
+                "type": "Object"
+            },
+            "class": "Server",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Server\\WSServer.js",
+            "line": 48,
+            "description": "Close connection to all connected clients and shutdown WS server",
+            "itemtype": "method",
+            "name": "stop",
+            "params": [
+                {
+                    "name": "code",
+                    "description": "Disconnect code",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "Data to be passed to client",
+                    "type": "String"
+                }
+            ],
+            "class": "WSServer",
+            "module": "Core"
+        }
+    ]
+}

@@ -21,15 +21,14 @@ var nodemailer = require('nodemailer');
 
 
 
-/*
-    Mailer
-
-        Handles mailing for Firefly
-
-    Parameters:
-
-        firefly - reference to the application Firefly object
-        defaults - {Object} Default configurations for Mailer. Containing properties: from, to, subject, html, attachements
+/**
+* Handles mailing for Firefly
+*
+* @class Mailer
+* @module Services
+* @constructor
+* @param {Object} firefly reference to the application Firefly object
+* @param {Object} defaults Default configurations for Mailer. Containing properties: from, to, subject, html, attachements
 */
 var Mailer = module.exports = function(firefly, defaults) {
     this._firefly = firefly;
@@ -40,17 +39,14 @@ var Mailer = module.exports = function(firefly, defaults) {
 
 
 
-/*
-    Function: send
-
-        Send a single email
-
-    Parameters:
-
-        addr - Email address of the recipient
-        subject - Email subject
-        body - Body of the email
-        fn - Funciton to call when email has been sent
+/**
+* Send a single email
+*
+* @method send
+* @param {String} addr Email address of the recipient
+* @param {String} subject Email subject
+* @param {String} Body of the email
+* @param {Function} Funciton to call when email has been sent
 */
 Mailer.prototype.send = function(addr, subject, body, fn) {
     var config = Object.create(self._defaults);
@@ -70,17 +66,14 @@ Mailer.prototype.send = function(addr, subject, body, fn) {
 
 
 
-/*
-    Function: batchSend
-
-        Send an email to multiple recipients
-
-    Parameters:
-
-        addr - Array containing email addresses of the recipients
-        subject - Email subject
-        body - Body of the email
-        fn - Funciton to call when email has been sent
+/**
+* Send an email to multiple recipients
+*
+* @method batchSend
+* @param {String} addr Array containing email addresses of the recipients
+* @param {String} subject Email subject
+* @param {String} Body of the email
+* @param {Function} Funciton to call when the emails have been sent
 */
 Mailer.prototype.batchSend = function(addrs, subject, body, fn) {
     var self = this;

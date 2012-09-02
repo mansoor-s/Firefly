@@ -25,19 +25,18 @@ var Server = require( '../Server/Server.js' );
 var WSServer = require( '../Server/WSServer.js' );
 var Router = require( '../Router/Router.js' );
 var Request = require( '../Http/Request.js' );
-var Request = require( '../Http/Response.js' );
+var Response = require( '../Http/Response.js' );
 var RenderManager = require( '../RenderManager/RenderManager.js' );
 
 
-/*
-    Function: Firefly
-
-        Firefly object constructor.
-
-    Parameters:
-
-        appRoutes - {Object} reference to the application routes object
-        config - {Object} reference to application config object
+/**
+* Firefly object constructor
+*
+* @class Firefly
+* @module Core
+* @constructor
+* @param {Object} appRoutes reference to the application routes object
+* @param {Object} config reference to application config object
 */
 var Firefly = module.exports = function( appRoutes, config ) {
     if ( typeof appRoutes !== 'object' || typeof config !== 'object' ) {
@@ -76,16 +75,13 @@ var Firefly = module.exports = function( appRoutes, config ) {
 
 
 
-/*
-    Function: init
-
-        Initialize the application. Caches's all views and starts HTTP and WebSocket servers
-        
-    Parameters:
-    
-        fn - {Function} Function to call on HTTP server start
+/**
+* Initialize the application. Caches's all views and starts HTTP and WebSocket servers
+*
+* @method init
+* @param {Function} fn Function to call on HTTP server start
 */
-Firefly.prototype.init = function( fn ) {
+Firefly.prototype.init = function ( fn ) {
     var self = this;
     this._initialized = true;
     
@@ -110,10 +106,10 @@ Firefly.prototype.init = function( fn ) {
 
 
 
-/*
-    Function: initWS
-
-        Initialize WebSocket servers. Use this seperatly if using application with cluster. (NOTE: set AUTO_START_WS_SERVER to false in app config object)
+/**
+* Initialize WebSocket servers. Use this seperatly if using application with cluster. (NOTE: set AUTO_START_WS_SERVER to false in app config object)
+*
+* @method initWS
 */
 Firefly.prototype.initWS = function() {
     if ( this.config.AUTO_START_WS_SERVER === false ) {
@@ -127,10 +123,10 @@ Firefly.prototype.initWS = function() {
 
 
 
-/*
-    Function: autoloadApplets
-
-        Autoload and Use application Applets. This function performes blocking IO (require())
+/**
+* Autoload and Use application Applets. This function performes blocking IO (require())
+*
+* @method autoloadApplets
 */
 Firefly.prototype.autoloadApplets = function() {
     var rawAppletNames = fs.readdirSync( this.config.APPLETS_DIR );
@@ -154,16 +150,12 @@ Firefly.prototype.autoloadApplets = function() {
 
 
 
-/*
-    Function: getApplet
-
-        Return information on the specified applet
-        
-    Parameters:
-        
-        applets - {String} Name of the applet .. as defined on the main application Route file
-        
-    Returns: {Object} Hash-array contains properties `object` and `routes`
+/**
+* Get a reference to an applet
+*
+* @method getApplet
+* @param {String} applets Name of the applet instance.. as defined on the main application Route file
+* @returns {Object} Reference to applet
 */
 Firefly.prototype.getApplet = function( applet ) {
     return this._applets[ applet ];
@@ -172,12 +164,11 @@ Firefly.prototype.getApplet = function( applet ) {
 
 
 
-/*
-    Function: getAllRawApplets
-
-        Return information on the specified applet
-        
-    Returns: {Object} Hash-array contains properties `object`, `routes` and `viewPath`.
+/**
+* Return all un-initialized applets
+*
+* @method getAllRawApplets
+* @return {Object} Hash-array contains properties `object`, `routes` and `viewPath`.
 */
 Firefly.prototype.getAllRawApplets = function() {
     return this._appletsRaw;
@@ -185,12 +176,11 @@ Firefly.prototype.getAllRawApplets = function() {
 
     
 
-/*
-    Function: getAllApplets
-
-        Return information about all of the registered applets
-
-    Returns: {Object} Hash-array contains properties `object` and `routes`.
+/**
+* Return information about all of the registered applets
+*
+* @method getAllApplets
+* @return {Object} Hash-array contains properties `object` and `routes`.
 */
 Firefly.prototype.getAllApplets = function() {
     return this._appletsRaw;
@@ -198,14 +188,12 @@ Firefly.prototype.getAllApplets = function() {
 
 
 
-/*
-    Function: set
-
-        Set an object as a service, accessable application wide
-        
-    Parameters:
-        
-        name - {String} Name of service being set
+/**
+* Set an object as a service, accessable application wide
+*
+* @method set
+* @param {String} name Name of service being set
+* @param {String} refrence to service object
 */
 Firefly.prototype.set = function( name, obj ) {
     if ( !name || !obj ) {
@@ -217,18 +205,12 @@ Firefly.prototype.set = function( name, obj ) {
 
 
 
-/*
-    Function: get
-
-        Get a reference to the requested service
-        
-    Parameters:
-        
-        name - {String} Name of service being requested
-
-    Returns:
-
-        {Object} Requested service or undefined if none exist by that handle
+/**
+* Get a reference to the requested service
+*
+* @method get
+* @param {String} name Name of service being requested
+* @return {Object} Requested service or undefined if none exist by that handle
 */
 Firefly.prototype.get = function( name ) {
     return this._services[name];
@@ -236,15 +218,13 @@ Firefly.prototype.get = function( name ) {
 
 
 
-/*
-    Function: addApplet
-
-        Add an initialized applet object
-        
-    Parameters:
-        
-        name - {String} Name of applet
-        applet - {Object} reference to applet object
+/**
+* Add an initialized applet object
+*
+* @method addApplet
+* @param {String} name Name of applet
+* @param {Object} applet reference to applet object
+* @return {Object} Requested service or undefined if none exist by that handle
 */
 Firefly.prototype.addApplet = function( name, applet ) {
     if ( !name || !applet ) {
@@ -256,14 +236,11 @@ Firefly.prototype.addApplet = function( name, applet ) {
 
 
 
-/*
-    Function: getAppRoutes
-
-        Get the application routes object that was passed to Firefly by the app
-
-    Returns:
-
-        {Object} Application routes object
+/**
+* Get the application routes object that was passed to Firefly by the app
+*
+* @method getAppRoutes
+* @return {Object} Application routes object
 */
 Firefly.prototype.getAppRoutes = function() {
     return this._appRoutes;
@@ -271,14 +248,11 @@ Firefly.prototype.getAppRoutes = function() {
 
 
 
-/*
-    Function: getRequestHandler
-
-        Wrapper for the request handler of all client requests
-        
-    Returns:
-    
-        {Function} request handler
+/**
+* Wrapper for the request handler of all client requests
+*
+* @method getRequestHandler
+* @return {Function} request handler
 */
 Firefly.prototype.getRequestHandler = function() {
     var self = this;
@@ -310,14 +284,12 @@ Firefly.prototype.getRequestHandler = function() {
 };
 
 
-/*
-    Function: getWSRequestHandler
 
-        Returns call back to be used for all WS client connections
-        
-    Returns:
-    
-        {Function} WS request handler
+/**
+* Returns call back to be used for all WS client connections
+*
+* @method getWSRequestHandler
+* @return {Function} WS request handler
 */
 Firefly.prototype.getWSRequestHandler = function() {
     var self = this;
@@ -355,18 +327,12 @@ Firefly.prototype.getWSRequestHandler = function() {
 
 
 
-/*
-    Function: catch
-
-        Handle application-wide exceptions
-
-    Parameters:
-        request - Request object
-        response - Response object
-
-    Returns:
-
-        {Object} Error object
+/**
+* Handle application-wide exceptions
+*
+* @method catch
+* @param {Object} request Reference to request object
+* @param {Object} response Reference to response object
 */
 Firefly.prototype.catch = function( err, request, response ) {
     var logger = this.get( 'Logger' );
@@ -375,14 +341,12 @@ Firefly.prototype.catch = function( err, request, response ) {
 };
 
 
-/*
-    Function: setViewEngine
 
-        Set a view/templating engine for Firefly to use
-        
-    Parameters:
-        
-        engine - reference to the templating engine object
+/**
+* Set a view/templating engine for Firefly to use
+*
+* @method setViewEngine
+* @param {Object} engine reference to the templating engine object
 */
 Firefly.prototype.setViewEngine = function( engine ) {
     if (this._initialized === true) {
@@ -394,14 +358,11 @@ Firefly.prototype.setViewEngine = function( engine ) {
 
 
 
-/*
-    Function: setViewEngine
-
-        Add a callback function to be called when init() is called on Firefly. These functions are executed in sequence.
-        
-    Parameters:
-        
-        fn - callback function to call with another callback function as its parameter which it must call
+/**
+* Add a callback function to be called when Firefly is initialized. These functions are executed in sequence.
+*
+* @method addInitDependency
+* @param {Function} fn callback function to call with another callback function as its parameter which it must call
             to continue the init sequence
 */
 Firefly.prototype.addInitDependency = function( fn ) {
@@ -410,14 +371,11 @@ Firefly.prototype.addInitDependency = function( fn ) {
 
 
 
-/*
-    Function: trustProxyData
-
-    Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)
-    
-    Parameters:
-        
-        trust - {Boolean} Set true if you have any reverse proxys in front of your server. 
+/**
+* Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)
+*
+* @method trustProxyData
+* @param {Boolean} trust Set true if you have any reverse proxys in front of your server. 
 */
 Firefly.prototype.trustProxyData = function( trust ) {
     this._trustProxyData = trust;

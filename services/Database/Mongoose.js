@@ -25,16 +25,16 @@ var fs = require('fs'),
     dive = require('dive');
 
 
-/*
-    Function: Mongoose
-        Initialize Mongoose and set it as a service named 'Mongoose' with Firefly
 
-    Parameters:
-
-        firefly - {Object} reference to Firefly instance
-        opts - {Object} mongodb connection options
-        servicename - {String} (optional) name for the service. Defaults to `Mongoose` 
-
+/**
+* Initialize Mongoose and set it as a service named 'Mongoose' with Firefly
+*
+* @class Mongoose
+* @module Services
+* @constructor
+* @param {Object} firefly reference to Firefly instance
+* @param {Object} opts mongodb connection options
+* @param {String} [serviceName='Mongoose'] name for the service
 */
 var Mongoose = module.exports = function(firefly, opts, serviceName) {
     if (!firefly || !opts) {
@@ -52,14 +52,13 @@ var Mongoose = module.exports = function(firefly, opts, serviceName) {
 };
 
 
-/*
-    Function: _onInit
 
-        Function gets called on application init
-
-    parameters:
-
-        fn - {Function} callback
+/**
+* The function returned by this method gets called on application init
+*
+* @method _onInit
+* @private
+* @return {Function} will return a callback function which itself takes a callback function
 */
 Mongoose.prototype._onInit = function() {
     var self = this;
@@ -74,14 +73,13 @@ Mongoose.prototype._onInit = function() {
 };
 
 
-/*
-    Function: _initModels
 
-        Initialize mongoose models from schema directory
-
-    parameters:
-
-        fn - {Function} callback
+/**
+* Initialize mongoose models from schema directory
+*
+* @method _initModels
+* @private
+* @param {Function} fn callback
 */
 Mongoose.prototype._initModels = function(fn) {
     var self = this;

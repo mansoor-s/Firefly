@@ -1,0 +1,9 @@
+{
+    "name": "Firefly",
+    "description": "A Node.js CMF",
+    "version": "0.1.0",
+    "url": "https://github.com/mansoor-s/Firefly",
+    "options": {
+        "outdir": "./APIDocs/"
+    }
+}

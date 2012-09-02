@@ -1,13 +1,35 @@
+/*
+    Firefly - Node.js CMS
+    Copyright (C) <2012>  <Mansoor Sayed>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 'use strict';
 
 var fs = require('fs');
 var Handlebars = require('handlebars');
 
-/*
-    Wrapper for Handlebars
-
+/**
+* Wrapper for Handlebars
+*
+* @class Handlebars
+* @module Services
+* @constructor
+* @param {Object} firefly Reference to the application Firefly object
 */
-var Renderer = module.exports = function(app) {
+var Renderer = module.exports = function(firefly) {
    
     this._views = undefined;
     
@@ -19,14 +41,16 @@ var Renderer = module.exports = function(app) {
     */
     this.cache = {};
     
-    app.addInitDependency(this._onInit());
+    //firefly.addInitDependency(this._onInit());
 };
 
 
-/*
-    Function: _onInit
-
-        Private function called on application initialization
+/**
+* function to be called on application initialization. *Not* registered with firefly.
+*   No use for it at this time
+*
+* @method _onInit
+* @private
 */
 Renderer.prototype._onInit = function() {
     var self = this;
@@ -35,15 +59,13 @@ Renderer.prototype._onInit = function() {
     };
 };
 
-/*
-    Function: setViews
 
-        Set an internal map of view names and file paths. This function will call buildCache
-    
-    parameters: 
-
-        views - {Object} object containing map of view names and file paths
-        fn -  {Function} callback
+/**
+* Set an internal map of view names and file paths. This function will call buildCache
+*
+* @method setViews
+* @param{ Object} views Object containing map of view names and file paths
+* @param {Function} fn Callback
 */
 Renderer.prototype.setViews = function(views, fn) {
     this._views = views;
@@ -51,15 +73,13 @@ Renderer.prototype.setViews = function(views, fn) {
 };
 
 
-/*
-    Function buildCache
 
-        Build a cache of filepaths and its contents in memory. So not to hit the disk for every request.
-
-    Parameters: 
-
-        fn - {Function} callback
-
+/**
+* Build a cache of filepaths and its contents in memory. So not to hit the disk for every request.
+*
+* @method buildCache
+* @param{Object} views Object containing map of view names and file paths
+* @param {Function} fn Callback
 */
 Renderer.prototype.buildCache = function(fn) {
     for (var i = 0, len = this._views.length; i < len; ++i) {
@@ -75,15 +95,12 @@ Renderer.prototype.buildCache = function(fn) {
 
 
 
-/*
-    Function rebuildCache
-
-        Rebuild cache. Clears the file contents cach and calls buildCache
-
-    Parameters: 
-
-        fn - {Function} callback
-
+/**
+* Rebuild cache. Clears the file contents cach and calls buildCache
+*
+* @method rebuildCache
+* @param{Object} views Object containing map of view names and file paths
+* @param {Function} fn Callback
 */
 Renderer.prototype.rebuildCache = function(fn) {
     this.cache = {};
@@ -92,16 +109,12 @@ Renderer.prototype.rebuildCache = function(fn) {
 
 
 
-/*
-    Function render
-
-        Render a view
-
-    Parameters: 
-
-        path -{String} view file path 
-        fn - {Function} callback
-
+/**
+* Render a view
+*
+* @method render
+* @param{String} view file path 
+* @param {Function} fn Callback
 */
 Renderer.prototype.render = function(path, opts) {
     var template = this.cache[path];

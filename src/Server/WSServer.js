@@ -21,16 +21,15 @@
 var ws = require( 'ws' );
 
 
-/*
-    Function: WSServer
-
-        WSServer object constructor
-
-    Parameters:
-
-        firefly - {Object} reference to application's Firefly object
-        wsInfo - {Object} Object containing
-        requestHandler - {Function} Fn to call for every client connect. reference
+/**
+* WSServer object constructor
+*
+* @class WSServer
+* @module Core
+* @constructor
+* @param {Object} firefly Reference to the Firefly object
+* @param {Object} wsInfo Object containing properties for `WS` module
+* @param {Function} requestHandler Funciton to call for every client connect. reference
             to `socket` object is passed to the callback
 */
 var WSServer = module.exports = function( firefly, wsInfo, requestHandler ) {
@@ -45,15 +44,13 @@ var WSServer = module.exports = function( firefly, wsInfo, requestHandler ) {
 };
 
 
-/*
-    Function: stop
 
-    Close connection to all connected clients and shutdown WS server
-
-    Parameters:
-
-       code - {String} disconnect code
-       data - {String} data to be passed to client
+/**
+* Close connection to all connected clients and shutdown WS server
+*
+* @method stop
+* @param {String} code Disconnect code
+* @param {String} data Data to be passed to client
 */
 WSServer.prototype.stop = function( code, data ) {
     this._wss.close( code, data );

@@ -23,14 +23,14 @@ var UserAgent = require( 'useragent' );
 var Formidable = require('formidable');
 
 
-/*
-    Function: Request
 
-        Request object constructor
-
-    Parameters:
-
-        req - Native node request object
+/**
+* Request object constructor
+*
+* @class Request
+* @module Core
+* @constructor
+* @param {Object} req Native node request object
 */
 var Request = module.exports = function( req ) {
     this._isMethodSafe = false;
@@ -54,14 +54,11 @@ var Request = module.exports = function( req ) {
 
 
 
-/*
-    Function: parseForm
-
-    Parses form fields and files.
-
-    Parameters:
-
-        fn - {Functions} callback function to call when upload is finished and has been parsed
+/**
+* Parses form fields and files. This method is called by Firefly
+*
+* @method parseForm
+* @param {Function} fn callback function to call when upload is finished and has been parsed
 */
 Request.prototype.parseForm =  function(fn) {
     var form = new Formidable.IncomingForm();
@@ -73,10 +70,13 @@ Request.prototype.parseForm =  function(fn) {
     });
 };
 
-/*
-    Function: setServerSecure
 
-    Explicitly tell the Request object that the connection with the client is secure (HTTPS)
+
+/**
+* Explicitly tell the Request object that the connection with the client is secure (HTTPS)
+*
+* @method setServerSecure
+* @param {Function} fn callback function to call when upload is finished and has been parsed
 */
 Request.prototype.setServerSecure = function( secure ) {
     this._serverIsSecure = secure;
@@ -84,11 +84,11 @@ Request.prototype.setServerSecure = function( secure ) {
 
 
 
-/*
-    Function: _setupUserAgent
-
-    Uses the Useragent package (https://github.com/3rd-Eden/useragent) to parse the 
-    useragent header field
+/**
+* Figures out the client's useragent by parsing the `user-agent` header field
+*
+* @method _setupUserAgent
+* @private
 */
 Request.prototype._setupUserAgent = function() {
     var user_agent = this.get( 'user-agent' );
@@ -97,14 +97,10 @@ Request.prototype._setupUserAgent = function() {
 
 
 
-/*
-    Function: getOs
-
-    Returns the client OS as specified in the user-agent header field
-
-    Returns:
-
-      {String} Client's OS
+/**
+* Figures out the client's operating system by parsing the `user-agent` header field
+*
+* @method getOs
 */
 Request.prototype.getOs = function() {
     if ( !this._userAgent ) {
@@ -115,14 +111,11 @@ Request.prototype.getOs = function() {
 
 
 
-/*
-    Function: getBrowser
-
-    Returns the client Browser and version as specified in the user-agent header field
-
-    Returns:
-
-      {String} Client's Browser and version
+/**
+* Returns the client Browser and version as specified in the user-agent header field
+*
+* @method getBrowser
+* @return {String} Client's Browser and version
 */
 Request.prototype.getBrowser = function() {
     if ( !this._userAgent ) {
@@ -133,18 +126,14 @@ Request.prototype.getBrowser = function() {
 
 
 
-/*
-    Function: getClientIpAddress
-
-    Finds the client's IP address
-    
-    Parameters:
-        
-        proxy - {Boolean} Boolean value indicating whether there is a proxy sitting infront of the server
-
-    Returns:
-
-      {String} Client's IP Address
+/**
+* Finds the client's IP address. If there is a proxy sitting
+*   in front of web server then `HTTP_X_FORWARDED_FOR` is looked at.
+*
+* @method getClientIpAddress
+* @param {Boolean} [proxy=false] Boolean value indicating whether there is a
+*   proxy sitting in front of the server.
+* @return {String} Client's IP Address
 */
 Request.prototype.getClientIpAddress = function( proxy ) {
     if ( proxy && this._trustProxyData ) {
@@ -155,58 +144,34 @@ Request.prototype.getClientIpAddress = function( proxy ) {
 
 
 
-/*
-    Function: getPort
-
-    Finds the client's port number
-
-    Returns:
-
-      {Number} Client's port number
+/**
+* Finds the port from which the client is requesting from
+*
+* @method getClientPort
+* @return {Number} Client's port number
 */
-Request.prototype.getPort = function() {
+Request.prototype.getClientPort = function() {
     return this._request.client.remotePort;
 };
 
 
 
-/*
-    Function: getAcceptableContentTypes
-
-    Get the content types acceptable to the client browser
-
-    Returns:
-
-      {Array} Client browser's acceptable content types
-*/
-Request.prototype.getAcceptableContentTypes = function() {
-    
-};
-
-
-
-/*
-    Function: getBasePath
-
-    Get the base path of the request URI
-
-    Returns:
-
-      {String} Base path of the request URI
+/**
+* Get the base path of the request URI
+*
+* @method getBasePath
+* @return {String} Base path of the request URI
 */
 Request.prototype.getBasePath = function() {
     return this._parsedUrl.pathname;
 };
 
 
-/*
-    Function: getBaseUrl
-
-    Get the base URL of the request URI
-
-    Returns:
-
-      {String} Base path of the request URI
+/**
+* Get the base URL of the request URI
+*
+* @method getBaseUrl
+* @return {String} Base path of the request URI
 */
 Request.prototype.getBaseUrl = function() {
     return this._parsedUrl.protocol + this._parsedUrl.host + this._parsedUrl.pathname;
@@ -214,14 +179,11 @@ Request.prototype.getBaseUrl = function() {
 
 
 
-/*
-    Function: getCharsets
-
-    Get the charsets supported by the client
-
-    Returns:
-
-      {Array} Charsets
+/**
+* Get the charsets supported by the client
+*
+* @method getCharsets
+* @return {Array} Charsets
 */
 Request.prototype.getCharsets = function() {
     if (this._charSets === undefined) {
@@ -232,14 +194,11 @@ Request.prototype.getCharsets = function() {
 
 
 
-/*
-    Function: getETags
-
-    Get the base ETags header
-
-    Returns:
-
-      {Array} ETags
+/**
+* Get the base ETags header
+*
+* @method getETags
+* @return {Array} ETags
 */
 Request.prototype.getETags = function() {
     var etags = this.get( 'If-None-Match' ) || '';
@@ -248,34 +207,12 @@ Request.prototype.getETags = function() {
 
 
 
-/*
-    Function: getFormat
-
-    Get the format requested by the client
-
-    Returns:
-
-      {String} format
-*/
-Request.prototype.getFormat = function() {
-    
-};
-
-
-
-/*
-    Function: getHost
-
-    Get the host header in the client request. If a port number is appended to the host, it will be omitted.
-    This is the case if a non-standard port is used for the http servere.
-    
-    Returns:
-
-      {String} host
-
-    See Also:
-    
-        <getHttpHost>
+/**
+* Get the host header in the client request. If a port number is appended to the host, it will be omitted.
+*    This is the case if a non-standard port is used for the http server.
+*
+* @method getHost
+* @return {String} host
 */
 Request.prototype.getHost = function() {
     var host = this.get( 'host' );
@@ -284,18 +221,11 @@ Request.prototype.getHost = function() {
 
 
 
-/*
-    Function: getHTTPHost
-
-    Get the host header in the request. Includes the port port number if sent by the client.
-
-    Returns:
-
-      {String} host
-
-    See Also:
-    
-        <getHost>
+/**
+* Get the host header in the request. Includes the port port number if sent by the client.
+*
+* @method getHTTPHost
+* @return {String} host
 */
 Request.prototype.getHttpHost = function() {
     return this.get( 'host' );
@@ -303,18 +233,11 @@ Request.prototype.getHttpHost = function() {
 
 
 
-/*
-    Function: getLanguages
-
-    Get the languages supported by the client by reading the 
-
-    Returns:
-
-      {Array} languages supported. If no no languages are specified, an empty array is returned
-
-    See Also:
-    
-        <getPreferredLanguage>
+/**
+*  Get the languages supported by the client by reading the `Accept-Language` header
+*
+* @method getLanguages
+* @return {Array} languages supported. If no no languages are specified, an empty array is returned
 */
 Request.prototype.getLanguages = function() {
     var languagesRaw = this._request.headers[ 'Accept-Language' ] || '';
@@ -331,18 +254,11 @@ Request.prototype.getLanguages = function() {
 
 
 
-/*
-    Function: getPreferredLanguage
-
-    Get the prefered language for the client based on the language's quality value
-
-    Returns:
-
-      {String} prefered language
-
-    See Also:
-    
-        <getLanguages>
+/**
+*  Get the prefered language for the client based on the language's quality value
+*
+* @method getPreferredLanguage
+* @return {String} prefered language
 */
 Request.prototype.getPreferredLanguage = function() {
     var languagesRaw = this._request.headers[ 'Accept-Language' ] || '';
@@ -365,18 +281,12 @@ Request.prototype.getPreferredLanguage = function() {
 
 
 
-/*
-    Function: getMethod
-
-    Get request method (i.e POST, GET, PUT..). If the X-HTTP-METHOD-OVERRIDE is found, it is returned instead.
-    Returned string is capitalized.
-
-    Returns:
-
-      {String} request method
-      
-    See Also:
-        <getMethodActual>
+/**
+*  Get request method (i.e POST, GET, PUT..). If the `X-HTTP-METHOD-OVERRIDE` header is found, it is returned instead.
+*     Returned string is upper case.
+*
+* @method getMethod
+* @return {String} request method
 */
 Request.prototype.getMethod = function() {
     if ( !this._method ) {
@@ -392,18 +302,12 @@ Request.prototype.getMethod = function() {
 
 
 
-/*
-    Function: getMethodActual
-
-    Get request method. This is different from <getMethod> in that it will return the actual method used in the http request
-    as apposed to returning the X-HTTP-METHOD-OVERRIDE header value if it is found. Returned string is capitalized.
-
-    Returns:
-
-      {String} request method
-      
-    See Also:
-        <getMethod>
+/**
+*  Get request method. This is different from <getMethod> in that it will return the actual method used in the http request
+*     as apposed to returning the `X-HTTP-METHOD-OVERRIDE` header field if it is found. Returned string is upper case.
+*
+* @method getMethodActual
+* @return {String} request method
 */
 Request.prototype.getMethodActual = function() {
     return this._request.method;
@@ -411,30 +315,24 @@ Request.prototype.getMethodActual = function() {
 
 
 
-/*
-    Function: getMimeType
-
-    Get the mime type specified by the client
-
-    Returns:
-
-      {String} mime type
+/**
+*  Get the mime type specified by the client
+*
+* @method getMimeType
+* @return {String} mime type
 */
 Request.prototype.getMimeType = function() {
-    
+    return this.get('Content-Type');
 };
 
 
 
 
-/*
-    Function: getPort
-
-    Get the host port specified by the request header
-
-    Returns:
-
-      {Number} Port Number
+/**
+*  Get the host port specified by the request header
+*
+* @method getPort
+* @return {Number} Port Number
 */
 Request.prototype.getPort = function() {
     if ( !this._port ) {
@@ -451,18 +349,11 @@ Request.prototype.getPort = function() {
 
 
 
-/*
-    Function: getQueryString
-
-    Get the query portion of the requested URL.  i.e 'name=ryan'
-
-    Returns:
-
-      {String} query string
-      
-    See Also:
-        
-        <getQuery>
+/**
+*  Get the query portion of the requested URL.  i.e 'field=value'
+*
+* @method getQueryString
+* @return {String} query string
 */
 Request.prototype.getQueryString = function() {
     return this._queryString;
@@ -470,18 +361,11 @@ Request.prototype.getQueryString = function() {
 
 
 
-/*
-    Function: getQuery
-
-    Get the query portion of the requested URL as an object.  i.e 'name=ryan' becomes {'name': 'ryan'} 
-
-    Returns:
-
-      {Object} query
-      
-    See Also:
-        
-        <getQueryString>
+/**
+*  Get the query portion of the requested URL as an object.  i.e 'field=value' becomes {'field': 'value'} 
+*
+* @method getQuery
+* @return {Object} query
 */
 Request.prototype.getQuery = function() {
     //return this._parsedUrl.query;
@@ -491,14 +375,11 @@ Request.prototype.getQuery = function() {
 
 
 
-/*
-    Function: getScheme
-
-    Get the request scheme ('http' or 'https') 
-
-    Returns:
-
-      {Boolean} is method safe
+/**
+*  Get the request scheme ('http' or 'https')  
+*
+* @method getScheme
+* @return {String} scheme
 */
 Request.prototype.getScheme = function() {
     return this.isSecure() ? 'https' : 'http';
@@ -506,14 +387,11 @@ Request.prototype.getScheme = function() {
 
 
 
-/*
-    Function: isMethodSafe
-
-    Check whether or not the requested method is a `safe` one (GET, HEAD).
-
-    Returns:
-
-      {Boolean} is method safe
+/**
+*  Check whether or not the requested method is a `safe` one (GET, HEAD).
+*
+* @method isMethodSafe
+* @return {Boolean} is method safe
 */
 Request.prototype.isMethodSafe = function() {
     var method = this.getMethod();
@@ -526,14 +404,11 @@ Request.prototype.isMethodSafe = function() {
 
 
 
-/*
-    Function: isNoCache
-
-    Determaine whether the client has a no-cache policy
-
-    Returns:
-
-      {Boolean} is there a no-cache policy
+/**
+*  Determaine whether the client has a no-cache policy
+*
+* @method isMethodSafe
+* @return {Boolean} True if there is a no-cache policy otherwise false
 */
 Request.prototype.isNoCache = function() {
     var pragma = this.get( pragma );
@@ -548,14 +423,11 @@ Request.prototype.isNoCache = function() {
 
 
 
-/*
-    Function: isSecure
-
-    Determaine whether the connection to the client is secure
-
-    Returns:
-
-      {Boolean} is connection secure
+/**
+*  Determaine whether the connection to the client is secure
+*
+* @method isSecure
+* @return {Boolean} is connection secure
 */
 Request.prototype.isSecure = function() {
     if ( this._serverIsSecure ) {
@@ -572,15 +444,12 @@ Request.prototype.isSecure = function() {
 
 
 
-/*
-    Function: isXmlHttpRequest
-
-    Determaine whether the request is an AJAX/XHR request. It determines this by checking the X-Requested-With header.
-    The header is specified by the javascript framework. Works with Prototype, Mootools and jQuery.
-
-    Returns:
-
-      {Boolean} is request AJAX
+/**
+*  Determaine whether the request is an AJAX/XHR request. It determines this by checking the X-Requested-With header.
+*     The header is specified by the javascript framework. Works with Prototype, Mootools and jQuery.
+*
+* @method isXmlHttpRequest
+* @return {Boolean} True if request is `AJAX` otherwise false
 */
 Request.prototype.isXmlHttpRequest = function() {
     return ( this.get( 'X-Requested-With' ) || '' ).toLowerCase() === 'xmlhttprequest';
@@ -588,14 +457,11 @@ Request.prototype.isXmlHttpRequest = function() {
 
 
 
-/*
-    Function: isWebSocketRequest
-
-    Determaine whether the request is a websocket request. It determines this by checking the `Upgrade` header field.
-
-    Returns:
-
-      {Boolean} is request WebSocket
+/**
+*  Determaine whether the request is a websocket request. It determines this by checking the `Upgrade` header field.
+*
+* @method isWebSocketRequest
+* @return {Boolean} True if request is a WebSocket upgrade request otherwise false
 */
 Request.prototype.isWebSocketRequest = function() {
     var upgrades = this.getUpgrades();
@@ -610,14 +476,11 @@ Request.prototype.isWebSocketRequest = function() {
 
 
 
-/*
-    Function: getVersion
-
-    Determine the HTTP protocol version in the client request.
-
-    Returns:
-
-      {Number} HTTP verions
+/**
+*  Determine the HTTP protocol version in the client request.
+*
+* @method getVersion
+* @return {Number} HTTP verions
 */
 Request.prototype.getVersion = function() {
     return parseInt( this._request.httpVersion );
@@ -625,14 +488,12 @@ Request.prototype.getVersion = function() {
 
 
 
-/*
-    Function: getConnectionSocket
 
-    Returns the net.Socket object associated with the current connection
-
-    Returns:
-
-      {Object} net.Socket for current connection
+/**
+* Returns a reference to the net.Socket object associated with the current connection
+*
+* @method getConnectionSocket
+* @return {Object} Reference to the net.Socket object for current connection
 */
 Request.prototype.getConnectionSocket = function() {
     return this._request.connection;
@@ -640,44 +501,11 @@ Request.prototype.getConnectionSocket = function() {
 
 
 
-/*
-    Function: verifyPeer
-
-    Returns the net.Socket object associated with the current connection
-
-    Returns:
-
-      {Object} net.Socket for current connection
-*/
-Request.prototype.verifyPeer = function() {
-    return this._request.connection.verifyPeer();
-};
-
-
-
-/*
-    Function: getPeerCertificate
-
-    Returns the net.Socket object associated with the current connection
-
-    Returns:
-
-      {Object} net.Socket for current connection
-*/
-Request.prototype.getPeerCertificate = function() {
-    return this._request.connection.getPeerCertificate();
-};
-
-
-
-/*
-    Function: getUpgrade
-
-    Returns the value for the Upgrade request header.
-
-    Returns:
-
-      {String} upgrade
+/**
+* Returns the value for the Upgrade request header.
+*
+* @method getUpgrade
+* @return {String} upgrade
 */
 Request.prototype.getUpgrade = function() {
     return this._request.upgrade;
@@ -685,14 +513,11 @@ Request.prototype.getUpgrade = function() {
 
 
 
-/*
-    Function: setEncoding
-
-    Set the encoding for the request body. 
-    
-    Parameters:
-        
-        encoding - {String|Null} Encoding name. `utf8` or `binary`. Defaults to null,
+/**
+* Set the encoding for the request body. 
+*
+* @method setEncoding
+* @param {String|Null} encoding=null `utf8` or `binary`. Defaults to null,
             which means that the `data` event will emit a Buffer object
 */
 Request.prototype.setEncoding = function( encoding ) {
@@ -701,14 +526,11 @@ Request.prototype.setEncoding = function( encoding ) {
 
 
 
-/*
-    Function: trustProxyData
-
-    Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)
-    
-    Parameters:
-        
-        trust - {Boolean} Set true if you have any reverse proxys in front of your server. 
+/**
+* Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)
+*
+* @method trustProxyData
+* @param {Boolean} trust Set true if you have any reverse proxys in front of your server. 
 */
 Request.prototype.trustProxyData = function( trust ) {
     this._trustProxyData = trust;
@@ -716,18 +538,11 @@ Request.prototype.trustProxyData = function( trust ) {
 
 
 
-/*
-    Function: getReferrer
-
-    Get the referrer URL.
-    
-    returns:
-        
-        {String} referrer
-        
-    See Also: 
-    
-        <getReferer>
+/**
+* Get the referrer URL
+*
+* @method getReferrer
+* @return {String} referrer
 */
 Request.prototype.getReferrer = function() {
     return this.get( 'Referer' ) || '';
@@ -735,31 +550,21 @@ Request.prototype.getReferrer = function() {
 
 
 
-/*
-    Function: getReferer
-
-    Get the referrer URL. Same as <Referrer> but misspelled
-    
-    returns:
-        
-        {String} referrer
-        
-    See Also: 
-    
-        <getReferrer>
+/**
+* Get the referrer URL. Same as <Referrer> but misspelled as it is in the specs
+*
+* @method getReferer
+* @return {String} referrer
 */
 Request.prototype.getReferer = Request.prototype.getReferrer;
 
 
 
-/*
-    Function: hasDoNotTrack
-
-    Determine whether the client is sending a Do-Not-Track request header
-    
-    returns:
-        
-        {Boolean} true if the header exists, otherwise false
+/**
+* Determine whether the client is sending a Do-Not-Track request header
+*
+* @method hasDoNotTrack
+* @return {Boolean} true if the header exists, otherwise false
 */
 Request.prototype.hasDoNotTrack = function() {
     return this.get( 'DNT' ) == 1 ? true : false;
@@ -767,14 +572,11 @@ Request.prototype.hasDoNotTrack = function() {
 
 
 
-/*
-    Function: getConnection
-
-    Get the value of the `Connection` header field of client request
-    
-    returns:
-        
-        {String} a string containing the Connection header value
+/**
+* Get the value of the `Connection` header field of client request
+*
+* @method getConnection
+* @return {String} connection header value
 */
 Request.prototype.getConnection = function() {
     return this.get( 'Connection' ) || '';
@@ -782,14 +584,11 @@ Request.prototype.getConnection = function() {
 
 
 
-/*
-    Function: getUpgrades
-
-    Get value/s of the `Upgrade` field of the request header
-    
-    returns:
-        
-        {Array} values of the `Upgrade` header
+/**
+* Get values of the `Upgrade` field of the request header
+*
+* @method getUpgrades
+* @return {Array} values of the `Upgrade` header
 */
 Request.prototype.getUpgrades = function() {
     if (this._request.length === 0) {
@@ -804,14 +603,11 @@ Request.prototype.getUpgrades = function() {
 
 
 
-/*
-    Function: hasUpgrade
-
-    Determine whether the client is asking for a protocol upgrade
-    
-    returns:
-        
-        {Boolean} a string containing the Connection header value
+/**
+* Determine whether the client is asking for a protocol upgrade
+*
+* @method hasUpgrade
+* @return {Boolean} true if upgrade field is set otherwise false
 */
 Request.prototype.hasUpgrade = function() {
     return this.getConnection().toLowerCase() === 'upgrade' ? true : false;
@@ -819,39 +615,11 @@ Request.prototype.hasUpgrade = function() {
 
 
 
-/*
-    Function: getTransport
-
-    Determine the transport used by client to make the request (i.e XHR, WS, HTTP)
-    
-    returns:
-        
-        {Boolean} a string containing the Connection header value
-*/
-Request.prototype.getTransport = function() {
-    if ( !this._transport ) {
-        if ( this.isXmlHttpRequest() ) {
-            this._transport = 'XHR';
-        } else if ( this.isWebSocketRequest() ) {
-            this._transport = 'WS';
-        } else {
-            this._transport = 'HTTP';
-        }
-    }
-    
-    return this._transport;
-};
-
-
-
-/*
-    Function: get
-
-    Get the value of a specified HTTP request header
-    
-    returns:
-        
-        {String} Value of HTTP header
+/**
+* Get the value of a specified HTTP request header
+*
+* @method get
+* @return {String} Value of HTTP header
 */
 Request.prototype.get = function( header ) {
     return this._request.headers[ (header || '').toLowerCase() ];
@@ -859,19 +627,13 @@ Request.prototype.get = function( header ) {
 
 
 
-/*
-    Function: getHeaderDate
-
-        Get the value of a HTTP header as a Date object.. if it is a valid representaion of a date
-        
-    Parameters:
-    
-        header - {String} Name of http header for which to get date value
-        defaultValue - {Date} Date object to be returned incase the specified HTTP header does not exist or is empty
-    
-    returns:
-    
-        {Date} Requested date
+/**
+* Get the value of a HTTP header as a Date object.. if it is a valid representaion of a date
+*
+* @method getHeaderDate
+* @param {String} header Name of http header for which to get date value
+* @param {Date} defaultValue Date object to be returned incase the specified HTTP header does not exist or is empty
+* @return {Date} Requested date
 */
 Request.prototype.getHeaderDate = function( header, defaultValue ) {
     var date = this.get( header );
@@ -889,12 +651,11 @@ Request.prototype.getHeaderDate = function( header, defaultValue ) {
 
 
 
-
-/*
-    Function: _parseCookies
-
-        Parse the cookies sent by the client and create a `Cookie` object for each of them
-
+/**
+* Parse the cookies sent by the client and create a `Cookie` object for each of them
+*
+* @method _parseCookies
+* @private
 */
 Request.prototype._parseCookies = function() {
     var cookies = this.get( 'Cookie' ) || '';
@@ -916,18 +677,12 @@ Request.prototype._parseCookies = function() {
 
 
 
-/*
-    Function: getCookie
-
-        Get the specified cookie as a `Cookie` object
-        
-    Parameters:
-        
-        name - {String} Name of cookie
-        
-    Returns:
-    
-        {String} the value of the cookie
+/**
+* Get the specified cookie as a `Cookie` object
+*
+* @method getCookie
+* @param {String} name Name of cookie
+* @return {String} the value of the cookie
 */
 Request.prototype.getCookie = function( name ) {
     return this._cookies[ name ].getValue();
@@ -936,12 +691,12 @@ Request.prototype.getCookie = function( name ) {
 
 
 
-/*
-    Function: pause
-    
-        Pause a client request. Calls native request.pause() method. Stops the request from
+/**
+* Pause a client request. Calls native request.pause() method. Stops the request from
             emmiting any new events until `resume` is called. Usefull to make sure 
             events not be missed while performing IO operationa.
+*
+* @method pause
 */
 Request.prototype.pause = function() {
     this._request.pause();
@@ -950,10 +705,10 @@ Request.prototype.pause = function() {
 
 
 
-/*
-    Function: resume
-    
-        Resume a paused request
+/**
+* Resume a paused request
+*
+* @method resume
 */
 Request.prototype.resume = function() {
     this._request.resume();
@@ -961,14 +716,13 @@ Request.prototype.resume = function() {
 
 
 
-/*
-    Function: setRouteObject
-    
-        Set the reference to the route object for the request, useful for getting quick 
+/**
+* Set the reference to the route object for the request, useful for getting quick 
         access to the route object 
-        
-    Parameters:
-        route - {Object} reference to the route object
+*
+* @method setRouteObject
+* @param {Object} route Reference to the route object
+* @return {String} the value of the cookie
 */
 Request.prototype.setRouteObject = function( route ) {
     this._routeObject = route;
@@ -976,27 +730,25 @@ Request.prototype.setRouteObject = function( route ) {
 
 
 
-/*
-    Function: getRouteObject
-    
-        Get a reference to the route object for the request, useful for getting
+/**
+* Get a reference to the route object for the request, useful for getting
         quick access to the route object 
-        
-    Returns: 
-        {Object} reference to route object
+*
+* @method getRouteObject
+* @return {Object} reference to route object
 */
 Request.prototype.getRouteObject = function() {
     return this._routeObject;
 };
 
 
-/*
-    Function: setApplet
-    
-        Set a reference to the applet object that the Router has assigned this Request to 
-        
-    Parameters:
-        applet - {Object} reference to applet object
+
+/**
+* Set a reference to the applet object to which the Router has assigned this Request
+*
+* @method setApplet
+* @param {Object} route Reference to the route object
+* @return {Object} applet Reference to applet object
 */
 Request.prototype.setApplet = function( applet ) {
     this._appletObject = applet;
@@ -1004,25 +756,22 @@ Request.prototype.setApplet = function( applet ) {
  
  
 
-/*
-    Function: getApplet
-    
-        Get a reference to the applet instance object this request is assigned to
-                
-    Returns: 
-        {Object} reference to applet object
+/**
+* Get a reference to the applet instance object this request is assigned to
+*
+* @method getApplet
+* @return {Object} reference to applet object
 */
 Request.prototype.getApplet = function() {
     return this._appletObject;
 };
 
-/*
-    Function: getFormData
-    
-        Get a reference to the form data sent with user request
-                
-    Returns: 
-        {Object} reference to form data object. Object contains properties `files` and `fields`
+
+/**
+* Get a reference to the form data sent with user request
+*
+* @method getFormData
+* @return {Object} reference to form data object. Object contains properties `files` and `fields`
             Both are arrays
 */
 Request.prototype.getFormData = function() {

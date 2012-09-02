@@ -20,22 +20,35 @@
 
 var bcrypt = require('bcrypt');
 
-var Permission = module.exports = function(app) {
-    this._app = app;
-    this._cookieName = app.config.SESSION_COOKIE_NAME;
-    app.addInitDependency(this._onInit());
+
+/**
+* Permission system for Firefly
+*
+* @class Permission
+* @module Services
+* @constructor
+* @param {Object} firefly Reference to the application Firefly object
+*/
+var Permission = module.exports = function(firefly) {
+    this._app = firefly;
+    this._cookieName = firefly.config.SESSION_COOKIE_NAME;
+    //firefly.addInitDependency(this._onInit());
     
-    app.router.addRouteRequirement('authenticated', this._getAuthenticatedChecker());
-    app.router.addRouteRequirement('verified', this._getVerifiedChecker());
-    app.router.addRouteRequirement('group', this._getGroupChecker());
+    firefly.router.addRouteRequirement('authenticated', this._getAuthenticatedChecker());
+    firefly.router.addRouteRequirement('verified', this._getVerifiedChecker());
+    firefly.router.addRouteRequirement('group', this._getGroupChecker());
 
     
-    this.sessionManager = app.get('SessionManager');
+    this.sessionManager = firefly.get('SessionManager');
 };
 
-/*
-    This is called after a session manager is created.
 
+
+/**
+* function to be called on application initialization. *Not* registered with firefly.
+*
+* @method _onInit
+* @private
 */
 Permission.prototype._onInit = function() {
     var self = this;
@@ -45,6 +58,20 @@ Permission.prototype._onInit = function() {
 };
 
 
+
+/**
+* Returns a function that checks to make sure user is authenticated
+*
+* @method _getAuthenticatedChecker
+* @private
+* @return {Function} fn
+*
+* @example
+*       //the function returned takes four parameters:
+        function(request, response, rule, fn) {
+            
+        }
+*/
 Permission.prototype._getAuthenticatedChecker = function() {
     var self = this;
 
@@ -64,7 +91,19 @@ Permission.prototype._getAuthenticatedChecker = function() {
 
 
 
-
+/**
+* Returns a function that checks to make sure user is verified (Email.. or any other means)
+*
+* @method _getVerifiedChecker
+* @private
+* @return {Function} fn
+*
+* @example
+*       //the function returned takes four parameters:
+        function(request, response, rule, fn) {
+            
+        }
+*/
 Permission.prototype._getVerifiedChecker = function() {
     var self = this;
     //fn takes  ruleSatisfied and end
@@ -90,9 +129,13 @@ Permission.prototype._getVerifiedChecker = function() {
 };
 
 
-/*
-
-
+/**
+* Checks if client has a valid session
+*
+* @method hasValidSession
+* @param {Object} request Reference to request object
+* @param {Function} callback function which will take a boolean as its argument.
+*   The argument will be true if the session is valid, otherwise false
 */
 Permission.prototype.hasValidSession = function(request, fn) {
     var sessId = request.getCookie(self._cookieName);

@@ -17,14 +17,15 @@
 */
 
 'use strict';
-/*
-    Function: Cookie
 
-        Cookie object constructor
 
-    Parameters:
-
-        properties - properties of the cookie object. ie {name: 'foo', value:'cookievalue123456798'}
+/**
+* Cookie object constructor
+*
+* @class Cookie
+* @module Core
+* @constructor
+* @param {Object} properties Properties of the cookie object. ie {name: 'foo', value:'cookievalue123456798'}
 */
 var Cookie = module.exports = function( properties ) {
     this._isSecure = false;
@@ -38,14 +39,11 @@ var Cookie = module.exports = function( properties ) {
 
 
 
-/*
-    Function: toString
-
-        String representation of the cookie for setting in HTTP header
-
-    Returns:
-
-        {String} cookie name
+/**
+* String representation of the cookie for setting in HTTP header
+*
+* @method toString
+* @return {String} String representation of the cookie
 */
 Cookie.prototype.toString = function() {
     var secureFlag = this._isSecure ? ' Secure;' : '';
@@ -67,14 +65,11 @@ Cookie.prototype.toString = function() {
 
 
 
-/*
-    Function: getExpires
-
-        Get the cookie's `Expires` directive. 
-
-    Returns:
-
-        {Date} cookie expires value as a Date object
+/**
+* Get the cookie's `Expires` directive. 
+*
+* @method getExpires
+* @return {Date} cookie expires value as a Date object
 */
 Cookie.prototype.getExpires = function() {
     return this._expires;
@@ -82,14 +77,11 @@ Cookie.prototype.getExpires = function() {
 
 
 
-/*
-    Function: setExpires
-
-        Set the cookie's `Expires` directive. 
-
-    Parameters:
-
-        expires - {Date} value to set as the cookie's expires value
+/**
+* Set the cookie's `Expires` directive.
+*
+* @method setExpires
+* @param {Date} expires value to set as the cookie's expires value
 */
 Cookie.prototype.setExpires = function( expires ) {
     this._expires = expires;
@@ -97,14 +89,11 @@ Cookie.prototype.setExpires = function( expires ) {
 
 
 
-/*
-    Function: getName
-
-        Returns the name of the Cookie
-
-    Returns:
-
-        {String} cookie name
+/**
+* Returns the name of the Cookie
+*
+* @method getName
+* @return {String} cookie name
 */
 Cookie.prototype.getName = function() {
     return this._name;
@@ -112,14 +101,11 @@ Cookie.prototype.getName = function() {
 
 
 
-/*
-    Function: setName
-
-        Set the cookie's name
-
-    Parameters:
-
-        name - {String} cookie name
+/**
+* Set the cookie's name
+*
+* @method setName
+* @param {String} name cookie name
 */
 Cookie.prototype.setName = function( name ) {
     this._name = name;
@@ -128,14 +114,11 @@ Cookie.prototype.setName = function( name ) {
 
 
 
-/*
-    Function: getValue
-
-        Returns the cookie value
-
-    Returns:
-
-        {String} cookie value
+/**
+* Returns the cookie value
+*
+* @method getValue
+* @return {String} cookie value
 */
 Cookie.prototype.getValue = function() {
     return this._value;
@@ -143,14 +126,11 @@ Cookie.prototype.getValue = function() {
 
 
 
-/*
-    Function: setValue
-
-        Set the cookie value
-
-    Parameters:
-
-        value - {String} the value to set
+/**
+* Set the cookie value
+*
+* @method setValue
+* @param {String} value The value to set
 */
 Cookie.prototype.setValue = function( value ) {
     this._value = value;
@@ -158,14 +138,11 @@ Cookie.prototype.setValue = function( value ) {
 
 
 
-/*
-    Function: getDomain
-
-        Returns the cookie's domain restriction
-
-    Returns:
-
-        {String} cookie domain
+/**
+* Returns the cookie's domain restriction
+*
+* @method getDomain
+* @return {String} cookie domain
 */
 Cookie.prototype.getDomain = function() {
     return this._domain;
@@ -173,15 +150,11 @@ Cookie.prototype.getDomain = function() {
 
 
 
-
-/*
-    Function: setDomain
-
-        Set the cookie's domain restriction
-
-    Parameters:
-
-        domain - {String} cookie domain
+/**
+* Set the cookie's domain restriction
+*
+* @method setDomain
+* @param {String} domain cookie domain
 */
 Cookie.prototype.setDomain = function( domain ) {
     this._domain = domain;
@@ -190,14 +163,11 @@ Cookie.prototype.setDomain = function( domain ) {
 
 
 
-/*
-    Function: getPath
-
-        Returns the cookies path restriction
-
-    Returns:
-
-        {String} cookie path
+/**
+* Returns the cookies path restriction
+*
+* @method getPath
+* @return {String} cookie path restriction
 */
 Cookie.prototype.getPath = function() {
     return this._path;
@@ -205,14 +175,11 @@ Cookie.prototype.getPath = function() {
 
 
 
-/*
-    Function: setPath
-
-        Set the cookie's path restriction
-
-    Parameters:
-
-        path - {String} cookie path
+/**
+* Set the cookie's path restriction
+*
+* @method setPath
+* @param {String} path cookie path
 */
 Cookie.prototype.setPath = function( path ) {
     this._path = path;
@@ -221,14 +188,11 @@ Cookie.prototype.setPath = function( path ) {
 
 
 
-/*
-    Function: isSecure
-
-        Determine if the `Secure` flag is set on the cookie
-
-    Returns:
-
-        {Boolean} Is cookie secure
+/**
+* Determine if the `Secure` flag is set on the cookie
+*
+* @method isSecure
+* @return {Boolean} true if it is a secure cookie otherwise false
 */
 Cookie.prototype.isSecure = function() {
     return this._isSecure;
@@ -236,16 +200,12 @@ Cookie.prototype.isSecure = function() {
 
 
 
-
-/*
-    Function: isSecure
-
-        Set a boolean value that will determine if the `Secure` flag is set on the cookie
+/**
+* Set a boolean value that will determine if the `Secure` flag is set on the cookie
             Defaults to false
-
-    Parameters:
-
-        isSecure - {Boolean} Is cookie secure
+*
+* @method setSecure
+* @param {Boolean} isSecure Is cookie secure
 */
 Cookie.prototype.setSecure = function( isSecure ) {
     this._isSecure = isSecure;

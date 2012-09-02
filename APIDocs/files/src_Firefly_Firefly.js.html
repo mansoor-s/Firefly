@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src\Firefly\Firefly.js - Firefly</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.5.1&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title="Firefly"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.1.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Cookie.html">Cookie</a></li>
+            
+                <li><a href="..&#x2F;classes/Firefly.html">Firefly</a></li>
+            
+                <li><a href="..&#x2F;classes/Handlebars.html">Handlebars</a></li>
+            
+                <li><a href="..&#x2F;classes/Mailer.html">Mailer</a></li>
+            
+                <li><a href="..&#x2F;classes/Mongoose.html">Mongoose</a></li>
+            
+                <li><a href="..&#x2F;classes/Permission.html">Permission</a></li>
+            
+                <li><a href="..&#x2F;classes/RenderManager.html">RenderManager</a></li>
+            
+                <li><a href="..&#x2F;classes/Request.html">Request</a></li>
+            
+                <li><a href="..&#x2F;classes/Response.html">Response</a></li>
+            
+                <li><a href="..&#x2F;classes/Router.html">Router</a></li>
+            
+                <li><a href="..&#x2F;classes/Server.html">Server</a></li>
+            
+                <li><a href="..&#x2F;classes/SessionManager.html">SessionManager</a></li>
+            
+                <li><a href="..&#x2F;classes/WSServer.html">WSServer</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/Core.html">Core</a></li>
+            
+                <li><a href="..&#x2F;modules/Services.html">Services</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src\Firefly\Firefly.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;*
+    Firefly - Node.js CMS
+    Copyright (C) &lt;2012&gt;  &lt;Mansoor Sayed&gt;
+
+    This program is free software: you can redistribute it and&#x2F;or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see &lt;http:&#x2F;&#x2F;www.gnu.org&#x2F;licenses&#x2F;&gt;.
+*&#x2F;
+
+&#x27;use strict&#x27;;
+
+var fs = require( &#x27;fs&#x27; );
+var async = require( &#x27;async&#x27; );
+
+var Server = require( &#x27;..&#x2F;Server&#x2F;Server.js&#x27; );
+var WSServer = require( &#x27;..&#x2F;Server&#x2F;WSServer.js&#x27; );
+var Router = require( &#x27;..&#x2F;Router&#x2F;Router.js&#x27; );
+var Request = require( &#x27;..&#x2F;Http&#x2F;Request.js&#x27; );
+var Response = require( &#x27;..&#x2F;Http&#x2F;Response.js&#x27; );
+var RenderManager = require( &#x27;..&#x2F;RenderManager&#x2F;RenderManager.js&#x27; );
+
+
+&#x2F;**
+* Firefly object constructor
+*
+* @class Firefly
+* @module Core
+* @constructor
+* @param {Object} appRoutes reference to the application routes object
+* @param {Object} config reference to application config object
+*&#x2F;
+var Firefly = module.exports = function( appRoutes, config ) {
+    if ( typeof appRoutes !== &#x27;object&#x27; || typeof config !== &#x27;object&#x27; ) {
+        throw Error( &#x27;name: &quot;Bad Parameter&quot;, description: &quot;Expecting type &#x60;object&#x60; for parameters &#x60;routes&#x60; and &#x60;config&#x60;.&quot;&#x27; );
+    }
+    
+    this.config = config;
+
+    this._trustProxyData = false;
+
+    this._appRoutes = appRoutes;
+
+    this._services = {};
+
+    this.server = new Server( this, this.getRequestHandler() );
+    
+    this._wsServers = {};
+    
+    this.router = new Router( this, this.server );
+
+    this._services[&#x27;Server&#x27;] = this.server;
+    this._services[&#x27;Router&#x27;] = this.router;
+
+    this._appletsRaw = {};
+    this._applets = {};
+    this.renderManager;
+
+    this._initSequence = [];
+    
+    this._viewEngine;
+    this._initialized = false;
+    
+    this.autoloadApplets();
+};
+
+
+
+
+&#x2F;**
+* Initialize the application. Caches&#x27;s all views and starts HTTP and WebSocket servers
+*
+* @method init
+* @param {Function} fn Function to call on HTTP server start
+*&#x2F;
+Firefly.prototype.init = function ( fn ) {
+    var self = this;
+    this._initialized = true;
+    
+    this.server.start( function() {
+        if ( self.config.AUTO_START_WS_SERVER === true ) {
+            var wsRoutes = self.router.getWSRoutes();
+            for ( var wsRoute in wsRoutes ) {
+                self._wsServers[ wsRoute ] = new WSServer( self, wsRoutes[ wsRoute ], self.getWSRequestHandler() );
+            }
+        }
+
+        &#x2F;&#x2F;execute init sequence for services
+        async.series(self._initSequence, function() {
+            self.router.buildRoutes();
+            
+            self.renderManager = new RenderManager( self, self._viewEngine );
+            
+            self.renderManager.buildViewMap(fn);
+        });
+    } );
+};
+
+
+
+&#x2F;**
+* Initialize WebSocket servers. Use this seperatly if using application with cluster. (NOTE: set AUTO_START_WS_SERVER to false in app config object)
+*
+* @method initWS
+*&#x2F;
+Firefly.prototype.initWS = function() {
+    if ( this.config.AUTO_START_WS_SERVER === false ) {
+        var wsRoutes = this.router.getWSRoutes();
+        for ( var wsRoute in wsRoutes ) {
+            this._wsServers[ wsRoute ] = new WSServer( this, wsRoutes[ wsRoute ], this.getWSRequestHandler() );
+        }
+    }
+};
+
+
+
+
+&#x2F;**
+* Autoload and Use application Applets. This function performes blocking IO (require())
+*
+* @method autoloadApplets
+*&#x2F;
+Firefly.prototype.autoloadApplets = function() {
+    var rawAppletNames = fs.readdirSync( this.config.APPLETS_DIR );
+    
+    for (var i = 0, len = rawAppletNames.length; i &lt; len; ++i ) {
+        var thisDir = this.config.APPLETS_DIR + rawAppletNames[ i ];
+        var stat = fs.statSync( thisDir );
+        if ( !stat.isDirectory() ) {
+            continue;
+        }
+        
+        var appletPath = this.config.APPLETS_DIR + rawAppletNames[ i ];
+        
+        this._appletsRaw[ rawAppletNames[ i ] ] = {
+            object: require( appletPath + &#x27;&#x2F;index.js&#x27; ),
+            routes: require( appletPath + &#x27;&#x2F;Routes.js&#x27; ),
+            appletViewDir: appletPath + &#x27;&#x2F;views&#x2F;&#x27;
+        };
+    }
+};
+
+
+
+&#x2F;**
+* Get a reference to an applet
+*
+* @method getApplet
+* @param {String} applets Name of the applet instance.. as defined on the main application Route file
+* @returns {Object} Reference to applet
+*&#x2F;
+Firefly.prototype.getApplet = function( applet ) {
+    return this._applets[ applet ];
+};
+
+
+
+
+&#x2F;**
+* Return all un-initialized applets
+*
+* @method getAllRawApplets
+* @return {Object} Hash-array contains properties &#x60;object&#x60;, &#x60;routes&#x60; and &#x60;viewPath&#x60;.
+*&#x2F;
+Firefly.prototype.getAllRawApplets = function() {
+    return this._appletsRaw;
+};
+
+    
+
+&#x2F;**
+* Return information about all of the registered applets
+*
+* @method getAllApplets
+* @return {Object} Hash-array contains properties &#x60;object&#x60; and &#x60;routes&#x60;.
+*&#x2F;
+Firefly.prototype.getAllApplets = function() {
+    return this._appletsRaw;
+};
+
+
+
+&#x2F;**
+* Set an object as a service, accessable application wide
+*
+* @method set
+* @param {String} name Name of service being set
+* @param {String} refrence to service object
+*&#x2F;
+Firefly.prototype.set = function( name, obj ) {
+    if ( !name || !obj ) {
+        throw Error( &#x27;name: &quot;Bad Parameter&quot;, discription: &quot;Expected parameters of types &#x60;string&#x60; and &#x60;object&#x60;&quot;&#x27; );
+    }
+    
+    this._services[name] = obj;
+};
+
+
+
+&#x2F;**
+* Get a reference to the requested service
+*
+* @method get
+* @param {String} name Name of service being requested
+* @return {Object} Requested service or undefined if none exist by that handle
+*&#x2F;
+Firefly.prototype.get = function( name ) {
+    return this._services[name];
+};
+
+
+
+&#x2F;**
+* Add an initialized applet object
+*
+* @method addApplet
+* @param {String} name Name of applet
+* @param {Object} applet reference to applet object
+* @return {Object} Requested service or undefined if none exist by that handle
+*&#x2F;
+Firefly.prototype.addApplet = function( name, applet ) {
+    if ( !name || !applet ) {
+        throw Error( &#x27;name: &quot;Bad Parameter&quot;, description: &quot;Expected parameters of types &#x60;string&#x60; and &#x60;object&#x60;&quot;&#x27; );
+    }
+
+    this._applets[ name ] = applet;
+};
+
+
+
+&#x2F;**
+* Get the application routes object that was passed to Firefly by the app
+*
+* @method getAppRoutes
+* @return {Object} Application routes object
+*&#x2F;
+Firefly.prototype.getAppRoutes = function() {
+    return this._appRoutes;
+};
+
+
+
+&#x2F;**
+* Wrapper for the request handler of all client requests
+*
+* @method getRequestHandler
+* @return {Function} request handler
+*&#x2F;
+Firefly.prototype.getRequestHandler = function() {
+    var self = this;
+    return function( req, res ) {
+        try {
+            var request = new Request( req );
+            var response = new Response( res, request, self );
+
+            if ( self.server.isSecure() ) {
+                request.setServerSecure( true );
+            }
+
+            if ( self._trustProxyData ) {
+                request.trustProxyData(true);
+            }
+
+            if(request.getMethod() === &#x27;POST&#x27;) {
+                request.parseForm(function() {
+                    self.router.findRoute( request, response );
+                });
+            } else {
+                self.router.findRoute( request, response );
+            }
+            
+        } catch( e ) {
+            self.catch( e );
+        }
+    };
+};
+
+
+
+&#x2F;**
+* Returns call back to be used for all WS client connections
+*
+* @method getWSRequestHandler
+* @return {Function} WS request handler
+*&#x2F;
+Firefly.prototype.getWSRequestHandler = function() {
+    var self = this;
+    &#x2F;&#x2F; connection handler
+    return function( wsInfo, socket ) {
+        try {
+            &#x2F;&#x2F;find correct connect controller
+            self.router.findWSRoute( wsInfo, socket, {
+                &#x27;id&#x27;: &#x27;connection&#x27;
+            });
+            
+            &#x2F;&#x2F;find correct message controller
+            socket.on( &#x27;message&#x27;, function( dataRaw ) {
+                &#x2F;&#x2F;parse JSON if it is in the notation otherwise pass it as is
+                var data;
+                try {
+                    data = JSON.parse( dataRaw );
+                } catch ( e ) {
+                    data = dataRaw;
+                }
+                
+                self.router.findWSRoute( wsInfo, socket, data );
+            } );
+            
+            socket.on( &#x27;disconnect&#x27;, function() {
+                self.router.findWSRoute( wsInfo, socket, {
+                    &#x27;id&#x27;: &#x27;disconnect&#x27;
+                } );
+            } );
+        } catch( e ) {
+            self.catch( e );
+        }
+    };
+};
+
+
+
+&#x2F;**
+* Handle application-wide exceptions
+*
+* @method catch
+* @param {Object} request Reference to request object
+* @param {Object} response Reference to response object
+*&#x2F;
+Firefly.prototype.catch = function( err, request, response ) {
+    var logger = this.get( &#x27;Logger&#x27; );
+    logger.log( err );
+
+};
+
+
+
+&#x2F;**
+* Set a view&#x2F;templating engine for Firefly to use
+*
+* @method setViewEngine
+* @param {Object} engine reference to the templating engine object
+*&#x2F;
+Firefly.prototype.setViewEngine = function( engine ) {
+    if (this._initialized === true) {
+        this.renderManager.setViewEngine( engine );
+    } else {
+        this._viewEngine = engine;
+    }
+};
+
+
+
+&#x2F;**
+* Add a callback function to be called when Firefly is initialized. These functions are executed in sequence.
+*
+* @method addInitDependency
+* @param {Function} fn callback function to call with another callback function as its parameter which it must call
+            to continue the init sequence
+*&#x2F;
+Firefly.prototype.addInitDependency = function( fn ) {
+    this._initSequence.push(fn);
+};
+
+
+
+&#x2F;**
+* Should Firefly trust data coming from a proxy. (i.e &#x60;HTTP_X_FORWARDED_FOR&#x60; header)
+*
+* @method trustProxyData
+* @param {Boolean} trust Set true if you have any reverse proxys in front of your server. 
+*&#x2F;
+Firefly.prototype.trustProxyData = function( trust ) {
+    this._trustProxyData = trust;
+};
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

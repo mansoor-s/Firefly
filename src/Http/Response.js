@@ -20,14 +20,14 @@
 
 var Cookie = require( './Cookie.js' );
 
-/*
-    Function: Response
 
-        Response object constructor
-
-    Parameters:
-
-        res - Native node response object
+/**
+* Response object constructor
+*
+* @class Response
+* @module Core
+* @constructor
+* @param {Object} res Native node response object
 */
 var Response = module.exports = function( resNative, fReq, firefly ) {
     this._response = resNative;
@@ -45,20 +45,18 @@ var Response = module.exports = function( resNative, fReq, firefly ) {
     this._charset = 'UTF-8';
     
     this._response.statusCode = 200;
+    
+    this._sent = false;
 };
 
 
 
-/*
-    Function: toString
-
-        Creates a string represnetaion of the response object including both 
-            content and header sections. **This is broken**
-    
-    returns:
-    
-        String representation of HTTP response
-    
+/**
+* Creates a string represnetaion of the response object including both 
+*            content and header sections. **This is broken**
+*
+* @method toString
+* @param {String} String representation of HTTP response
 */
 Response.prototype.toString = function() {
     return JSON.stringify( this._response );
@@ -66,14 +64,11 @@ Response.prototype.toString = function() {
 
 
 
-/*
-    Function: getNativeResponse
-    
-        Exposes the native Node response object
-    
-    returns:
-    
-        {Object} Native Node esponse object
+/**
+* Exposes the native Node response object
+*
+* @method getNativeResponse
+* @param {Object} Native Node esponse object
 */
 Response.prototype.getNativeResponse = function() {
     return this._response;    
@@ -81,16 +76,12 @@ Response.prototype.getNativeResponse = function() {
 
 
 
-
-/*
-    Function: getAge
-
-        Get age of the response
-    
-    returns:
-    
-        {Number | undefined} Header's value as a type Number, if none is found 
-            then `undefined` is returned
+/**
+* Get age of the response
+*
+* @method getAge
+* @return {Number | undefined} Header's value as a type Number, if none is found 
+*           then `undefined` is returned
 */
 Response.prototype.getAge = function() {
     var age;
@@ -102,14 +93,11 @@ Response.prototype.getAge = function() {
 
 
 
-/*
-    Function: getEncoding
-
-        Get the name of the encoding
-    
-    returns:
-    
-        {String} encoding
+/**
+* Get the name of the encoding
+*
+* @method getEncoding
+* @return {String} encoding
 */
 Response.prototype.getEncoding = function() {
     return this._encoding;
@@ -117,14 +105,11 @@ Response.prototype.getEncoding = function() {
 
 
 
-/*
-    Function: setEncoding
-
-        Change the value of the response's encoding, default is `utf8`
-        
-    Parameters:
-    
-        encoding - {String} encoding to use
+/**
+* Change the value of the response's encoding, default is `utf8`
+*
+* @method setEncoding
+* @return {String} encoding to use
 */
 Response.prototype.setEncoding = function( encoding ) {
     this._encoding = encoding;
@@ -132,28 +117,22 @@ Response.prototype.setEncoding = function( encoding ) {
 
 
 
-/*
-    Function: getContent
-
-        Get content of the response object
-    
-    returns:
-    
-        {String} Content of response object
+/**
+* Get content of the response object
+*
+* @method getContent
+* @return {String} Content of response object
 */
 Response.prototype.getContent = function() {
     return this._content;
 };
 
 
-/*
-    Function: setDate
-
-        Set the value of the `Date` HTTP header
-    
-    parameters:
-    
-        date - {Date} value to set as the value of `Date` header
+/**
+* Set the value of the `Date` HTTP header
+*
+* @method setDate
+* @param {Date} date Value to set as the value of `Date` header
 */
 Response.prototype.setDate = function( date ) {
     this.setHeaderDate( date);
@@ -161,14 +140,11 @@ Response.prototype.setDate = function( date ) {
 
 
 
-/*
-    Function: getDate
-
-        Get a Date object with the value of the `Date` HTTP header
-    
-    returns:
-    
-        {Date} value of `Date` header
+/**
+* Get a Date object with the value of the `Date` HTTP header
+*
+* @method getDate
+* @return {Date} value of `Date` header
 */
 Response.prototype.getDate = function() {
     return this.getHeaderDate( 'Date' );
@@ -176,20 +152,14 @@ Response.prototype.getDate = function() {
 
 
 
-/*
-    Function: getHeaderDate
-
-        Get the value of a HTTP header as a Date object.. if it is a valid representaion of a date
-        
-    Parameters:
-    
-        header - {String} Name of http header for which to get date value
-        defaultValue - {Date} Date object to be returned incase the specified HTTP header
+/**
+* Get the value of a HTTP header as a Date object.. if it is a valid representaion of a date
+*
+* @method getHeaderDate
+* @param {String} header Name of http header for which to get date value
+* @param {Date} defaultValue Date object to be returned incase the specified HTTP header
             does not exist or is empty
-    
-    returns:
-    
-        {Date} Requested date
+* @return {Date} Requested date
 */
 Response.prototype.getHeaderDate = function( header, defaultValue ) {
     var date = this.get( header );
@@ -206,13 +176,13 @@ Response.prototype.getHeaderDate = function( header, defaultValue ) {
 
 
 
-/*
-    Function: setHeaderDate
-
-        Set the value of the specified header to the value of the specified Date object (UTC representation)
-        
-    header - {String} Name of header field
-    date - {Date} date value
+/**
+* Set the value of the specified header to the value of the specified Date object (UTC representation)
+*
+* @method setHeaderDate
+* @param {String} header Name of header field
+* @param {Date} data date value
+* @return {Date} value of `Date` header
 */
 Response.prototype.setHeaderDate = function( header, date ) {
     this.setHeader( header, date.toUTCString() );
@@ -220,14 +190,11 @@ Response.prototype.setHeaderDate = function( header, date ) {
 
 
 
-/*
-    Function: getEtag
-
-        Get the value of the Etag header value
-    
-    returns:
-    
-        {String} value of `Etag` HTTP header
+/**
+* Get the value of the Etag header value
+*
+* @method getEtag
+* @return {String} value of `Etag` HTTP header
 */
 Response.prototype.getEtag = function() {
     return this.getHeader( 'Etag' );
@@ -235,30 +202,25 @@ Response.prototype.getEtag = function() {
 
 
 
-/*
-    Function: getExpires
-
-        Get the value of the `Expires` header as a Date object
-    
-    returns:
-    
-        {Date} Response expiration date
+/**
+* Get the value of the `Expires` header as a Date object
+*
+* @method getExpires
+* @return {Date} Response expiration date
 */
 Response.prototype.getExpires = function() {
     return this.getHeaderDate( 'Expires' );
 };
 
 
-/*
-    Function: getMaxAge
 
-        Get the maximum time after which the response will be considered stale as a Date object.
-            First, it checks for a `s-maxage` directive, then a `max-age` directive, and then it falls
-            back on an `expires` header. `undefined` is returned when no maximum age can be established.
-    
-    returns:
-    
-        String representation of HTTP response
+/**
+* Get the maximum time after which the response will be considered stale as a Date object.
+*           First, it checks for a `s-maxage` directive, then a `max-age` directive, and then it falls
+*           back on an `expires` header. `undefined` is returned when no maximum age can be established.
+*
+* @method getMaxAge
+* @return {String} String representation of HTTP response
 */
 Response.prototype.getMaxAge = function() {
     var age;
@@ -274,14 +236,13 @@ Response.prototype.getMaxAge = function() {
 };
 
 
-/*
-    Function: getStatusCode
 
-        Get the response's HTTP status code
-    
-    returns:
-    
-        {Number} Status code
+
+/**
+* Get the response's HTTP status code
+*
+* @method getStatusCode
+* @return {Number} Status code
 */
 Response.prototype.getStatusCode = function() {
     return this._response.statusCode;
@@ -290,14 +251,11 @@ Response.prototype.getStatusCode = function() {
 
 
 
-/*
-    Function: getlety
-
-        Get the lety HTTP header's values in an array 
-        
-    returns:
-    
-        {Array} lety values
+/**
+* Get the lety HTTP header's values in an array 
+*
+* @method getlety
+* @return {Array} lety values
 */
 Response.prototype.getlety = function() {
     var lety = this.get( 'lety' ) || '';
@@ -307,13 +265,11 @@ Response.prototype.getlety = function() {
 
 
 
-/*
-    Function: setlety
-
-        Set the `lety` header
-        
-    Parameters:
-        headers - {Array | String} An Array or String containing list of headers.
+/**
+* Set the `lety` header
+*
+* @method setlety
+* @param {Array | String} headers An Array or String containing list of headers.
             if it is a string then the headers must be comma seperated
 */
 Response.prototype.setlety = function( headers ) {
@@ -322,13 +278,11 @@ Response.prototype.setlety = function( headers ) {
 
 
 
-/*
-    Function: isCachable
-
-        Determin if the response is cachable
-
-    Returns:
-        {Boolean} is response cachable
+/**
+* Determin if the response is cachable
+*
+* @method isCachable
+* @return {Boolean} is response cachable
 */
 Response.prototype.isCachable = function() {
     
@@ -336,14 +290,11 @@ Response.prototype.isCachable = function() {
 
 
 
-/*
-    Function: isFresh
-
-        Determine if the response is fresh
-        
-    Returns
-    
-        {Boolean} True if it is fresh, otherwise false
+/**
+* Determine if the response is fresh
+*
+* @method isFresh
+* @return {Boolean} True if it is fresh, otherwise false
 */
 Response.prototype.isFresh = function() {
     return this.getTtl > 0;
@@ -351,15 +302,12 @@ Response.prototype.isFresh = function() {
 
 
 
-/*
-    Function: isValidateable
-
-        Determine if the response includes headers that can be used to validate
-            the response with the origin server using a conditional GET request.
-            
-    Returns:
-    
-        {Boolean} True if response is validateable otherwise, false
+/**
+* Determine if the response includes headers that can be used to validate
+*            the response with the origin server using a conditional GET request.
+*
+* @method isValidateable
+* @return {Boolean} True if response is validateable otherwise, false
 */
 Response.prototype.isValidateable = function() {
     if ( this.getHeader( 'Last-Modified' )  !== undefined || this.getHeader( 'ETag' ) !== undefined ) {
@@ -370,14 +318,13 @@ Response.prototype.isValidateable = function() {
 };
 
 
-/*
-    Function: setClientTtl
 
-        Set the time to live for the Response's private cache. This method sets the 
-            Cache-Control and max-age directives
-        
-    Parameters:
-        seconds - {Number} Set the number of seconds (added to the existing age) should 
+/**
+* Set the time to live for the Response's private cache. This method sets the 
+*           Cache-Control and max-age directives
+*
+* @method setClientTtl
+* @param {Number} seconds Set the number of seconds (added to the existing age) should 
             the private TTL be set to 
 */
 Response.prototype.setPrivateTtl = function( seconds ) {
@@ -386,14 +333,12 @@ Response.prototype.setPrivateTtl = function( seconds ) {
 };
 
 
-/*
-    Function: setTtl
-
-        Set the time to live for the Response's shared cache. This method sets the 
-            Cache-Control and s-maxage directives
-        
-    Parameters:
-        seconds - {Number} Set the number of seconds (added to the existing age) 
+/**
+* Set the time to live for the Response's shared cache. This method sets the 
+*           Cache-Control and s-maxage directives
+*
+* @method setTtl
+* @param {Number} seconds Set the number of seconds (added to the existing age) 
             should the shared TTL be set to 
 */
 Response.prototype.setTtl = function( seconds ) {
@@ -402,14 +347,12 @@ Response.prototype.setTtl = function( seconds ) {
 };
 
 
-/*
-    Function: setContent
 
-        Set the response content
-        
-    Parameters:
-    
-        content - {String} String containing content
+/**
+* Set the response content
+*
+* @method setContent
+* @param {String} content String containing content
 */
 Response.prototype.setContent = function( content ) {
     this._content = content;
@@ -417,15 +360,12 @@ Response.prototype.setContent = function( content ) {
 
 
 
-/*
-    Function: setEtag
-
-        Set the ETag header
-
-    Parameters:
-
-        value - {String} value to be set for the ETag header
-        weak - {Bool} boolean value indicating it is a weak Etag
+/**
+* Set the ETag header
+*
+* @method setEtag
+* @param {String} value value to be set for the ETag header
+* @param {Bool} weak boolean value indicating it is a weak Etag
 */
 Response.prototype.setETag = function( value, weak ) {
     if ( value === undefined ) {
@@ -444,14 +384,12 @@ Response.prototype.setETag = function( value, weak ) {
 
 
 
-/*
-    Function: setExpires
 
-        Set the vlaue of the `Expires` HTTP header.
-        
-    Parameters:
-    
-        date - {Date} Date object containing the time value to be set
+/**
+* Set the vlaue of the `Expires` HTTP header.
+*
+* @method setExpires
+* @param {Date} date Date object containing the time value to be set
 */
 Response.prototype.setExpires = function( date ) {
     if ( date === undefined ) {
@@ -463,10 +401,10 @@ Response.prototype.setExpires = function( date ) {
 
 
 
-/*
-    Function: setExpired
-
-        Marks the response stale by setting the Age header to be equal to the maximum age of the response.
+/**
+* Marks the response stale by setting the Age header to be equal to the maximum age of the response.
+*
+* @method setExpired
 */
 Response.prototype.setExpired = function() {
     if ( this.isFresh() ) {
@@ -476,13 +414,11 @@ Response.prototype.setExpired = function() {
 
 
 
-/*
-    Function: setLastModified
-
-        Set the value of the `Last-Modified` HTTP header with the specified Date object
-        
-    Parameters
-        date - {Date} Instance of Date object holding date-time to be set as the last modified header
+/**
+* Set the value of the `Last-Modified` HTTP header with the specified Date object
+*
+* @method setLastModified
+* @param {Date} date Instance of Date object holding date-time to be set as the last modified header
 */
 Response.prototype.setLastModified = function( date ) {
     if ( !date ) {
@@ -495,42 +431,45 @@ Response.prototype.setLastModified = function( date ) {
 
 
 
-
-/*
-    Function: setMaxAge
-
-        Sets the number of seconds after which the response should no longer be considered fresh.
+/**
+* Sets the number of seconds after which the response should no longer be considered fresh
+*
+* @method setMaxAge
+* @param {Number} seconds Number of seconds
 */
-Response.prototype.setMaxAge = function( value ) {
-    this.addCacheControlDirective( 'max-age', value );
+Response.prototype.setMaxAge = function( seconds ) {
+    this.addCacheControlDirective( 'max-age', seconds );
 };
 
 
 
 
-/*
-    Function: setSharedMaxAge
-
-        Sets the number of seconds after which the response should no longer be 
+/**
+* Sets the number of seconds after which the response should no longer be 
             considered fresh by shared caches.
             This methods sets the Cache-Control s-maxage directive.
-            
-    Parameters:
-        value - {Number} Number of seconds
+*
+* @method setSharedMaxAge
+* @param {Number} seconds Number of seconds
 */
-Response.prototype.setSharedMaxAge = function( value ) {
+Response.prototype.setSharedMaxAge = function( seconds ) {
     this.setPublic();
-    this.addCacheControlDirective( 's-maxage', value );
+    this.addCacheControlDirective( 's-maxage', seconds );
 };
 
 
 
 /*
-    Function: setNotModified
+    Function: 
 
-        Set the response as a not modified (304). Will remove any HTTP headers that 
+        
+*/
+/**
+* Set the response as a not modified (304). Will remove any HTTP headers that 
         might contradict this: 'Allow', 'Content-Encoding', 'Content-Language',
         'Content-Length', 'Content-MD5', 'Content-Type', 'Last-Modified'
+*
+* @method setNotModified
 */
 Response.prototype.setNotModified = function() {
     this.setStatusCode( 304 );
@@ -545,10 +484,10 @@ Response.prototype.setNotModified = function() {
 
 
 
-/*
-    Function: setPrivate
-
-        Set reponse as private. This makes the response ineligible for serving other clients.
+/**
+* Set reponse as private. This makes the response ineligible for serving other clients.
+*
+* @method setPrivate
 */
 Response.prototype.setPrivate = function() {
     this.removeCacheControlDirective( 'public' );
@@ -557,10 +496,10 @@ Response.prototype.setPrivate = function() {
 
 
 
-/*
-    Function: setPublic
-
-        Set reponse as public. This makes the response eligible for serving other clients.
+/**
+* Set reponse as public. This makes the response eligible for serving other clients.
+*
+* @method setPublic
 */
 Response.prototype.setPublic = function() {
     this.removeCacheControlDirective( 'private' );
@@ -570,23 +509,22 @@ Response.prototype.setPublic = function() {
 
 
 /*
-    Function: setProtocolVersion
-
-        Set the protoccol version of the response
+* Set the protoccol version of the response
+*
+* method setProtocolVersion
 */
+/*
 Response.prototype.setProtocolVersion = function() {
     
 };
+*/
 
 
-
-/*
-    Function: setStatusCode
-    
-        Set HTTP status code to response
-    
-    Parameters:
-        status - {Number} Status code
+/**
+* Set HTTP status code to response
+*
+* @method setStatusCode
+* @param {Number} status Status code
 */
 Response.prototype.setStatusCode = function( status ) {
     this._response.statusCode = status;
@@ -594,10 +532,10 @@ Response.prototype.setStatusCode = function( status ) {
 
 
 
-/*
-    Function: send
-
-        Send headers + content to client thus ending the client's request
+/**
+* Send headers + content to client thus ending the client's request
+*
+* @method send
 */
 Response.prototype.send = function() {
     //setup response cookies
@@ -612,17 +550,48 @@ Response.prototype.send = function() {
     
     this._response.setHeader('Content-Type', this._contentType);
     this._response.end( this._content, this._encoding );
+    
+    this._sent = true;
 };
 
 
 
-/*
-    Function: _getCacheControlHeader
+/**
+* Send headers + content to client thus ending the client's request
+*
+* @method send
+*/
+Response.prototype.write = function( chunk, encoding ) {
 
-        Get the value of the `Cache-Control` header
-        
-    Return:
-        Cache-Control header value
+    //setup response cookies
+    var cookies = [];
+    for ( var cookie in this._cookies ) {
+        cookies.push( this._cookies[ cookie ].toString() );
+    }
+    
+    if ( cookies.length > 0 ) {
+        this._response.setHeader('Set-Cookie', cookies);
+    }
+    
+    this._response.setHeader('Content-Type', this._contentType);
+    this._response.end( this._content, this._encoding );
+    
+    
+    this._response.write(chunk, this._encoding);
+};
+
+Response.prototype.end = function() {
+    
+};
+
+
+
+/**
+* Get the value of the `Cache-Control` header
+*
+* @method _getCacheControlHeader
+* @private
+* @return {String} Cache-Control header value
 */
 Response.prototype._getCacheControlHeader = function() {
     var parts = [];
@@ -643,18 +612,12 @@ Response.prototype._getCacheControlHeader = function() {
 
 
 
-/*
-    Function: addCacheControlDirective
-
-        Add a cache directive to `Cache-Control` header
-        
-    Parameters:
-        
-        directive - {String} 
-        value - {String} Optional, value for cache directive
-        
-    Return:
-        Cache-Control header value
+/**
+* Add a cache directive to `Cache-Control` header
+*
+* @method addCacheControlDirective
+* @param {String} directie Directive
+* @param {String} [value] Optional value for cache directive
 */
 Response.prototype.addCacheControlDirective = function( directive, value ) {
     if ( value === undefined ) {
@@ -667,15 +630,11 @@ Response.prototype.addCacheControlDirective = function( directive, value ) {
 
 
 
-/*
-    Function: removeCacheControlDirective
-
-        Remove a cache directive to `Cache-Control` header
-        
-    Parameters:
-        
-        directive - {String} name of directive to remove form header
-        value - {String} Optional, value for cache directive
+/**
+* Remove a cache directive to `Cache-Control` header
+*
+* @method removeCacheControlDirective
+* @param {String} directie name of directive to remove form header
 */
 Response.prototype.removeCacheControlDirective = function( directive ) {
     delete this._cacheControl[ directive ];
@@ -685,18 +644,12 @@ Response.prototype.removeCacheControlDirective = function( directive ) {
 
 
 
-/*
-    Function: getCacheControlDirective
-
-        Remove a cache directive to `Cache-Control` header
-        
-    Parameters:
-        
-        directive - {String} name of directive to get
-        
-    Returns:
-    
-        {String} Value of specified directive
+/**
+* Get a cache directive to `Cache-Control` header
+*
+* @method getCacheControlDirective
+* @param {String} directie name of directive to remove form header
+* @return {String} Value of specified directive
 */
 Response.prototype.getCacheControlDirective = function( directive ) {
     return this._cacheControl[ directive ];
@@ -704,10 +657,13 @@ Response.prototype.getCacheControlDirective = function( directive ) {
 
 
 
-/*
-    Function: _updateCacheControl
-
-        Updates the `Cache-Control` header to user specified properties using Response's methods 
+/**
+* Updates the `Cache-Control` header to user specified properties using Response's methods 
+*
+* @method _updateCacheControl
+* @private
+* @param {String} directie name of directive to remove form header
+* @return {String} Value of specified directive
 */
 Response.prototype._updateCacheControl = function() {
     this.set( 'Cache-Control', this._getCacheControlHeader() );
@@ -715,24 +671,19 @@ Response.prototype._updateCacheControl = function() {
 
 
 
-/*
-    Function: isNotModified
 
-        Determines if the Response validators (ETag, Last-Modified) matches a conditional 
+/**
+* Determines if the Response validators (ETag, Last-Modified) matches a conditional 
             value specified in the Request. If the response is not modified, it sets the 
             status code to 304 and removes the response content by calling the `setNotModified` method
-        
-    Parameters:
-        request - {Object} Instance of the Request object which represents the client
-        
-    Returns
-    
-        {Boolean} True if the request and response cache validators match, otherwise false
+*
+* @method isNotModified
+* @return {Boolean} True if the request and response cache validators match, otherwise false
 */
-Response.prototype.isNotModified = function( request ) {
-    var lastModified = request.get( 'If-Modified-Since' );
+Response.prototype.isNotModified = function() {
+    var lastModified = this._request.get( 'If-Modified-Since' );
     var notModified = false;
-    var etag = request.getEtag();
+    var etag = this._request.getEtag();
     
     if ( !etag ) {
         notModified = ( ~etags.indexOf( this.getEtag() ) || ~etags.indexOf( '*' ) ) && ( !lastModified || this.getDate( 'Last-Modified' ).valueOf() === lastModified.valueOf() );
@@ -748,28 +699,24 @@ Response.prototype.isNotModified = function( request ) {
 };
 
 
-/*
-    Function: isInvalid
 
-        Determine if the response is invalid by looking at the status code
-        
-    Returns:
-        
-        {Boolean} is response invaid?
+/**
+* Determine if the response is invalid by looking at the status code
+*
+* @method isInvalid
+* @return {Boolean} true if the response is invalid, otherwise false
 */
 Response.prototype.isInvalid = function() {
     return this.statusCode() < 100 || this.statusCode() >= 600;
 };
 
 
-/*
-    Function: isInformational
 
-        Determine if the response is informative by looking at the status code
-        
-    Returns:
-        
-        {Boolean} Is response informative?
+/**
+* Determine if the response is just informative by looking at the status code
+*
+* @method isInformational
+* @return {Boolean} true if the response is informative, otherwise false
 */
 Response.prototype.isInformational = function() {
     return this.statusCode() >= 100 && this.statusCode() < 200;
@@ -777,14 +724,11 @@ Response.prototype.isInformational = function() {
 
 
 
-/*
-    Function: isSuccessful
-
-        Determine if the response is successful by looking at the status code
-        
-    Returns:
-        
-        {Boolean} is response successful?
+/**
+* Determine if the response is successful by looking at the status code
+*
+* @method isSuccessful
+* @return {Boolean} true if the response is successful, otherwise false
 */
 Response.prototype.isSuccessful = function() {
     return this.statusCode() >= 200 && this.statusCode() < 300;
@@ -792,28 +736,22 @@ Response.prototype.isSuccessful = function() {
 
 
 
-/*
-    Function: isRedirection
-
-        Determine if the response is a redirect by looking at the status code
-        
-    Returns:
-        
-        {Boolean} is response a redirect?
+/**
+* Determine if the response is a redirect by looking at the status code
+*
+* @method isRedirection
+* @return {Boolean} true if the response is a redirect, otherwise false
 */
 Response.prototype.isRedirection = function() {
     return this.statusCode() >= 300 && this.statusCode() < 400;
 };
 
 
-/*
-    Function: isClientError
-
-        Determine if the response is a client error by looking at the status code
-        
-    Returns:
-        
-        {Boolean} is response a client error?
+/**
+* Determine if the response is a client error by looking at the status code
+*
+* @method isClientError
+* @return {Boolean} true if the response is a client error, otherwise false
 */
 Response.prototype.isClientError = function() {
     return this.statusCode() >= 400 && this.statusCode() < 500;
@@ -821,14 +759,11 @@ Response.prototype.isClientError = function() {
 
 
 
-/*
-    Function: isInvalid
-
-        Determine if the response is a server error by looking at the status code
-        
-    Returns:
-        
-        {Boolean} is response a server error?
+/**
+* Determine if the response is a server error by looking at the status code
+*
+* @method isServerError
+* @return {Boolean} true if the response is a server error, otherwise false
 */
 Response.prototype.isServerError = function() {
     return this.statusCode() >= 500 && this.statusCode() < 600;
@@ -836,14 +771,11 @@ Response.prototype.isServerError = function() {
 
 
 
-/*
-    Function: isOk
-
-        Determine if the response is OK by looking at the status code
-        
-    Returns:
-        
-        {Boolean} is response OK?
+/**
+* Determine if the response is OK by looking at the status code (200)
+*
+* @method isOk
+* @return {Boolean} true if the response is OK, otherwise false
 */
 Response.prototype.isOk = function() {
     return this.statusCode() === 200;
@@ -851,14 +783,11 @@ Response.prototype.isOk = function() {
 
 
 
-/*
-    Function: isForbidden
-
-        Determine if the response is forbidden by looking at the status code
-        
-    Returns:
-        
-        {Boolean} is response forbidden?
+/**
+* Determine if the response is forbidden by looking at the status code
+*
+* @method isForbidden
+* @return {Boolean} true if the response is forbidden, otherwise false
 */
 Response.prototype.isForbidden = function() {
     return this.statusCode() === 403;
@@ -866,28 +795,22 @@ Response.prototype.isForbidden = function() {
 
 
 
-/*
-    Function: isNotFound
-
-        Determine if the response is a `not found` by looking at the status code
-        
-    Returns:
-        
-        {Boolean} is response invaid?
+/**
+* Determine if the response is a `not found` by looking at the status code (404)
+*
+* @method isNotFound
+* @return {Boolean} true if the response is 'not found', otherwise false
 */
 Response.prototype.isNotFound = function() {
     return this.statusCode() === 404;
 };
 
 
-/*
-    Function: isEmpty
-
-        Determine if the response is empty by looking at the status code
-        
-    Returns:
-        
-        {Boolean} is response invaid?
+/**
+* Determine if the response is empty by looking at the status code
+*
+* @method isEmpty
+* @return {Boolean} true if the response is valid, otherwise false
 */
 Response.prototype.isEmpty = function() {
     return ( this.statusCode() === 201 || this.statusCode() === 204 || this.statusCode() === 304 );
@@ -896,15 +819,12 @@ Response.prototype.isEmpty = function() {
 
 
 
-/*
-    Function: set
-
-        Set HTTP header and it's value
-        
-    Parameters:
-        
-        header - {String} HTTP Header name
-        value - {String} Header value
+/**
+* Set HTTP header and it's value
+*
+* @method set
+* @param {String} header HTTP Header name
+* @param {String} value Header value
 */
 Response.prototype.set = function( header, value ) {
     this._response.setHeader( header, value );
@@ -912,18 +832,13 @@ Response.prototype.set = function( header, value ) {
 
 
 
-/*
-    Function: get
 
-        Get the specified HTTP header's value
-        
-    Parameters:
-        
-        header - {String} HTTP Header name
-        
-    Returns:
-    
-        {String} Specified Header's value
+/**
+* Get the specified HTTP header's value
+*
+* @method get
+* @param {String} header HTTP Header name
+* @return {String} Specified Header's value
 */
 Response.prototype.get = function( header ) {
     return this._response.getHeader( header );
@@ -931,14 +846,11 @@ Response.prototype.get = function( header ) {
 
 
 
-/*
-    Function: remove
-
-        Remove the specified HTTP header
-        
-    Parameters:
-        
-        header - {String} HTTP Header name
+/**
+* Remove the specified HTTP header
+*
+* @method remove
+* @param {String} header HTTP Header name
 */
 Response.prototype.remove = function( header ) {
     this._response.removeHeader( header );
@@ -947,17 +859,14 @@ Response.prototype.remove = function( header ) {
 
 
 
-/*
-    Function: setCookie
-
-        Set a cookie by passing in its properties, including it's name. 
+/**
+* Set a cookie by passing in its properties, including it's name. 
             see <Cookie> for the supported properties
-        
-    Parameters:
-        
-        properties - {Object} Properties/directives of the cookie
+*
+* @method addCookie
+* @param {Object} Properties/directives of the cookie
 */
-Response.prototype.setCookie = function( properties ) {
+Response.prototype.addCookie = function( properties ) {
     if ( !properties.name ) {
         throw Error( 'name: "Bad Cookie", description: "Function requires valid cookie name"' );
     }
@@ -966,18 +875,12 @@ Response.prototype.setCookie = function( properties ) {
 
 
 
-/*
-    Function: getCookie
-
-        Get the specified cookie as a `Cookie` object
-        
-    Parameters:
-        
-        name - {String} Name of cookie
-        
-    Returns:
-    
-        {Cookie} requested cookie
+/**
+* Get the specified cookie as a `Cookie` object
+*
+* @method getCookie
+* @param {String} name Name of cookie
+* @return {Object/Cookie} requested cookie
 */
 Response.prototype.getCookie = function( name ) {
     return this._cookies[ name ];
@@ -985,14 +888,11 @@ Response.prototype.getCookie = function( name ) {
 
 
 
-/*
-    Function: removeCookie
-
-        Remove a cookie from client browser by setting its `Expires` directive
-        
-    Parameters:
-        
-        name - {String} Name of cookie
+/**
+* Remove a cookie from client browser by setting its `Expires` directive
+*
+* @method removeCookie
+* @param {String} name Name of cookie
 */
 Response.prototype.removeCookie = function( name ) {
     if ( !name ) {
@@ -1012,10 +912,12 @@ Response.prototype.removeCookie = function( name ) {
 
 
 
-/*
-    Function: render
-
-        Render the response and end it
+/**
+* Render the response and end it
+*
+* @method render
+* @param {String} viewName Name of the view to render
+* @param {Object} props Object holding values to pass to rendering engine
 */
 Response.prototype.render = function( viewName, props ) {
     var applet = this._request.getApplet();
@@ -1025,38 +927,35 @@ Response.prototype.render = function( viewName, props ) {
 };
 
 
-/*
-    Function: setContentType
 
-        Set response `Content-Type` header's value. firefly, by default sets it to text/html
-        
-    Parameters:
-        
-        contentType - {String} Value of Content-Type header
+/**
+* Set response `Content-Type` header's value. firefly, by default sets it to text/html
+*
+* @method setContentType
+* @param {String} contentType Value of Content-Type header
 */
 Response.prototype.setContentType = function( contentType ) {
     this._contentType = contentType;
 };
 
 
-/*
-    Function: getContentType
 
-        Get response `Content-Type` header's value
-        
-    Returns:
-        
-        contentType - {String} Value of Content-Type header
+/**
+* Get response `Content-Type` header's value
+*
+* @method getContentType
+* @param {String} contentType Value of Content-Type header
 */
 Response.prototype.getContentType = function() {
     return this._contentType;
 };
 
 
-/*
-    Function: redirect
 
-        Redirect user to another URL
+/**
+* Redirect user to another URL
+*
+* @method redirect
 */
 Response.prototype.redirect = function( url ) {
     this.setStatusCode(303);
