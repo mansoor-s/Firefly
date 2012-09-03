@@ -23,30 +23,28 @@ var config = require( './Config.js' );
 var routes = require( './Routes.js' );
 
 var HandleBars = require( './services/Renderer/Handlebars.js' );
-
 var SessionManager = require( './services/Security/SessionManager.js' );
-var Authenticate = require( './services/Security/Permission.js' );
-
+var Permission = require( './services/Security/Permission.js' );
 var Mongoose = require( './services/Database/Mongoose.js' );
-
 var Mailer = require( './services/Mailer/Mailer.js' );
+
 
 //new instance of Firefly
 var firefly = new Firefly( routes, config );
 
-//Redis session store:
-//var sessionManager = new SessionManager(firefly);
-//firefly.set('SessionManager', sessionManager);
+
+//set up renderer. wrapper for Handlebars
+var handlebars = new HandleBars(firefly);
+
+firefly.setViewEngine(handlebars);
+
+
+var sessionManager = new SessionManager(firefly);
+var permission = new Permission(firefly);
+
 
 //var mongoose = new Mongoose(firefly, config.MongoDB);
 
-//Authentication service:
-//var authenticate = new Authenticate(firefly);
-//firefly.set('Authenticate', authenticate);
-
-//set up renderer. wrapper for Handlebars
-//var handlebars = new HandleBars(firefly);
-//firefly.setViewEngine(handlebars);
 
 
 //Initialize 

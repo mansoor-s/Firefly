@@ -67,5 +67,5 @@ Logger.prototype.warning = function( message, meta ) {
 * @param {Object} [meta] Metadata object to include witht the log 
 */
 Logger.prototype.error = function( message, meta ) {
-    
+    winston.error(message, meta);
 };

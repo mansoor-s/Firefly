@@ -28,15 +28,19 @@ var bcrypt = require('bcrypt');
 * @module Services
 * @constructor
 * @param {Object} firefly Reference to the application Firefly object
+* @param {String} [serviceName='Permission'] Name with which to register the service with Firefly
 */
-var Permission = module.exports = function(firefly) {
+var Permission = module.exports = function(firefly, serviceName) {
+    serviceName = serviceName || 'Permission';
+    
     this._app = firefly;
+    this._app.set(serviceName, this);
+    
     this._cookieName = firefly.config.SESSION_COOKIE_NAME;
     //firefly.addInitDependency(this._onInit());
     
     firefly.router.addRouteRequirement('authenticated', this._getAuthenticatedChecker());
     firefly.router.addRouteRequirement('verified', this._getVerifiedChecker());
-    firefly.router.addRouteRequirement('group', this._getGroupChecker());
 
     
     this.sessionManager = firefly.get('SessionManager');

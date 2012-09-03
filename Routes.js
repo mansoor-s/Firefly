@@ -8,7 +8,7 @@ var Routes = module.exports = {
     	basePattern: 'admin',
     	applet: 'Admin',
     	requirements: {
-    		_usergroup: 'admin'
+    	    _usergroup: 'admin'
     	}
     }
 };

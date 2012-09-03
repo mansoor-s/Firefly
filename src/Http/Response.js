@@ -557,31 +557,60 @@ Response.prototype.send = function() {
 
 
 /**
-* Send headers + content to client thus ending the client's request
+* write a chunk out to the client
 *
-* @method send
+* @method write
+* @param {String} chunk Value for the chunk
+* @param {String} [encoding] Encoding for the chunk
 */
 Response.prototype.write = function( chunk, encoding ) {
+    if ( this._sent !== true ) {
+        //setup response cookies
+        var cookies = [];
+        for ( var cookie in this._cookies ) {
+            cookies.push( this._cookies[ cookie ].toString() );
+        }
+        
+        if ( cookies.length > 0 ) {
+            this._response.setHeader('Set-Cookie', cookies);
+        }
 
-    //setup response cookies
-    var cookies = [];
-    for ( var cookie in this._cookies ) {
-        cookies.push( this._cookies[ cookie ].toString() );
+        
+        this._response.setHeader('Content-Type', this._contentType);
     }
     
-    if ( cookies.length > 0 ) {
-        this._response.setHeader('Set-Cookie', cookies);
-    }
+    this._response.write( chunk, this._encoding );
     
-    this._response.setHeader('Content-Type', this._contentType);
-    this._response.end( this._content, this._encoding );
-    
-    
-    this._response.write(chunk, this._encoding);
+    this._sent = true;
 };
 
-Response.prototype.end = function() {
+
+
+/**
+* End the resonse. This should be called for chunked responses.
+*   if chunk parameter is given it will be sent and then the response is ended
+*
+* @method end
+* @param {String} [chunk] Value for the chunk
+* @param {String} [encoding] Encoding for the chunk
+*/
+Response.prototype.end = function( chunk, encoding ) {
+    if ( this._sent !== true ) {
+        //setup response cookies
+        var cookies = [];
+        for ( var cookie in this._cookies ) {
+            cookies.push( this._cookies[ cookie ].toString() );
+        }
+        
+        if ( cookies.length > 0 ) {
+            this._response.setHeader('Set-Cookie', cookies);
+        }
+
+        
+        this._response.setHeader('Content-Type', this._contentType);
+    }
     
+    this._response.end( chunk, encoding );
 };
 
 
@@ -921,7 +950,7 @@ Response.prototype.removeCookie = function( name ) {
 */
 Response.prototype.render = function( viewName, props ) {
     var applet = this._request.getApplet();
-    var content = this._firefly.renderer.render( applet, viewName, props );
+    var content = this._firefly.renderManager.render( applet, viewName, props );
     this.setContent( content );
     this.send();
 };

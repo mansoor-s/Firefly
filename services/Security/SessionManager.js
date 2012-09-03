@@ -28,12 +28,19 @@ var uuid = require('node-uuid');
 * @module Services
 * @constructor
 * @param {Object} firefly Reference to the application Firefly object
+* @param {String} [serviceName='SessionManager'] Name with which to register the service with Firefly
 */
-var SessionManager = module.exports = function(firefly) {
+var SessionManager = module.exports = function(firefly, serviceName) {
+    serviceName = serviceName || 'SessionManager';
+    
+    firefly.set(serviceName, this);
+    
     this._cookieName = firefly.config.SESSION_COOKIE_NAME;
+    
     //firefly.addInitDependency(this._onInit());
     
     this._client = redis.createClient();
+    console.log('created redis client');
 };
 
 
@@ -97,7 +104,7 @@ SessionManager.prototype.createSession = function(response, data, fn) {
 
     response.setCookie({name: this._cookieName, value: id});
     
-    this._client.set(id, data, function(err, res) {
+    this._client.hset(id, data, function(err, res) {
         if(err) {
             throw Error(err);
         }

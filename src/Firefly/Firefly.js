@@ -20,6 +20,7 @@
 
 var fs = require( 'fs' );
 var async = require( 'async' );
+var util = require( 'util' );
 
 var Server = require( '../Server/Server.js' );
 var WSServer = require( '../Server/WSServer.js' );
@@ -400,8 +401,7 @@ Firefly.prototype.getWSRequestHandler = function() {
 * @param {Object} response Reference to response object
 */
 Firefly.prototype.catchException = function( err, request, response ) {
-    var logger = this.get( 'Logger' );
-    logger.log( err );
+    throw err;
 
 };
 
