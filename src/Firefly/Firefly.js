@@ -27,6 +27,7 @@ var Router = require( '../Router/Router.js' );
 var Request = require( '../Http/Request.js' );
 var Response = require( '../Http/Response.js' );
 var RenderManager = require( '../RenderManager/RenderManager.js' );
+var Logger = require( '../Logger/Logger.js' );
 
 
 /**
@@ -43,32 +44,97 @@ var Firefly = module.exports = function( appRoutes, config ) {
         throw Error( 'name: "Bad Parameter", description: "Expecting type `object` for parameters `routes` and `config`."' );
     }
     
+    /**
+    * Reference to application config object
+    *@property config
+    *@type Object
+    */
     this.config = config;
 
+    /**
+    *@private
+    *@type Boolean
+    *@property _trustProxyData
+    */
     this._trustProxyData = false;
 
+    /**
+    *@private
+    *@type Object
+    *@property _appRoutes
+    */
     this._appRoutes = appRoutes;
 
+    /**
+    *@private
+    *@type Object
+    *@property _services
+    */
     this._services = {};
 
+    /**
+    *An instance of the Server Router
+    *@property server
+    *@type Object
+    */
     this.server = new Server( this, this.getRequestHandler() );
     
+    /**
+    *@private
+    *@type Object
+    *@property _wsServers
+    */
     this._wsServers = {};
     
+    /**
+    *An instance of the RenderManager Router
+    *@type Object
+    *@property router
+    */
     this.router = new Router( this, this.server );
 
-    this._services['Server'] = this.server;
-    this._services['Router'] = this.router;
-
+    /**
+    *@private
+    *@type Object
+    *@property _appletsRaw
+    */
     this._appletsRaw = {};
+    
+    /**
+    *@private
+    *@type Object
+    *@property _applets
+    */
     this._applets = {};
+    
+    /**
+    * An instance of the RenderManager object
+    *@type Object
+    *@property renderManager
+    */
     this.renderManager;
 
+    /**
+    *@private
+    *@type Array
+    *@property _initSequence
+    */
     this._initSequence = [];
     
+    /**
+    *@private
+    *@type Object
+    *@property _viewEngine
+    */
     this._viewEngine;
-    this._initialized = false;
-    
+
+    /**
+    * An instance of the Logger object
+    *@type Object
+    *@property logger
+    */
+    this.logger = new Logger( this );
+        
     this.autoloadApplets();
 };
 
@@ -83,7 +149,6 @@ var Firefly = module.exports = function( appRoutes, config ) {
 */
 Firefly.prototype.init = function ( fn ) {
     var self = this;
-    this._initialized = true;
     
     this.server.start( function() {
         if ( self.config.AUTO_START_WS_SERVER === true ) {
@@ -278,7 +343,7 @@ Firefly.prototype.getRequestHandler = function() {
             }
             
         } catch( e ) {
-            self.catch( e );
+            self.catchException( e );
         }
     };
 };
@@ -320,7 +385,7 @@ Firefly.prototype.getWSRequestHandler = function() {
                 } );
             } );
         } catch( e ) {
-            self.catch( e );
+            self.catchException( e );
         }
     };
 };
@@ -330,11 +395,11 @@ Firefly.prototype.getWSRequestHandler = function() {
 /**
 * Handle application-wide exceptions
 *
-* @method catch
+* @method catchException
 * @param {Object} request Reference to request object
 * @param {Object} response Reference to response object
 */
-Firefly.prototype.catch = function( err, request, response ) {
+Firefly.prototype.catchException = function( err, request, response ) {
     var logger = this.get( 'Logger' );
     logger.log( err );
 

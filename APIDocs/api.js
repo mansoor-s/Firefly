@@ -4,6 +4,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "Cookie",
         "Firefly",
         "Handlebars",
+        "Logger",
         "Mailer",
         "Mongoose",
         "Permission",

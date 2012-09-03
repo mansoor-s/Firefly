@@ -33,17 +33,79 @@ var Formidable = require('formidable');
 * @param {Object} req Native node request object
 */
 var Request = module.exports = function( req ) {
+    
+    /**
+    *@private
+    *@type Boolean
+    *@property _isMethodSafe
+    */
     this._isMethodSafe = false;
+    
+    /**
+    *@private
+    *@type Boolean
+    *@property _trustProxyData
+    */
     this._trustProxyData = false;
+    
+    /**
+    *@private
+    *@type Boolean
+    *@property _isWebSocket
+    */
     this._isWebSocket = false;
+    
+    /**
+    *@private
+    *@type Array
+    *@property _charSets
+    */
     this._charSets = [];
+    
+    /**
+    *@private
+    *@type Array
+    *@property _upgrade
+    */
     this._upgrade = [];
+    
+    /**
+    *@private
+    *@type Object
+    *@property _cookies
+    */
     this._cookies = {};
+    
+    /**
+    *@private
+    *@type Object
+    *@property _request
+    */
     this._request = req;
+    
+    /**
+    *@private
+    *@type Object
+    *@property _parsedUrl
+    */
     this._parsedUrl = url.parse( this._request.url, true );
+    
+    /**
+    *@private
+    *@type Object
+    *@property _queryString
+    */
     this._queryString = url.parse( this._request.url ).query;
+    
+    
     this._parseCookies();
 
+    
+    /**
+    *@private
+    *@type Object
+    *@property _formData
+    */
     this._formData = {
         fields: [],
         files: []
@@ -407,7 +469,7 @@ Request.prototype.isMethodSafe = function() {
 /**
 *  Determaine whether the client has a no-cache policy
 *
-* @method isMethodSafe
+* @method isNoCache
 * @return {Boolean} True if there is a no-cache policy otherwise false
 */
 Request.prototype.isNoCache = function() {

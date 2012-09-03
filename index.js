@@ -23,10 +23,13 @@ var config = require( './Config.js' );
 var routes = require( './Routes.js' );
 
 var HandleBars = require( './services/Renderer/Handlebars.js' );
-var SessionManager = require( './services/SessionManager.js' );
+
+var SessionManager = require( './services/Security/SessionManager.js' );
+var Authenticate = require( './services/Security/Permission.js' );
 
 var Mongoose = require( './services/Database/Mongoose.js' );
-var Authenticate = require( './services/Authenticate.js' );
+
+var Mailer = require( './services/Mailer/Mailer.js' );
 
 //new instance of Firefly
 var firefly = new Firefly( routes, config );

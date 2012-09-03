@@ -47,6 +47,8 @@
             
                 <li><a href="..&#x2F;classes/Handlebars.html">Handlebars</a></li>
             
+                <li><a href="..&#x2F;classes/Logger.html">Logger</a></li>
+            
                 <li><a href="..&#x2F;classes/Mailer.html">Mailer</a></li>
             
                 <li><a href="..&#x2F;classes/Mongoose.html">Mongoose</a></li>
@@ -143,6 +145,7 @@ var Router = require( &#x27;..&#x2F;Router&#x2F;Router.js&#x27; );
 var Request = require( &#x27;..&#x2F;Http&#x2F;Request.js&#x27; );
 var Response = require( &#x27;..&#x2F;Http&#x2F;Response.js&#x27; );
 var RenderManager = require( &#x27;..&#x2F;RenderManager&#x2F;RenderManager.js&#x27; );
+var Logger = require( &#x27;..&#x2F;Logger&#x2F;Logger.js&#x27; );
 
 
 &#x2F;**
@@ -159,32 +162,97 @@ var Firefly = module.exports = function( appRoutes, config ) {
         throw Error( &#x27;name: &quot;Bad Parameter&quot;, description: &quot;Expecting type &#x60;object&#x60; for parameters &#x60;routes&#x60; and &#x60;config&#x60;.&quot;&#x27; );
     }
     
+    &#x2F;**
+    * Reference to application config object
+    *@property config
+    *@type Object
+    *&#x2F;
     this.config = config;
 
+    &#x2F;**
+    *@private
+    *@type Boolean
+    *@property _trustProxyData
+    *&#x2F;
     this._trustProxyData = false;
 
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _appRoutes
+    *&#x2F;
     this._appRoutes = appRoutes;
 
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _services
+    *&#x2F;
     this._services = {};
 
+    &#x2F;**
+    *An instance of the Server Router
+    *@property server
+    *@type Object
+    *&#x2F;
     this.server = new Server( this, this.getRequestHandler() );
     
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _wsServers
+    *&#x2F;
     this._wsServers = {};
     
+    &#x2F;**
+    *An instance of the RenderManager Router
+    *@type Object
+    *@property router
+    *&#x2F;
     this.router = new Router( this, this.server );
 
-    this._services[&#x27;Server&#x27;] = this.server;
-    this._services[&#x27;Router&#x27;] = this.router;
-
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _appletsRaw
+    *&#x2F;
     this._appletsRaw = {};
+    
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _applets
+    *&#x2F;
     this._applets = {};
+    
+    &#x2F;**
+    * An instance of the RenderManager object
+    *@type Object
+    *@property renderManager
+    *&#x2F;
     this.renderManager;
 
+    &#x2F;**
+    *@private
+    *@type Array
+    *@property _initSequence
+    *&#x2F;
     this._initSequence = [];
     
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _viewEngine
+    *&#x2F;
     this._viewEngine;
-    this._initialized = false;
-    
+
+    &#x2F;**
+    * An instance of the Logger object
+    *@type Object
+    *@property logger
+    *&#x2F;
+    this.logger = new Logger( this );
+        
     this.autoloadApplets();
 };
 
@@ -199,7 +267,6 @@ var Firefly = module.exports = function( appRoutes, config ) {
 *&#x2F;
 Firefly.prototype.init = function ( fn ) {
     var self = this;
-    this._initialized = true;
     
     this.server.start( function() {
         if ( self.config.AUTO_START_WS_SERVER === true ) {
@@ -394,7 +461,7 @@ Firefly.prototype.getRequestHandler = function() {
             }
             
         } catch( e ) {
-            self.catch( e );
+            self.catchException( e );
         }
     };
 };
@@ -436,7 +503,7 @@ Firefly.prototype.getWSRequestHandler = function() {
                 } );
             } );
         } catch( e ) {
-            self.catch( e );
+            self.catchException( e );
         }
     };
 };
@@ -446,11 +513,11 @@ Firefly.prototype.getWSRequestHandler = function() {
 &#x2F;**
 * Handle application-wide exceptions
 *
-* @method catch
+* @method catchException
 * @param {Object} request Reference to request object
 * @param {Object} response Reference to response object
 *&#x2F;
-Firefly.prototype.catch = function( err, request, response ) {
+Firefly.prototype.catchException = function( err, request, response ) {
     var logger = this.get( &#x27;Logger&#x27; );
     logger.log( err );
 

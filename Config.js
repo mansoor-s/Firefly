@@ -39,7 +39,7 @@ var Config = module.exports = {
     MongoDB: {
         HOST: 'localhost',
         PORT: undefined,
-        DB_NAME: 'Firefly',
+        DB_NAME: 'firefly',
         OPTS: {
             USER: undefined,
             PASS: undefined

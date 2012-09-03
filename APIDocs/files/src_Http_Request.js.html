@@ -47,6 +47,8 @@
             
                 <li><a href="..&#x2F;classes/Handlebars.html">Handlebars</a></li>
             
+                <li><a href="..&#x2F;classes/Logger.html">Logger</a></li>
+            
                 <li><a href="..&#x2F;classes/Mailer.html">Mailer</a></li>
             
                 <li><a href="..&#x2F;classes/Mongoose.html">Mongoose</a></li>
@@ -149,17 +151,79 @@ var Formidable = require(&#x27;formidable&#x27;);
 * @param {Object} req Native node request object
 *&#x2F;
 var Request = module.exports = function( req ) {
+    
+    &#x2F;**
+    *@private
+    *@type Boolean
+    *@property _isMethodSafe
+    *&#x2F;
     this._isMethodSafe = false;
+    
+    &#x2F;**
+    *@private
+    *@type Boolean
+    *@property _trustProxyData
+    *&#x2F;
     this._trustProxyData = false;
+    
+    &#x2F;**
+    *@private
+    *@type Boolean
+    *@property _isWebSocket
+    *&#x2F;
     this._isWebSocket = false;
+    
+    &#x2F;**
+    *@private
+    *@type Array
+    *@property _charSets
+    *&#x2F;
     this._charSets = [];
+    
+    &#x2F;**
+    *@private
+    *@type Array
+    *@property _upgrade
+    *&#x2F;
     this._upgrade = [];
+    
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _cookies
+    *&#x2F;
     this._cookies = {};
+    
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _request
+    *&#x2F;
     this._request = req;
+    
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _parsedUrl
+    *&#x2F;
     this._parsedUrl = url.parse( this._request.url, true );
+    
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _queryString
+    *&#x2F;
     this._queryString = url.parse( this._request.url ).query;
+    
+    
     this._parseCookies();
 
+    
+    &#x2F;**
+    *@private
+    *@type Object
+    *@property _formData
+    *&#x2F;
     this._formData = {
         fields: [],
         files: []
@@ -523,7 +587,7 @@ Request.prototype.isMethodSafe = function() {
 &#x2F;**
 *  Determaine whether the client has a no-cache policy
 *
-* @method isMethodSafe
+* @method isNoCache
 * @return {Boolean} True if there is a no-cache policy otherwise false
 *&#x2F;
 Request.prototype.isNoCache = function() {

@@ -17,7 +17,8 @@
         "mongoose": "latest",
         "dive": "latest",
         "node-uuid": "latest",
-        "redis": "redis"
+        "redis": "latest",
+        "winston": "latest"
     },
     "repository": {
         "type" : "git",

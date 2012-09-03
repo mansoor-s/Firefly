@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>RenderManager - Firefly</title>
+    <title>Logger - Firefly</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -112,7 +112,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>RenderManager Class</h1>
+                        <h1>Logger Class</h1>
 <div class="box meta">
     
 
@@ -120,7 +120,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;src_RenderManager_RenderManager.js.html#l25"><code>src\RenderManager\RenderManager.js:25</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;src_Logger_Logger.js.html#l23"><code>src\Logger\Logger.js:23</code></a>
         </div>
     
 
@@ -136,14 +136,14 @@
 
 
 <div class="box intro">
-    <p>RenderManager object constructor.</p>
+    <p>Logging for Firefly</p>
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_RenderManager" class="method item">
-    <h3 class="name"><code>RenderManager</code></h3>
+        <div id="method_Logger" class="method item">
+    <h3 class="name"><code>Logger</code></h3>
 
     
         <div class="args">
@@ -151,7 +151,7 @@
             
                 <li class="arg">
                     
-                        <code>app</code>
+                        <code>firefly</code>
                     
                 </li>
             
@@ -184,7 +184,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_RenderManager_RenderManager.js.html#l25"><code>src\RenderManager\RenderManager.js:25</code></a>
+        <a href="..&#x2F;files&#x2F;src_Logger_Logger.js.html#l23"><code>src\Logger\Logger.js:23</code></a>
         
         </p>
 
@@ -206,14 +206,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">app</code>
+                        <code class="param-name">firefly</code>
                         <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>reference to Firefly object</p>
+                        <p>Reference to the application Firefly object</p>
                     </div>
 
                     
@@ -254,14 +254,21 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_buildViewMap">buildViewMap</a>
+                                <a href="#method_error">error</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_render">render</a>
+                                <a href="#method_info">info</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_info">info</a>
 
                                 
                                 
@@ -283,8 +290,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_buildViewMap" class="method item">
-    <h3 class="name"><code>buildViewMap</code></h3>
+                    <div id="method_error" class="method item">
+    <h3 class="name"><code>error</code></h3>
 
     
         <div class="args">
@@ -292,7 +299,13 @@
             
                 <li class="arg">
                     
-                        <code>fn</code>
+                        <code>message</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[meta]</code>
                     
                 </li>
             
@@ -325,7 +338,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_RenderManager_RenderManager.js.html#l40"><code>src\RenderManager\RenderManager.js:40</code></a>
+        <a href="..&#x2F;files&#x2F;src_Logger_Logger.js.html#l62"><code>src\Logger\Logger.js:62</code></a>
         
         </p>
 
@@ -336,7 +349,7 @@
     </div>
 
     <div class="description">
-        <p>Creates a map of view names and view file path. [Performes sync IO]</p>
+        <p>Log errors</p>
     </div>
 
     
@@ -347,14 +360,30 @@
             
                 <li class="param">
                     
-                        <code class="param-name">fn</code>
-                        <span class="type">Function</span>
+                        <code class="param-name">message</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>callback</p>
+                        <p>Messaage to log</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[meta]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Metadata object to include witht the log</p>
                     </div>
 
                     
@@ -370,8 +399,8 @@
 </div>
 
                 
-                    <div id="method_render" class="method item">
-    <h3 class="name"><code>render</code></h3>
+                    <div id="method_info" class="method item">
+    <h3 class="name"><code>info</code></h3>
 
     
         <div class="args">
@@ -379,19 +408,13 @@
             
                 <li class="arg">
                     
-                        <code>applet</code>
+                        <code>message</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>viewName</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>props</code>
+                        <code class="optional">[meta]</code>
                     
                 </li>
             
@@ -399,10 +422,6 @@
         </div>
     
 
-    
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
     
 
     
@@ -428,7 +447,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_RenderManager_RenderManager.js.html#l72"><code>src\RenderManager\RenderManager.js:72</code></a>
+        <a href="..&#x2F;files&#x2F;src_Logger_Logger.js.html#l36"><code>src\Logger\Logger.js:36</code></a>
         
         </p>
 
@@ -439,7 +458,7 @@
     </div>
 
     <div class="description">
-        <p>Get the rendered contents of a view with the given properties</p>
+        <p>Log information</p>
     </div>
 
     
@@ -450,14 +469,14 @@
             
                 <li class="param">
                     
-                        <code class="param-name">applet</code>
+                        <code class="param-name">message</code>
                         <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Name of the raw applet to which the view belongs</p>
+                        <p>Messaage to log</p>
                     </div>
 
                     
@@ -465,29 +484,15 @@
             
                 <li class="param">
                     
-                        <code class="param-name">viewName</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Name of the view</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">props</code>
+                        <code class="param-name optional">[meta]</code>
                         <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>Object to pass to pass to view engine for the current view</p>
+                        <p>Metadata object to include witht the log</p>
                     </div>
 
                     
@@ -498,18 +503,114 @@
     
 
     
-        <div class="returns">
-            <h4>Returns:</h4>
 
-            <div class="returns-description">
+    
+</div>
+
                 
+                    <div id="method_info" class="method item">
+    <h3 class="name"><code>info</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
                     
-                        <span class="type">String</span>:
+                        <code>message</code>
                     
-                    Rendered contents of the view
-                
-            </div>
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[meta]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
         </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Logger_Logger.js.html#l49"><code>src\Logger\Logger.js:49</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Log warnings</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">message</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Messaage to log</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[meta]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Metadata object to include witht the log</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
     
 
     

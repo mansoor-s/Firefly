@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src\Http\Cookie.js - Firefly</title>
+    <title>src\Logger\Logger.js - Firefly</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -112,7 +112,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src\Http\Cookie.js</h1>
+                        <h1 class="file-heading">File: src\Logger\Logger.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -136,197 +136,56 @@
 
 &#x27;use strict&#x27;;
 
+var winston = require(&#x27;winston&#x27;);
 
 &#x2F;**
-* Cookie object constructor
+* Logging for Firefly
 *
-* @class Cookie
+* @class Logger
 * @module Core
 * @constructor
-* @param {Object} properties Properties of the cookie object. ie {name: &#x27;foo&#x27;, value:&#x27;cookievalue123456798&#x27;}
+* @param {Object} firefly Reference to the application Firefly object
 *&#x2F;
-var Cookie = module.exports = function( properties ) {
-    this._isSecure = false;
-    this._name = &#x27;&#x27;;
-    this._value = &#x27;&#x27;;
+var Logger = module.exports = function(firefly) {
+
+};
+
+
+&#x2F;**
+* Log information
+*
+* @method info
+* @param {String} message Messaage to log
+* @param {Object} [meta] Metadata object to include witht the log 
+*&#x2F;
+Logger.prototype.info = function( message, meta ) {
     
-    for ( var prop in properties ) {
-        this[ &#x27;_&#x27; + prop ] = properties[ prop ];
-    }
 };
 
 
 
 &#x2F;**
-* String representation of the cookie for setting in HTTP header
+* Log warnings
 *
-* @method toString
-* @return {String} String representation of the cookie
+* @method info
+* @param {String} message Messaage to log
+* @param {Object} [meta] Metadata object to include witht the log 
 *&#x2F;
-Cookie.prototype.toString = function() {
-    var secureFlag = this._isSecure ? &#x27; Secure;&#x27; : &#x27;&#x27;;
+Logger.prototype.warning = function( message, meta ) {
     
-    var expires = &#x27;&#x27;;
-    if ( this._expires !== undefined ) {
-        expires = &#x27; Expires=&#x27; + this._expires.toString() + &#x27;;&#x27;;
-    }
+};
+
+
+
+&#x2F;**
+* Log errors
+*
+* @method error
+* @param {String} message Messaage to log
+* @param {Object} [meta] Metadata object to include witht the log 
+*&#x2F;
+Logger.prototype.error = function( message, meta ) {
     
-    var domain = this._domain ? &#x27; &#x27; + domain + &#x27;;&#x27; : &#x27;&#x27;;
-    
-    var path = this._path ? &#x27; &#x27; + path + &#x27;;&#x27; : &#x27;&#x27;;
-    
-    var string = this._name + &#x27;=&#x27; + this._value + &#x27;;&#x27;;
-    string += domain + path + expires + secureFlag;
-    
-    return string;
-};
-
-
-
-&#x2F;**
-* Get the cookie&#x27;s &#x60;Expires&#x60; directive. 
-*
-* @method getExpires
-* @return {Date} cookie expires value as a Date object
-*&#x2F;
-Cookie.prototype.getExpires = function() {
-    return this._expires;
-};
-
-
-
-&#x2F;**
-* Set the cookie&#x27;s &#x60;Expires&#x60; directive.
-*
-* @method setExpires
-* @param {Date} expires value to set as the cookie&#x27;s expires value
-*&#x2F;
-Cookie.prototype.setExpires = function( expires ) {
-    this._expires = expires;
-};
-
-
-
-&#x2F;**
-* Returns the name of the Cookie
-*
-* @method getName
-* @return {String} cookie name
-*&#x2F;
-Cookie.prototype.getName = function() {
-    return this._name;
-};
-
-
-
-&#x2F;**
-* Set the cookie&#x27;s name
-*
-* @method setName
-* @param {String} name cookie name
-*&#x2F;
-Cookie.prototype.setName = function( name ) {
-    this._name = name;
-};
-
-
-
-
-&#x2F;**
-* Returns the cookie value
-*
-* @method getValue
-* @return {String} cookie value
-*&#x2F;
-Cookie.prototype.getValue = function() {
-    return this._value;
-};
-
-
-
-&#x2F;**
-* Set the cookie value
-*
-* @method setValue
-* @param {String} value The value to set
-*&#x2F;
-Cookie.prototype.setValue = function( value ) {
-    this._value = value;
-};
-
-
-
-&#x2F;**
-* Returns the cookie&#x27;s domain restriction
-*
-* @method getDomain
-* @return {String} cookie domain
-*&#x2F;
-Cookie.prototype.getDomain = function() {
-    return this._domain;
-};
-
-
-
-&#x2F;**
-* Set the cookie&#x27;s domain restriction
-*
-* @method setDomain
-* @param {String} domain cookie domain
-*&#x2F;
-Cookie.prototype.setDomain = function( domain ) {
-    this._domain = domain;
-};
-
-
-
-
-&#x2F;**
-* Returns the cookies path restriction
-*
-* @method getPath
-* @return {String} cookie path restriction
-*&#x2F;
-Cookie.prototype.getPath = function() {
-    return this._path;
-};
-
-
-
-&#x2F;**
-* Set the cookie&#x27;s path restriction
-*
-* @method setPath
-* @param {String} path cookie path
-*&#x2F;
-Cookie.prototype.setPath = function( path ) {
-    this._path = path;
-};
-
-
-
-
-&#x2F;**
-* Determine if the &#x60;Secure&#x60; flag is set on the cookie
-*
-* @method isSecure
-* @return {Boolean} true if it is a secure cookie otherwise false
-*&#x2F;
-Cookie.prototype.isSecure = function() {
-    return this._isSecure;
-};
-
-
-
-&#x2F;**
-* Set a boolean value that will determine if the &#x60;Secure&#x60; flag is set on the cookie
-            Defaults to false
-*
-* @method setSecure
-* @param {Boolean} isSecure Is cookie secure
-*&#x2F;
-Cookie.prototype.setSecure = function( isSecure ) {
-    this._isSecure = isSecure;
 };
     </pre>
 </div>

@@ -91,6 +91,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src\\Logger\\Logger.js": {
+            "name": "src\\Logger\\Logger.js",
+            "modules": {},
+            "classes": {
+                "Logger": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src\\RenderManager\\RenderManager.js": {
             "name": "src\\RenderManager\\RenderManager.js",
             "modules": {},
@@ -154,6 +163,7 @@
                 "Cookie": 1,
                 "Request": 1,
                 "Response": 1,
+                "Logger": 1,
                 "RenderManager": 1,
                 "Router": 1,
                 "Server": 1,
@@ -305,7 +315,7 @@
             "module": "Core",
             "namespace": "",
             "file": "src\\Firefly\\Firefly.js",
-            "line": 32,
+            "line": 33,
             "description": "Firefly object constructor",
             "is_constructor": 1,
             "params": [
@@ -383,6 +393,28 @@
                 {
                     "name": "res",
                     "description": "Native node response object",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Logger": {
+            "name": "Logger",
+            "shortname": "Logger",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Core",
+            "namespace": "",
+            "file": "src\\Logger\\Logger.js",
+            "line": 23,
+            "description": "Logging for Firefly",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "firefly",
+                    "description": "Reference to the application Firefly object",
                     "type": "Object"
                 }
             ]
@@ -836,7 +868,145 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 78,
+            "line": 47,
+            "description": "Reference to application config object",
+            "itemtype": "property",
+            "name": "config",
+            "type": "Object",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 54,
+            "access": "private",
+            "tagname": "",
+            "type": "Boolean",
+            "itemtype": "property",
+            "name": "_trustProxyData",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 61,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_appRoutes",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 68,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_services",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 75,
+            "description": "An instance of the Server Router",
+            "itemtype": "property",
+            "name": "server",
+            "type": "Object",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 82,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_wsServers",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 89,
+            "description": "An instance of the RenderManager Router",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "router",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 96,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_appletsRaw",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 103,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_applets",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 110,
+            "description": "An instance of the RenderManager object",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "renderManager",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 117,
+            "access": "private",
+            "tagname": "",
+            "type": "Array",
+            "itemtype": "property",
+            "name": "_initSequence",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 124,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_viewEngine",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 131,
+            "description": "An instance of the Logger object",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "logger",
+            "class": "Firefly",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Firefly\\Firefly.js",
+            "line": 144,
             "description": "Initialize the application. Caches's all views and starts HTTP and WebSocket servers",
             "itemtype": "method",
             "name": "init",
@@ -852,7 +1022,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 109,
+            "line": 174,
             "description": "Initialize WebSocket servers. Use this seperatly if using application with cluster. (NOTE: set AUTO_START_WS_SERVER to false in app config object)",
             "itemtype": "method",
             "name": "initWS",
@@ -861,7 +1031,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 126,
+            "line": 191,
             "description": "Autoload and Use application Applets. This function performes blocking IO (require())",
             "itemtype": "method",
             "name": "autoloadApplets",
@@ -870,7 +1040,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 153,
+            "line": 218,
             "description": "Get a reference to an applet",
             "itemtype": "method",
             "name": "getApplet",
@@ -890,7 +1060,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 167,
+            "line": 232,
             "description": "Return all un-initialized applets",
             "itemtype": "method",
             "name": "getAllRawApplets",
@@ -903,7 +1073,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 179,
+            "line": 244,
             "description": "Return information about all of the registered applets",
             "itemtype": "method",
             "name": "getAllApplets",
@@ -916,7 +1086,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 191,
+            "line": 256,
             "description": "Set an object as a service, accessable application wide",
             "itemtype": "method",
             "name": "set",
@@ -937,7 +1107,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 208,
+            "line": 273,
             "description": "Get a reference to the requested service",
             "itemtype": "method",
             "name": "get",
@@ -957,7 +1127,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 221,
+            "line": 286,
             "description": "Add an initialized applet object",
             "itemtype": "method",
             "name": "addApplet",
@@ -982,7 +1152,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 239,
+            "line": 304,
             "description": "Get the application routes object that was passed to Firefly by the app",
             "itemtype": "method",
             "name": "getAppRoutes",
@@ -995,7 +1165,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 251,
+            "line": 316,
             "description": "Wrapper for the request handler of all client requests",
             "itemtype": "method",
             "name": "getRequestHandler",
@@ -1008,7 +1178,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 288,
+            "line": 353,
             "description": "Returns call back to be used for all WS client connections",
             "itemtype": "method",
             "name": "getWSRequestHandler",
@@ -1021,10 +1191,10 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 330,
+            "line": 395,
             "description": "Handle application-wide exceptions",
             "itemtype": "method",
-            "name": "catch",
+            "name": "catchException",
             "params": [
                 {
                     "name": "request",
@@ -1042,7 +1212,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 345,
+            "line": 410,
             "description": "Set a view/templating engine for Firefly to use",
             "itemtype": "method",
             "name": "setViewEngine",
@@ -1058,7 +1228,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 361,
+            "line": 426,
             "description": "Add a callback function to be called when Firefly is initialized. These functions are executed in sequence.",
             "itemtype": "method",
             "name": "addInitDependency",
@@ -1074,7 +1244,7 @@
         },
         {
             "file": "src\\Firefly\\Firefly.js",
-            "line": 374,
+            "line": 439,
             "description": "Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)",
             "itemtype": "method",
             "name": "trustProxyData",
@@ -1277,7 +1447,117 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 57,
+            "line": 37,
+            "access": "private",
+            "tagname": "",
+            "type": "Boolean",
+            "itemtype": "property",
+            "name": "_isMethodSafe",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 44,
+            "access": "private",
+            "tagname": "",
+            "type": "Boolean",
+            "itemtype": "property",
+            "name": "_trustProxyData",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 51,
+            "access": "private",
+            "tagname": "",
+            "type": "Boolean",
+            "itemtype": "property",
+            "name": "_isWebSocket",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 58,
+            "access": "private",
+            "tagname": "",
+            "type": "Array",
+            "itemtype": "property",
+            "name": "_charSets",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 65,
+            "access": "private",
+            "tagname": "",
+            "type": "Array",
+            "itemtype": "property",
+            "name": "_upgrade",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 72,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_cookies",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 79,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_request",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 86,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_parsedUrl",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 93,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_queryString",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 104,
+            "access": "private",
+            "tagname": "",
+            "type": "Object",
+            "itemtype": "property",
+            "name": "_formData",
+            "class": "Request",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Http\\Request.js",
+            "line": 119,
             "description": "Parses form fields and files. This method is called by Firefly",
             "itemtype": "method",
             "name": "parseForm",
@@ -1293,7 +1573,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 75,
+            "line": 137,
             "description": "Explicitly tell the Request object that the connection with the client is secure (HTTPS)",
             "itemtype": "method",
             "name": "setServerSecure",
@@ -1309,7 +1589,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 87,
+            "line": 149,
             "description": "Figures out the client's useragent by parsing the `user-agent` header field",
             "itemtype": "method",
             "name": "_setupUserAgent",
@@ -1320,7 +1600,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 100,
+            "line": 162,
             "description": "Figures out the client's operating system by parsing the `user-agent` header field",
             "itemtype": "method",
             "name": "getOs",
@@ -1329,7 +1609,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 114,
+            "line": 176,
             "description": "Returns the client Browser and version as specified in the user-agent header field",
             "itemtype": "method",
             "name": "getBrowser",
@@ -1342,7 +1622,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 129,
+            "line": 191,
             "description": "Finds the client's IP address. If there is a proxy sitting\n  in front of web server then `HTTP_X_FORWARDED_FOR` is looked at.",
             "itemtype": "method",
             "name": "getClientIpAddress",
@@ -1364,7 +1644,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 147,
+            "line": 209,
             "description": "Finds the port from which the client is requesting from",
             "itemtype": "method",
             "name": "getClientPort",
@@ -1377,7 +1657,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 159,
+            "line": 221,
             "description": "Get the base path of the request URI",
             "itemtype": "method",
             "name": "getBasePath",
@@ -1390,7 +1670,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 170,
+            "line": 232,
             "description": "Get the base URL of the request URI",
             "itemtype": "method",
             "name": "getBaseUrl",
@@ -1403,7 +1683,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 182,
+            "line": 244,
             "description": "Get the charsets supported by the client",
             "itemtype": "method",
             "name": "getCharsets",
@@ -1416,7 +1696,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 197,
+            "line": 259,
             "description": "Get the base ETags header",
             "itemtype": "method",
             "name": "getETags",
@@ -1429,7 +1709,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 210,
+            "line": 272,
             "description": "Get the host header in the client request. If a port number is appended to the host, it will be omitted.\n   This is the case if a non-standard port is used for the http server.",
             "itemtype": "method",
             "name": "getHost",
@@ -1442,7 +1722,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 224,
+            "line": 286,
             "description": "Get the host header in the request. Includes the port port number if sent by the client.",
             "itemtype": "method",
             "name": "getHTTPHost",
@@ -1455,7 +1735,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 236,
+            "line": 298,
             "description": "Get the languages supported by the client by reading the `Accept-Language` header",
             "itemtype": "method",
             "name": "getLanguages",
@@ -1468,7 +1748,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 257,
+            "line": 319,
             "description": "Get the prefered language for the client based on the language's quality value",
             "itemtype": "method",
             "name": "getPreferredLanguage",
@@ -1481,7 +1761,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 284,
+            "line": 346,
             "description": "Get request method (i.e POST, GET, PUT..). If the `X-HTTP-METHOD-OVERRIDE` header is found, it is returned instead.\n   Returned string is upper case.",
             "itemtype": "method",
             "name": "getMethod",
@@ -1494,7 +1774,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 305,
+            "line": 367,
             "description": "Get request method. This is different from <getMethod> in that it will return the actual method used in the http request\n   as apposed to returning the `X-HTTP-METHOD-OVERRIDE` header field if it is found. Returned string is upper case.",
             "itemtype": "method",
             "name": "getMethodActual",
@@ -1507,7 +1787,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 318,
+            "line": 380,
             "description": "Get the mime type specified by the client",
             "itemtype": "method",
             "name": "getMimeType",
@@ -1520,7 +1800,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 331,
+            "line": 393,
             "description": "Get the host port specified by the request header",
             "itemtype": "method",
             "name": "getPort",
@@ -1533,7 +1813,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 352,
+            "line": 414,
             "description": "Get the query portion of the requested URL.  i.e 'field=value'",
             "itemtype": "method",
             "name": "getQueryString",
@@ -1546,7 +1826,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 364,
+            "line": 426,
             "description": "Get the query portion of the requested URL as an object.  i.e 'field=value' becomes {'field': 'value'}",
             "itemtype": "method",
             "name": "getQuery",
@@ -1559,7 +1839,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 378,
+            "line": 440,
             "description": "Get the request scheme ('http' or 'https')",
             "itemtype": "method",
             "name": "getScheme",
@@ -1572,7 +1852,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 390,
+            "line": 452,
             "description": "Check whether or not the requested method is a `safe` one (GET, HEAD).",
             "itemtype": "method",
             "name": "isMethodSafe",
@@ -1585,10 +1865,10 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 407,
+            "line": 469,
             "description": "Determaine whether the client has a no-cache policy",
             "itemtype": "method",
-            "name": "isMethodSafe",
+            "name": "isNoCache",
             "return": {
                 "description": "True if there is a no-cache policy otherwise false",
                 "type": "Boolean"
@@ -1598,7 +1878,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 426,
+            "line": 488,
             "description": "Determaine whether the connection to the client is secure",
             "itemtype": "method",
             "name": "isSecure",
@@ -1611,7 +1891,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 447,
+            "line": 509,
             "description": "Determaine whether the request is an AJAX/XHR request. It determines this by checking the X-Requested-With header.\n   The header is specified by the javascript framework. Works with Prototype, Mootools and jQuery.",
             "itemtype": "method",
             "name": "isXmlHttpRequest",
@@ -1624,7 +1904,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 460,
+            "line": 522,
             "description": "Determaine whether the request is a websocket request. It determines this by checking the `Upgrade` header field.",
             "itemtype": "method",
             "name": "isWebSocketRequest",
@@ -1637,7 +1917,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 479,
+            "line": 541,
             "description": "Determine the HTTP protocol version in the client request.",
             "itemtype": "method",
             "name": "getVersion",
@@ -1650,7 +1930,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 492,
+            "line": 554,
             "description": "Returns a reference to the net.Socket object associated with the current connection",
             "itemtype": "method",
             "name": "getConnectionSocket",
@@ -1663,7 +1943,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 504,
+            "line": 566,
             "description": "Returns the value for the Upgrade request header.",
             "itemtype": "method",
             "name": "getUpgrade",
@@ -1676,7 +1956,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 516,
+            "line": 578,
             "description": "Set the encoding for the request body.",
             "itemtype": "method",
             "name": "setEncoding",
@@ -1692,7 +1972,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 529,
+            "line": 591,
             "description": "Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)",
             "itemtype": "method",
             "name": "trustProxyData",
@@ -1708,7 +1988,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 541,
+            "line": 603,
             "description": "Get the referrer URL",
             "itemtype": "method",
             "name": "getReferrer",
@@ -1721,7 +2001,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 553,
+            "line": 615,
             "description": "Get the referrer URL. Same as <Referrer> but misspelled as it is in the specs",
             "itemtype": "method",
             "name": "getReferer",
@@ -1734,7 +2014,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 563,
+            "line": 625,
             "description": "Determine whether the client is sending a Do-Not-Track request header",
             "itemtype": "method",
             "name": "hasDoNotTrack",
@@ -1747,7 +2027,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 575,
+            "line": 637,
             "description": "Get the value of the `Connection` header field of client request",
             "itemtype": "method",
             "name": "getConnection",
@@ -1760,7 +2040,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 587,
+            "line": 649,
             "description": "Get values of the `Upgrade` field of the request header",
             "itemtype": "method",
             "name": "getUpgrades",
@@ -1773,7 +2053,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 606,
+            "line": 668,
             "description": "Determine whether the client is asking for a protocol upgrade",
             "itemtype": "method",
             "name": "hasUpgrade",
@@ -1786,7 +2066,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 618,
+            "line": 680,
             "description": "Get the value of a specified HTTP request header",
             "itemtype": "method",
             "name": "get",
@@ -1799,7 +2079,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 630,
+            "line": 692,
             "description": "Get the value of a HTTP header as a Date object.. if it is a valid representaion of a date",
             "itemtype": "method",
             "name": "getHeaderDate",
@@ -1824,7 +2104,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 654,
+            "line": 716,
             "description": "Parse the cookies sent by the client and create a `Cookie` object for each of them",
             "itemtype": "method",
             "name": "_parseCookies",
@@ -1835,7 +2115,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 680,
+            "line": 742,
             "description": "Get the specified cookie as a `Cookie` object",
             "itemtype": "method",
             "name": "getCookie",
@@ -1855,7 +2135,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 694,
+            "line": 756,
             "description": "Pause a client request. Calls native request.pause() method. Stops the request from\n           emmiting any new events until `resume` is called. Usefull to make sure \n           events not be missed while performing IO operationa.",
             "itemtype": "method",
             "name": "pause",
@@ -1864,7 +2144,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 708,
+            "line": 770,
             "description": "Resume a paused request",
             "itemtype": "method",
             "name": "resume",
@@ -1873,7 +2153,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 719,
+            "line": 781,
             "description": "Set the reference to the route object for the request, useful for getting quick \n       access to the route object",
             "itemtype": "method",
             "name": "setRouteObject",
@@ -1893,7 +2173,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 733,
+            "line": 795,
             "description": "Get a reference to the route object for the request, useful for getting\n       quick access to the route object",
             "itemtype": "method",
             "name": "getRouteObject",
@@ -1906,7 +2186,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 746,
+            "line": 808,
             "description": "Set a reference to the applet object to which the Router has assigned this Request",
             "itemtype": "method",
             "name": "setApplet",
@@ -1926,7 +2206,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 759,
+            "line": 821,
             "description": "Get a reference to the applet instance object this request is assigned to",
             "itemtype": "method",
             "name": "getApplet",
@@ -1939,7 +2219,7 @@
         },
         {
             "file": "src\\Http\\Request.js",
-            "line": 770,
+            "line": 832,
             "description": "Get a reference to the form data sent with user request",
             "itemtype": "method",
             "name": "getFormData",
@@ -2843,6 +3123,72 @@
             "itemtype": "method",
             "name": "redirect",
             "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Logger\\Logger.js",
+            "line": 36,
+            "description": "Log information",
+            "itemtype": "method",
+            "name": "info",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "Messaage to log",
+                    "type": "String"
+                },
+                {
+                    "name": "meta",
+                    "description": "Metadata object to include witht the log",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "class": "Logger",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Logger\\Logger.js",
+            "line": 49,
+            "description": "Log warnings",
+            "itemtype": "method",
+            "name": "info",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "Messaage to log",
+                    "type": "String"
+                },
+                {
+                    "name": "meta",
+                    "description": "Metadata object to include witht the log",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "class": "Logger",
+            "module": "Core"
+        },
+        {
+            "file": "src\\Logger\\Logger.js",
+            "line": 62,
+            "description": "Log errors",
+            "itemtype": "method",
+            "name": "error",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "Messaage to log",
+                    "type": "String"
+                },
+                {
+                    "name": "meta",
+                    "description": "Metadata object to include witht the log",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "class": "Logger",
             "module": "Core"
         },
         {

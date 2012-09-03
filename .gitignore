@@ -1,4 +1,4 @@
 .c9revisions/
-pids/
-logs/
+pids/*
+logs/*
 node_modules/
