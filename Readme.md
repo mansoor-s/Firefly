@@ -17,7 +17,7 @@ Firefly comes batteries included to get you started as quickly as possible. But,
 Whether you are developing a cool new HTML5 game or a company website, Firefly has you covered.
 
 
-API Documentation:
+API Documentation: http://mansoorsayed.com/Firefly/APIDocs/
 
  
 
