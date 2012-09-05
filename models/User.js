@@ -22,11 +22,13 @@ var bcrypt = require('bcrypt'),
 	Schema = require('mongoose').Schema;
 
 var UserSchema = module.exports = new Schema({
-    name: String,
+    username: String,
     password: String,
+    displayName: String,
+    email: String,
     created: { type : Date, default: Date.now() },
     lastModified: { type : Date, default: Date.now() },
-    groups: { type: Schema.Types.ObjectId, ref: 'Group'},  //this should be array of ObjectId's
+    groups: [{ type: Schema.Types.ObjectId, ref: 'Group'}],  //this should be array of ObjectId's
     verified: Boolean
 
 });
@@ -54,7 +56,6 @@ UserSchema.methods.authenticate = function(password, fn) {
 	    if(err) {
 	        throw err
 	    }
-
 	    fn(res);
 	});
 };

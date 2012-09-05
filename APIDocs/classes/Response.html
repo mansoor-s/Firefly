@@ -15,7 +15,7 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..&#x2F;assets/css/logo.png" title="Firefly"></h1>
+                <h1><img src=".&#x2F;firefly.png" title="Firefly"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
@@ -120,7 +120,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l24"><code>src\Http\Response.js:24</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l24"><code>src&#x2F;Http&#x2F;Response.js:24</code></a>
         </div>
     
 
@@ -184,7 +184,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l24"><code>src\Http\Response.js:24</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l24"><code>src&#x2F;Http&#x2F;Response.js:24</code></a>
         
         </p>
 
@@ -276,6 +276,13 @@
                         
                             <li class="index-item method">
                                 <a href="#method_addCookie">addCookie</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_end">end</a>
 
                                 
                                 
@@ -527,13 +534,6 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_send">send</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
                                 <a href="#method_set">set</a>
 
                                 
@@ -673,6 +673,13 @@
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_write">write</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -727,7 +734,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l589"><code>src\Http\Response.js:589</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l618"><code>src&#x2F;Http&#x2F;Response.js:618</code></a>
         
         </p>
 
@@ -810,7 +817,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l660"><code>src\Http\Response.js:660</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l689"><code>src&#x2F;Http&#x2F;Response.js:689</code></a>
         
         </p>
 
@@ -916,7 +923,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l615"><code>src\Http\Response.js:615</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l644"><code>src&#x2F;Http&#x2F;Response.js:644</code></a>
         
         </p>
 
@@ -1019,7 +1026,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l862"><code>src\Http\Response.js:862</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l891"><code>src&#x2F;Http&#x2F;Response.js:891</code></a>
         
         </p>
 
@@ -1050,6 +1057,117 @@
 
                     <div class="param-description">
                         <p>of the cookie</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_end" class="method item">
+    <h3 class="name"><code>end</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[chunk]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[encoding]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l589"><code>src&#x2F;Http&#x2F;Response.js:589</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>End the resonse. This should be called for chunked responses.
+  if chunk parameter is given it will be sent and then the response is ended</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[chunk]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Value for the chunk</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[encoding]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Encoding for the chunk</p>
                     </div>
 
                     
@@ -1111,7 +1229,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l836"><code>src\Http\Response.js:836</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l865"><code>src&#x2F;Http&#x2F;Response.js:865</code></a>
         
         </p>
 
@@ -1205,7 +1323,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l79"><code>src\Http\Response.js:79</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l79"><code>src&#x2F;Http&#x2F;Response.js:79</code></a>
         
         </p>
 
@@ -1287,7 +1405,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l647"><code>src\Http\Response.js:647</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l676"><code>src&#x2F;Http&#x2F;Response.js:676</code></a>
         
         </p>
 
@@ -1381,7 +1499,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l120"><code>src\Http\Response.js:120</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l120"><code>src&#x2F;Http&#x2F;Response.js:120</code></a>
         
         </p>
 
@@ -1458,7 +1576,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l943"><code>src\Http\Response.js:943</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l972"><code>src&#x2F;Http&#x2F;Response.js:972</code></a>
         
         </p>
 
@@ -1549,7 +1667,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l878"><code>src\Http\Response.js:878</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l907"><code>src&#x2F;Http&#x2F;Response.js:907</code></a>
         
         </p>
 
@@ -1643,7 +1761,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l143"><code>src\Http\Response.js:143</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l143"><code>src&#x2F;Http&#x2F;Response.js:143</code></a>
         
         </p>
 
@@ -1714,7 +1832,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l96"><code>src\Http\Response.js:96</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l96"><code>src&#x2F;Http&#x2F;Response.js:96</code></a>
         
         </p>
 
@@ -1785,7 +1903,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l193"><code>src\Http\Response.js:193</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l193"><code>src&#x2F;Http&#x2F;Response.js:193</code></a>
         
         </p>
 
@@ -1856,7 +1974,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l205"><code>src\Http\Response.js:205</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l205"><code>src&#x2F;Http&#x2F;Response.js:205</code></a>
         
         </p>
 
@@ -1943,7 +2061,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l155"><code>src\Http\Response.js:155</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l155"><code>src&#x2F;Http&#x2F;Response.js:155</code></a>
         
         </p>
 
@@ -2053,7 +2171,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l254"><code>src\Http\Response.js:254</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l254"><code>src&#x2F;Http&#x2F;Response.js:254</code></a>
         
         </p>
 
@@ -2124,7 +2242,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l217"><code>src\Http\Response.js:217</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l217"><code>src&#x2F;Http&#x2F;Response.js:217</code></a>
         
         </p>
 
@@ -2203,7 +2321,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l67"><code>src\Http\Response.js:67</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l67"><code>src&#x2F;Http&#x2F;Response.js:67</code></a>
         
         </p>
 
@@ -2284,7 +2402,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l241"><code>src\Http\Response.js:241</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l241"><code>src&#x2F;Http&#x2F;Response.js:241</code></a>
         
         </p>
 
@@ -2355,7 +2473,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l281"><code>src\Http\Response.js:281</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l281"><code>src&#x2F;Http&#x2F;Response.js:281</code></a>
         
         </p>
 
@@ -2426,7 +2544,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l750"><code>src\Http\Response.js:750</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l779"><code>src&#x2F;Http&#x2F;Response.js:779</code></a>
         
         </p>
 
@@ -2497,7 +2615,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l809"><code>src\Http\Response.js:809</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l838"><code>src&#x2F;Http&#x2F;Response.js:838</code></a>
         
         </p>
 
@@ -2568,7 +2686,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l786"><code>src\Http\Response.js:786</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l815"><code>src&#x2F;Http&#x2F;Response.js:815</code></a>
         
         </p>
 
@@ -2639,7 +2757,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l293"><code>src\Http\Response.js:293</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l293"><code>src&#x2F;Http&#x2F;Response.js:293</code></a>
         
         </p>
 
@@ -2710,7 +2828,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l715"><code>src\Http\Response.js:715</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l744"><code>src&#x2F;Http&#x2F;Response.js:744</code></a>
         
         </p>
 
@@ -2781,7 +2899,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l703"><code>src\Http\Response.js:703</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l732"><code>src&#x2F;Http&#x2F;Response.js:732</code></a>
         
         </p>
 
@@ -2852,7 +2970,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l798"><code>src\Http\Response.js:798</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l827"><code>src&#x2F;Http&#x2F;Response.js:827</code></a>
         
         </p>
 
@@ -2923,7 +3041,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l675"><code>src\Http\Response.js:675</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l704"><code>src&#x2F;Http&#x2F;Response.js:704</code></a>
         
         </p>
 
@@ -2996,7 +3114,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l774"><code>src\Http\Response.js:774</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l803"><code>src&#x2F;Http&#x2F;Response.js:803</code></a>
         
         </p>
 
@@ -3067,7 +3185,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l739"><code>src\Http\Response.js:739</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l768"><code>src&#x2F;Http&#x2F;Response.js:768</code></a>
         
         </p>
 
@@ -3138,7 +3256,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l762"><code>src\Http\Response.js:762</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l791"><code>src&#x2F;Http&#x2F;Response.js:791</code></a>
         
         </p>
 
@@ -3209,7 +3327,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l727"><code>src\Http\Response.js:727</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l756"><code>src&#x2F;Http&#x2F;Response.js:756</code></a>
         
         </p>
 
@@ -3280,7 +3398,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l305"><code>src\Http\Response.js:305</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l305"><code>src&#x2F;Http&#x2F;Response.js:305</code></a>
         
         </p>
 
@@ -3320,7 +3438,17 @@
     <h3 class="name"><code>redirect</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>url</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -3348,7 +3476,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l955"><code>src\Http\Response.js:955</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l984"><code>src&#x2F;Http&#x2F;Response.js:984</code></a>
         
         </p>
 
@@ -3359,9 +3487,32 @@
     </div>
 
     <div class="description">
-        <p>Redirect user to another URL</p>
+        <p>Redirect user to a URL</p>
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">url</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>URL to redirect to</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -3412,7 +3563,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l849"><code>src\Http\Response.js:849</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l878"><code>src&#x2F;Http&#x2F;Response.js:878</code></a>
         
         </p>
 
@@ -3499,7 +3650,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l633"><code>src\Http\Response.js:633</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l662"><code>src&#x2F;Http&#x2F;Response.js:662</code></a>
         
         </p>
 
@@ -3586,7 +3737,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l891"><code>src\Http\Response.js:891</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l920"><code>src&#x2F;Http&#x2F;Response.js:920</code></a>
         
         </p>
 
@@ -3679,7 +3830,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l915"><code>src\Http\Response.js:915</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l944"><code>src&#x2F;Http&#x2F;Response.js:944</code></a>
         
         </p>
 
@@ -3771,61 +3922,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l559"><code>src\Http\Response.js:559</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Send headers + content to client thus ending the client's request</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_send" class="method item">
-    <h3 class="name"><code>send</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l535"><code>src\Http\Response.js:535</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l535"><code>src&#x2F;Http&#x2F;Response.js:535</code></a>
         
         </p>
 
@@ -3895,7 +3992,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l822"><code>src\Http\Response.js:822</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l851"><code>src&#x2F;Http&#x2F;Response.js:851</code></a>
         
         </p>
 
@@ -3997,7 +4094,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l322"><code>src\Http\Response.js:322</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l322"><code>src&#x2F;Http&#x2F;Response.js:322</code></a>
         
         </p>
 
@@ -4086,7 +4183,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l351"><code>src\Http\Response.js:351</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l351"><code>src&#x2F;Http&#x2F;Response.js:351</code></a>
         
         </p>
 
@@ -4173,7 +4270,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l931"><code>src\Http\Response.js:931</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l960"><code>src&#x2F;Http&#x2F;Response.js:960</code></a>
         
         </p>
 
@@ -4260,7 +4357,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l131"><code>src\Http\Response.js:131</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l131"><code>src&#x2F;Http&#x2F;Response.js:131</code></a>
         
         </p>
 
@@ -4341,7 +4438,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l108"><code>src\Http\Response.js:108</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l108"><code>src&#x2F;Http&#x2F;Response.js:108</code></a>
         
         </p>
 
@@ -4424,7 +4521,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l363"><code>src\Http\Response.js:363</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l363"><code>src&#x2F;Http&#x2F;Response.js:363</code></a>
         
         </p>
 
@@ -4516,7 +4613,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l404"><code>src\Http\Response.js:404</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l404"><code>src&#x2F;Http&#x2F;Response.js:404</code></a>
         
         </p>
 
@@ -4580,7 +4677,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l388"><code>src\Http\Response.js:388</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l388"><code>src&#x2F;Http&#x2F;Response.js:388</code></a>
         
         </p>
 
@@ -4677,7 +4774,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l179"><code>src\Http\Response.js:179</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l179"><code>src&#x2F;Http&#x2F;Response.js:179</code></a>
         
         </p>
 
@@ -4792,7 +4889,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l417"><code>src\Http\Response.js:417</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l417"><code>src&#x2F;Http&#x2F;Response.js:417</code></a>
         
         </p>
 
@@ -4879,7 +4976,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l268"><code>src\Http\Response.js:268</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l268"><code>src&#x2F;Http&#x2F;Response.js:268</code></a>
         
         </p>
 
@@ -4967,7 +5064,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l434"><code>src\Http\Response.js:434</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l434"><code>src&#x2F;Http&#x2F;Response.js:434</code></a>
         
         </p>
 
@@ -5044,7 +5141,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l467"><code>src\Http\Response.js:467</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l467"><code>src&#x2F;Http&#x2F;Response.js:467</code></a>
         
         </p>
 
@@ -5100,7 +5197,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l487"><code>src\Http\Response.js:487</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l487"><code>src&#x2F;Http&#x2F;Response.js:487</code></a>
         
         </p>
 
@@ -5154,7 +5251,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l499"><code>src\Http\Response.js:499</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l499"><code>src&#x2F;Http&#x2F;Response.js:499</code></a>
         
         </p>
 
@@ -5218,7 +5315,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l447"><code>src\Http\Response.js:447</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l447"><code>src&#x2F;Http&#x2F;Response.js:447</code></a>
         
         </p>
 
@@ -5307,7 +5404,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l523"><code>src\Http\Response.js:523</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l523"><code>src&#x2F;Http&#x2F;Response.js:523</code></a>
         
         </p>
 
@@ -5394,7 +5491,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l336"><code>src\Http\Response.js:336</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l336"><code>src&#x2F;Http&#x2F;Response.js:336</code></a>
         
         </p>
 
@@ -5483,7 +5580,7 @@
             
         
         
-        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l54"><code>src\Http\Response.js:54</code></a>
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l54"><code>src&#x2F;Http&#x2F;Response.js:54</code></a>
         
         </p>
 
@@ -5514,6 +5611,115 @@
 
                     <div class="param-description">
                         <p>representation of HTTP response</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_write" class="method item">
+    <h3 class="name"><code>write</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>chunk</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[encoding]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Http_Response.js.html#l559"><code>src&#x2F;Http&#x2F;Response.js:559</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>write a chunk out to the client</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">chunk</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Value for the chunk</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[encoding]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Encoding for the chunk</p>
                     </div>
 
                     

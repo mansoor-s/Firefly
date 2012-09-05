@@ -982,9 +982,10 @@ Response.prototype.getContentType = function() {
 
 
 /**
-* Redirect user to another URL
+* Redirect user to a URL
 *
 * @method redirect
+* @param {String} url URL to redirect to
 */
 Response.prototype.redirect = function( url ) {
     this.setStatusCode(303);

@@ -3,7 +3,9 @@
     "description": "A Node.js CMF",
     "version": "0.1.0",
     "url": "https://github.com/mansoor-s/Firefly",
+    "logo": "./firefly.png",
     "options": {
-        "outdir": "./APIDocs/"
+        "outdir": "APIDocs/",
+        "exclude": "node_modules,pids,logs"
     }
 }

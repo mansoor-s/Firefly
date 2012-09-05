@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>services\Security\Permission.js - Firefly</title>
+    <title>services&#x2F;Security&#x2F;Permission.js - Firefly</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -15,7 +15,7 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..&#x2F;assets/css/logo.png" title="Firefly"></h1>
+                <h1><img src=".&#x2F;firefly.png" title="Firefly"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
@@ -112,7 +112,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: services\Security\Permission.js</h1>
+                        <h1 class="file-heading">File: services&#x2F;Security&#x2F;Permission.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -146,15 +146,19 @@ var bcrypt = require(&#x27;bcrypt&#x27;);
 * @module Services
 * @constructor
 * @param {Object} firefly Reference to the application Firefly object
+* @param {String} [serviceName=&#x27;Permission&#x27;] Name with which to register the service with Firefly
 *&#x2F;
-var Permission = module.exports = function(firefly) {
+var Permission = module.exports = function(firefly, serviceName) {
+    serviceName = serviceName || &#x27;Permission&#x27;;
+    
     this._app = firefly;
+    this._app.set(serviceName, this);
+    
     this._cookieName = firefly.config.SESSION_COOKIE_NAME;
     &#x2F;&#x2F;firefly.addInitDependency(this._onInit());
     
     firefly.router.addRouteRequirement(&#x27;authenticated&#x27;, this._getAuthenticatedChecker());
     firefly.router.addRouteRequirement(&#x27;verified&#x27;, this._getVerifiedChecker());
-    firefly.router.addRouteRequirement(&#x27;group&#x27;, this._getGroupChecker());
 
     
     this.sessionManager = firefly.get(&#x27;SessionManager&#x27;);

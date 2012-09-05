@@ -3,22 +3,30 @@
         "name": "Firefly",
         "description": "A Node.js CMF",
         "version": "0.1.0",
-        "url": "https://github.com/mansoor-s/Firefly"
+        "url": "https://github.com/mansoor-s/Firefly",
+        "logo": "./firefly.png"
     },
     "files": {
-        "services\\Database\\Mongoose.js": {
-            "name": "services\\Database\\Mongoose.js",
+        "services/Database/Mongoose.js": {
+            "name": "services/Database/Mongoose.js",
             "modules": {
                 "Services": 1
             },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "services/Database/Mongoskin.js": {
+            "name": "services/Database/Mongoskin.js",
+            "modules": {},
             "classes": {
                 "Mongoose": 1
             },
             "fors": {},
             "namespaces": {}
         },
-        "services\\Mailer\\Mailer.js": {
-            "name": "services\\Mailer\\Mailer.js",
+        "services/Mailer/Mailer.js": {
+            "name": "services/Mailer/Mailer.js",
             "modules": {},
             "classes": {
                 "Mailer": 1
@@ -26,8 +34,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "services\\Renderer\\Handlebars.js": {
-            "name": "services\\Renderer\\Handlebars.js",
+        "services/Renderer/Handlebars.js": {
+            "name": "services/Renderer/Handlebars.js",
             "modules": {},
             "classes": {
                 "Handlebars": 1
@@ -35,8 +43,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "services\\Security\\Permission.js": {
-            "name": "services\\Security\\Permission.js",
+        "services/Security/Permission.js": {
+            "name": "services/Security/Permission.js",
             "modules": {},
             "classes": {
                 "Permission": 1
@@ -44,8 +52,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "services\\Security\\SessionManager.js": {
-            "name": "services\\Security\\SessionManager.js",
+        "services/Security/SessionManager.js": {
+            "name": "services/Security/SessionManager.js",
             "modules": {},
             "classes": {
                 "SessionManager": 1
@@ -53,8 +61,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src\\Firefly\\Firefly.js": {
-            "name": "src\\Firefly\\Firefly.js",
+        "src/Firefly/Firefly.js": {
+            "name": "src/Firefly/Firefly.js",
             "modules": {
                 "Core": 1
             },
@@ -64,8 +72,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src\\Http\\Cookie.js": {
-            "name": "src\\Http\\Cookie.js",
+        "src/Http/Cookie.js": {
+            "name": "src/Http/Cookie.js",
             "modules": {},
             "classes": {
                 "Cookie": 1
@@ -73,8 +81,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src\\Http\\Request.js": {
-            "name": "src\\Http\\Request.js",
+        "src/Http/Request.js": {
+            "name": "src/Http/Request.js",
             "modules": {},
             "classes": {
                 "Request": 1
@@ -82,8 +90,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src\\Http\\Response.js": {
-            "name": "src\\Http\\Response.js",
+        "src/Http/Response.js": {
+            "name": "src/Http/Response.js",
             "modules": {},
             "classes": {
                 "Response": 1
@@ -91,8 +99,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src\\Logger\\Logger.js": {
-            "name": "src\\Logger\\Logger.js",
+        "src/Logger/Logger.js": {
+            "name": "src/Logger/Logger.js",
             "modules": {},
             "classes": {
                 "Logger": 1
@@ -100,8 +108,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src\\RenderManager\\RenderManager.js": {
-            "name": "src\\RenderManager\\RenderManager.js",
+        "src/RenderManager/RenderManager.js": {
+            "name": "src/RenderManager/RenderManager.js",
             "modules": {},
             "classes": {
                 "RenderManager": 1
@@ -109,8 +117,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src\\Router\\Router.js": {
-            "name": "src\\Router\\Router.js",
+        "src/Router/Router.js": {
+            "name": "src/Router/Router.js",
             "modules": {},
             "classes": {
                 "Router": 1
@@ -118,8 +126,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src\\Server\\Server.js": {
-            "name": "src\\Server\\Server.js",
+        "src/Server/Server.js": {
+            "name": "src/Server/Server.js",
             "modules": {},
             "classes": {
                 "Server": 1
@@ -127,8 +135,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src\\Server\\WSServer.js": {
-            "name": "src\\Server\\WSServer.js",
+        "src/Server/WSServer.js": {
+            "name": "src/Server/WSServer.js",
             "modules": {},
             "classes": {
                 "WSServer": 1
@@ -151,7 +159,7 @@
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "services\\Security\\SessionManager.js",
+            "file": "services/Security/SessionManager.js",
             "line": 24,
             "description": "Initialize Mongoose and set it as a service named 'Mongoose' with Firefly"
         },
@@ -172,7 +180,7 @@
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "src\\Server\\WSServer.js",
+            "file": "src/Server/WSServer.js",
             "line": 24,
             "description": "Firefly object constructor"
         }
@@ -187,9 +195,9 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "Services",
-            "file": "services\\Database\\Mongoose.js",
-            "line": 29,
-            "description": "Initialize Mongoose and set it as a service named 'Mongoose' with Firefly",
+            "file": "services/Database/Mongoskin.js",
+            "line": 24,
+            "description": "Initialize Mongoskin and set it as a service named 'Mongoskin' with Firefly",
             "is_constructor": 1,
             "params": [
                 {
@@ -221,7 +229,7 @@
             "extension_for": [],
             "module": "Services",
             "namespace": "",
-            "file": "services\\Mailer\\Mailer.js",
+            "file": "services/Mailer/Mailer.js",
             "line": 24,
             "description": "Handles mailing for Firefly",
             "is_constructor": 1,
@@ -248,7 +256,7 @@
             "extension_for": [],
             "module": "Services",
             "namespace": "",
-            "file": "services\\Renderer\\Handlebars.js",
+            "file": "services/Renderer/Handlebars.js",
             "line": 24,
             "description": "Wrapper for Handlebars",
             "is_constructor": 1,
@@ -270,7 +278,7 @@
             "extension_for": [],
             "module": "Services",
             "namespace": "",
-            "file": "services\\Security\\Permission.js",
+            "file": "services/Security/Permission.js",
             "line": 24,
             "description": "Permission system for Firefly",
             "is_constructor": 1,
@@ -279,6 +287,13 @@
                     "name": "firefly",
                     "description": "Reference to the application Firefly object",
                     "type": "Object"
+                },
+                {
+                    "name": "serviceName",
+                    "description": "Name with which to register the service with Firefly",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "'Permission'"
                 }
             ]
         },
@@ -292,7 +307,7 @@
             "extension_for": [],
             "module": "Services",
             "namespace": "",
-            "file": "services\\Security\\SessionManager.js",
+            "file": "services/Security/SessionManager.js",
             "line": 24,
             "description": "Redis based session manager for Firefly",
             "is_constructor": 1,
@@ -301,6 +316,13 @@
                     "name": "firefly",
                     "description": "Reference to the application Firefly object",
                     "type": "Object"
+                },
+                {
+                    "name": "serviceName",
+                    "description": "Name with which to register the service with Firefly",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "'SessionManager'"
                 }
             ]
         },
@@ -314,8 +336,8 @@
             "extension_for": [],
             "module": "Core",
             "namespace": "",
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 33,
+            "file": "src/Firefly/Firefly.js",
+            "line": 34,
             "description": "Firefly object constructor",
             "is_constructor": 1,
             "params": [
@@ -341,7 +363,7 @@
             "extension_for": [],
             "module": "Core",
             "namespace": "",
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 22,
             "description": "Cookie object constructor",
             "is_constructor": 1,
@@ -363,7 +385,7 @@
             "extension_for": [],
             "module": "Core",
             "namespace": "",
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 27,
             "description": "Request object constructor",
             "is_constructor": 1,
@@ -385,7 +407,7 @@
             "extension_for": [],
             "module": "Core",
             "namespace": "",
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 24,
             "description": "Response object constructor",
             "is_constructor": 1,
@@ -407,7 +429,7 @@
             "extension_for": [],
             "module": "Core",
             "namespace": "",
-            "file": "src\\Logger\\Logger.js",
+            "file": "src/Logger/Logger.js",
             "line": 23,
             "description": "Logging for Firefly",
             "is_constructor": 1,
@@ -429,7 +451,7 @@
             "extension_for": [],
             "module": "Core",
             "namespace": "",
-            "file": "src\\RenderManager\\RenderManager.js",
+            "file": "src/RenderManager/RenderManager.js",
             "line": 25,
             "description": "RenderManager object constructor.",
             "is_constructor": 1,
@@ -451,7 +473,7 @@
             "extension_for": [],
             "module": "Core",
             "namespace": "",
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 24,
             "description": "Router object constructor",
             "is_constructor": 1,
@@ -473,7 +495,7 @@
             "extension_for": [],
             "module": "Core",
             "namespace": "",
-            "file": "src\\Server\\Server.js",
+            "file": "src/Server/Server.js",
             "line": 25,
             "description": "Server object constructor",
             "is_constructor": 1,
@@ -500,7 +522,7 @@
             "extension_for": [],
             "module": "Core",
             "namespace": "",
-            "file": "src\\Server\\WSServer.js",
+            "file": "src/Server/WSServer.js",
             "line": 24,
             "description": "WSServer object constructor",
             "is_constructor": 1,
@@ -525,7 +547,7 @@
     },
     "classitems": [
         {
-            "file": "services\\Database\\Mongoose.js",
+            "file": "services/Database/Mongoose.js",
             "line": 56,
             "description": "The function returned by this method gets called on application init",
             "itemtype": "method",
@@ -540,7 +562,7 @@
             "module": "Services"
         },
         {
-            "file": "services\\Database\\Mongoose.js",
+            "file": "services/Database/Mongoose.js",
             "line": 77,
             "description": "Initialize mongoose models from schema directory",
             "itemtype": "method",
@@ -558,7 +580,22 @@
             "module": "Services"
         },
         {
-            "file": "services\\Mailer\\Mailer.js",
+            "file": "services/Database/Mongoskin.js",
+            "line": 51,
+            "description": "The function returned by this method gets called on application init",
+            "itemtype": "method",
+            "name": "_onInit",
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "will return a callback function which itself takes a callback function",
+                "type": "Function"
+            },
+            "class": "Mongoose",
+            "module": "Services"
+        },
+        {
+            "file": "services/Mailer/Mailer.js",
             "line": 42,
             "description": "Send a single email",
             "itemtype": "method",
@@ -589,7 +626,7 @@
             "module": "Services"
         },
         {
-            "file": "services\\Mailer\\Mailer.js",
+            "file": "services/Mailer/Mailer.js",
             "line": 69,
             "description": "Send an email to multiple recipients",
             "itemtype": "method",
@@ -620,7 +657,7 @@
             "module": "Services"
         },
         {
-            "file": "services\\Renderer\\Handlebars.js",
+            "file": "services/Renderer/Handlebars.js",
             "line": 48,
             "description": "function to be called on application initialization. *Not* registered with firefly.\n  No use for it at this time",
             "itemtype": "method",
@@ -631,7 +668,7 @@
             "module": "Services"
         },
         {
-            "file": "services\\Renderer\\Handlebars.js",
+            "file": "services/Renderer/Handlebars.js",
             "line": 63,
             "description": "Set an internal map of view names and file paths. This function will call buildCache",
             "itemtype": "method",
@@ -652,7 +689,7 @@
             "module": "Services"
         },
         {
-            "file": "services\\Renderer\\Handlebars.js",
+            "file": "services/Renderer/Handlebars.js",
             "line": 77,
             "description": "Build a cache of filepaths and its contents in memory. So not to hit the disk for every request.",
             "itemtype": "method",
@@ -673,7 +710,7 @@
             "module": "Services"
         },
         {
-            "file": "services\\Renderer\\Handlebars.js",
+            "file": "services/Renderer/Handlebars.js",
             "line": 98,
             "description": "Rebuild cache. Clears the file contents cach and calls buildCache",
             "itemtype": "method",
@@ -694,7 +731,7 @@
             "module": "Services"
         },
         {
-            "file": "services\\Renderer\\Handlebars.js",
+            "file": "services/Renderer/Handlebars.js",
             "line": 112,
             "description": "Render a view",
             "itemtype": "method",
@@ -715,8 +752,8 @@
             "module": "Services"
         },
         {
-            "file": "services\\Security\\Permission.js",
-            "line": 47,
+            "file": "services/Security/Permission.js",
+            "line": 51,
             "description": "function to be called on application initialization. *Not* registered with firefly.",
             "itemtype": "method",
             "name": "_onInit",
@@ -726,8 +763,8 @@
             "module": "Services"
         },
         {
-            "file": "services\\Security\\Permission.js",
-            "line": 62,
+            "file": "services/Security/Permission.js",
+            "line": 66,
             "description": "Returns a function that checks to make sure user is authenticated",
             "itemtype": "method",
             "name": "_getAuthenticatedChecker",
@@ -744,8 +781,8 @@
             "module": "Services"
         },
         {
-            "file": "services\\Security\\Permission.js",
-            "line": 94,
+            "file": "services/Security/Permission.js",
+            "line": 98,
             "description": "Returns a function that checks to make sure user is verified (Email.. or any other means)",
             "itemtype": "method",
             "name": "_getVerifiedChecker",
@@ -762,8 +799,8 @@
             "module": "Services"
         },
         {
-            "file": "services\\Security\\Permission.js",
-            "line": 132,
+            "file": "services/Security/Permission.js",
+            "line": 136,
             "description": "Checks if client has a valid session",
             "itemtype": "method",
             "name": "hasValidSession",
@@ -783,8 +820,8 @@
             "module": "Services"
         },
         {
-            "file": "services\\Security\\SessionManager.js",
-            "line": 41,
+            "file": "services/Security/SessionManager.js",
+            "line": 48,
             "description": "function to be called on application initialization. *Not* registered with firefly.\n  No use for it at this time (TODO: change the redis database from the default 0 in accordance with the config file)",
             "itemtype": "method",
             "name": "_onInit",
@@ -794,8 +831,8 @@
             "module": "Services"
         },
         {
-            "file": "services\\Security\\SessionManager.js",
-            "line": 56,
+            "file": "services/Security/SessionManager.js",
+            "line": 63,
             "description": "Get session object for given session ID",
             "itemtype": "method",
             "name": "getSession",
@@ -815,8 +852,8 @@
             "module": "Services"
         },
         {
-            "file": "services\\Security\\SessionManager.js",
-            "line": 85,
+            "file": "services/Security/SessionManager.js",
+            "line": 92,
             "description": "Create a session and return its session ID",
             "itemtype": "method",
             "name": "createSession",
@@ -841,8 +878,8 @@
             "module": "Services"
         },
         {
-            "file": "services\\Security\\SessionManager.js",
-            "line": 111,
+            "file": "services/Security/SessionManager.js",
+            "line": 118,
             "description": "Destroy session with the given session ID",
             "itemtype": "method",
             "name": "destorySession",
@@ -867,8 +904,8 @@
             "module": "Services"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 47,
+            "file": "src/Firefly/Firefly.js",
+            "line": 48,
             "description": "Reference to application config object",
             "itemtype": "property",
             "name": "config",
@@ -877,8 +914,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 54,
+            "file": "src/Firefly/Firefly.js",
+            "line": 55,
             "access": "private",
             "tagname": "",
             "type": "Boolean",
@@ -888,8 +925,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 61,
+            "file": "src/Firefly/Firefly.js",
+            "line": 62,
             "access": "private",
             "tagname": "",
             "type": "Object",
@@ -899,8 +936,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 68,
+            "file": "src/Firefly/Firefly.js",
+            "line": 69,
             "access": "private",
             "tagname": "",
             "type": "Object",
@@ -910,8 +947,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 75,
+            "file": "src/Firefly/Firefly.js",
+            "line": 76,
             "description": "An instance of the Server Router",
             "itemtype": "property",
             "name": "server",
@@ -920,8 +957,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 82,
+            "file": "src/Firefly/Firefly.js",
+            "line": 83,
             "access": "private",
             "tagname": "",
             "type": "Object",
@@ -931,8 +968,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 89,
+            "file": "src/Firefly/Firefly.js",
+            "line": 90,
             "description": "An instance of the RenderManager Router",
             "type": "Object",
             "itemtype": "property",
@@ -941,8 +978,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 96,
+            "file": "src/Firefly/Firefly.js",
+            "line": 97,
             "access": "private",
             "tagname": "",
             "type": "Object",
@@ -952,8 +989,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 103,
+            "file": "src/Firefly/Firefly.js",
+            "line": 104,
             "access": "private",
             "tagname": "",
             "type": "Object",
@@ -963,8 +1000,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 110,
+            "file": "src/Firefly/Firefly.js",
+            "line": 111,
             "description": "An instance of the RenderManager object",
             "type": "Object",
             "itemtype": "property",
@@ -973,8 +1010,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 117,
+            "file": "src/Firefly/Firefly.js",
+            "line": 118,
             "access": "private",
             "tagname": "",
             "type": "Array",
@@ -984,8 +1021,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 124,
+            "file": "src/Firefly/Firefly.js",
+            "line": 125,
             "access": "private",
             "tagname": "",
             "type": "Object",
@@ -995,8 +1032,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 131,
+            "file": "src/Firefly/Firefly.js",
+            "line": 132,
             "description": "An instance of the Logger object",
             "type": "Object",
             "itemtype": "property",
@@ -1005,8 +1042,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 144,
+            "file": "src/Firefly/Firefly.js",
+            "line": 145,
             "description": "Initialize the application. Caches's all views and starts HTTP and WebSocket servers",
             "itemtype": "method",
             "name": "init",
@@ -1021,8 +1058,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 174,
+            "file": "src/Firefly/Firefly.js",
+            "line": 175,
             "description": "Initialize WebSocket servers. Use this seperatly if using application with cluster. (NOTE: set AUTO_START_WS_SERVER to false in app config object)",
             "itemtype": "method",
             "name": "initWS",
@@ -1030,8 +1067,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 191,
+            "file": "src/Firefly/Firefly.js",
+            "line": 192,
             "description": "Autoload and Use application Applets. This function performes blocking IO (require())",
             "itemtype": "method",
             "name": "autoloadApplets",
@@ -1039,8 +1076,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 218,
+            "file": "src/Firefly/Firefly.js",
+            "line": 219,
             "description": "Get a reference to an applet",
             "itemtype": "method",
             "name": "getApplet",
@@ -1059,8 +1096,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 232,
+            "file": "src/Firefly/Firefly.js",
+            "line": 233,
             "description": "Return all un-initialized applets",
             "itemtype": "method",
             "name": "getAllRawApplets",
@@ -1072,8 +1109,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 244,
+            "file": "src/Firefly/Firefly.js",
+            "line": 245,
             "description": "Return information about all of the registered applets",
             "itemtype": "method",
             "name": "getAllApplets",
@@ -1085,8 +1122,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 256,
+            "file": "src/Firefly/Firefly.js",
+            "line": 257,
             "description": "Set an object as a service, accessable application wide",
             "itemtype": "method",
             "name": "set",
@@ -1106,8 +1143,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 273,
+            "file": "src/Firefly/Firefly.js",
+            "line": 274,
             "description": "Get a reference to the requested service",
             "itemtype": "method",
             "name": "get",
@@ -1126,8 +1163,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 286,
+            "file": "src/Firefly/Firefly.js",
+            "line": 287,
             "description": "Add an initialized applet object",
             "itemtype": "method",
             "name": "addApplet",
@@ -1151,8 +1188,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 304,
+            "file": "src/Firefly/Firefly.js",
+            "line": 305,
             "description": "Get the application routes object that was passed to Firefly by the app",
             "itemtype": "method",
             "name": "getAppRoutes",
@@ -1164,8 +1201,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 316,
+            "file": "src/Firefly/Firefly.js",
+            "line": 317,
             "description": "Wrapper for the request handler of all client requests",
             "itemtype": "method",
             "name": "getRequestHandler",
@@ -1177,8 +1214,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 353,
+            "file": "src/Firefly/Firefly.js",
+            "line": 354,
             "description": "Returns call back to be used for all WS client connections",
             "itemtype": "method",
             "name": "getWSRequestHandler",
@@ -1190,8 +1227,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
-            "line": 395,
+            "file": "src/Firefly/Firefly.js",
+            "line": 396,
             "description": "Handle application-wide exceptions",
             "itemtype": "method",
             "name": "catchException",
@@ -1211,7 +1248,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
+            "file": "src/Firefly/Firefly.js",
             "line": 410,
             "description": "Set a view/templating engine for Firefly to use",
             "itemtype": "method",
@@ -1227,7 +1264,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
+            "file": "src/Firefly/Firefly.js",
             "line": 426,
             "description": "Add a callback function to be called when Firefly is initialized. These functions are executed in sequence.",
             "itemtype": "method",
@@ -1243,7 +1280,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Firefly\\Firefly.js",
+            "file": "src/Firefly/Firefly.js",
             "line": 439,
             "description": "Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)",
             "itemtype": "method",
@@ -1259,7 +1296,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 42,
             "description": "String representation of the cookie for setting in HTTP header",
             "itemtype": "method",
@@ -1272,7 +1309,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 68,
             "description": "Get the cookie's `Expires` directive.",
             "itemtype": "method",
@@ -1285,7 +1322,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 80,
             "description": "Set the cookie's `Expires` directive.",
             "itemtype": "method",
@@ -1301,7 +1338,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 92,
             "description": "Returns the name of the Cookie",
             "itemtype": "method",
@@ -1314,7 +1351,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 104,
             "description": "Set the cookie's name",
             "itemtype": "method",
@@ -1330,7 +1367,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 117,
             "description": "Returns the cookie value",
             "itemtype": "method",
@@ -1343,7 +1380,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 129,
             "description": "Set the cookie value",
             "itemtype": "method",
@@ -1359,7 +1396,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 141,
             "description": "Returns the cookie's domain restriction",
             "itemtype": "method",
@@ -1372,7 +1409,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 153,
             "description": "Set the cookie's domain restriction",
             "itemtype": "method",
@@ -1388,7 +1425,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 166,
             "description": "Returns the cookies path restriction",
             "itemtype": "method",
@@ -1401,7 +1438,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 178,
             "description": "Set the cookie's path restriction",
             "itemtype": "method",
@@ -1417,7 +1454,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 191,
             "description": "Determine if the `Secure` flag is set on the cookie",
             "itemtype": "method",
@@ -1430,7 +1467,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Cookie.js",
+            "file": "src/Http/Cookie.js",
             "line": 203,
             "description": "Set a boolean value that will determine if the `Secure` flag is set on the cookie\n           Defaults to false",
             "itemtype": "method",
@@ -1446,7 +1483,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 37,
             "access": "private",
             "tagname": "",
@@ -1457,7 +1494,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 44,
             "access": "private",
             "tagname": "",
@@ -1468,7 +1505,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 51,
             "access": "private",
             "tagname": "",
@@ -1479,7 +1516,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 58,
             "access": "private",
             "tagname": "",
@@ -1490,7 +1527,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 65,
             "access": "private",
             "tagname": "",
@@ -1501,7 +1538,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 72,
             "access": "private",
             "tagname": "",
@@ -1512,7 +1549,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 79,
             "access": "private",
             "tagname": "",
@@ -1523,7 +1560,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 86,
             "access": "private",
             "tagname": "",
@@ -1534,7 +1571,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 93,
             "access": "private",
             "tagname": "",
@@ -1545,7 +1582,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 104,
             "access": "private",
             "tagname": "",
@@ -1556,7 +1593,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 119,
             "description": "Parses form fields and files. This method is called by Firefly",
             "itemtype": "method",
@@ -1572,7 +1609,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 137,
             "description": "Explicitly tell the Request object that the connection with the client is secure (HTTPS)",
             "itemtype": "method",
@@ -1588,7 +1625,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 149,
             "description": "Figures out the client's useragent by parsing the `user-agent` header field",
             "itemtype": "method",
@@ -1599,7 +1636,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 162,
             "description": "Figures out the client's operating system by parsing the `user-agent` header field",
             "itemtype": "method",
@@ -1608,7 +1645,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 176,
             "description": "Returns the client Browser and version as specified in the user-agent header field",
             "itemtype": "method",
@@ -1621,7 +1658,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 191,
             "description": "Finds the client's IP address. If there is a proxy sitting\n  in front of web server then `HTTP_X_FORWARDED_FOR` is looked at.",
             "itemtype": "method",
@@ -1643,7 +1680,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 209,
             "description": "Finds the port from which the client is requesting from",
             "itemtype": "method",
@@ -1656,7 +1693,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 221,
             "description": "Get the base path of the request URI",
             "itemtype": "method",
@@ -1669,7 +1706,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 232,
             "description": "Get the base URL of the request URI",
             "itemtype": "method",
@@ -1682,7 +1719,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 244,
             "description": "Get the charsets supported by the client",
             "itemtype": "method",
@@ -1695,7 +1732,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 259,
             "description": "Get the base ETags header",
             "itemtype": "method",
@@ -1708,7 +1745,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 272,
             "description": "Get the host header in the client request. If a port number is appended to the host, it will be omitted.\n   This is the case if a non-standard port is used for the http server.",
             "itemtype": "method",
@@ -1721,7 +1758,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 286,
             "description": "Get the host header in the request. Includes the port port number if sent by the client.",
             "itemtype": "method",
@@ -1734,7 +1771,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 298,
             "description": "Get the languages supported by the client by reading the `Accept-Language` header",
             "itemtype": "method",
@@ -1747,7 +1784,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 319,
             "description": "Get the prefered language for the client based on the language's quality value",
             "itemtype": "method",
@@ -1760,7 +1797,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 346,
             "description": "Get request method (i.e POST, GET, PUT..). If the `X-HTTP-METHOD-OVERRIDE` header is found, it is returned instead.\n   Returned string is upper case.",
             "itemtype": "method",
@@ -1773,7 +1810,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 367,
             "description": "Get request method. This is different from <getMethod> in that it will return the actual method used in the http request\n   as apposed to returning the `X-HTTP-METHOD-OVERRIDE` header field if it is found. Returned string is upper case.",
             "itemtype": "method",
@@ -1786,7 +1823,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 380,
             "description": "Get the mime type specified by the client",
             "itemtype": "method",
@@ -1799,7 +1836,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 393,
             "description": "Get the host port specified by the request header",
             "itemtype": "method",
@@ -1812,7 +1849,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 414,
             "description": "Get the query portion of the requested URL.  i.e 'field=value'",
             "itemtype": "method",
@@ -1825,7 +1862,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 426,
             "description": "Get the query portion of the requested URL as an object.  i.e 'field=value' becomes {'field': 'value'}",
             "itemtype": "method",
@@ -1838,7 +1875,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 440,
             "description": "Get the request scheme ('http' or 'https')",
             "itemtype": "method",
@@ -1851,7 +1888,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 452,
             "description": "Check whether or not the requested method is a `safe` one (GET, HEAD).",
             "itemtype": "method",
@@ -1864,7 +1901,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 469,
             "description": "Determaine whether the client has a no-cache policy",
             "itemtype": "method",
@@ -1877,7 +1914,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 488,
             "description": "Determaine whether the connection to the client is secure",
             "itemtype": "method",
@@ -1890,7 +1927,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 509,
             "description": "Determaine whether the request is an AJAX/XHR request. It determines this by checking the X-Requested-With header.\n   The header is specified by the javascript framework. Works with Prototype, Mootools and jQuery.",
             "itemtype": "method",
@@ -1903,7 +1940,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 522,
             "description": "Determaine whether the request is a websocket request. It determines this by checking the `Upgrade` header field.",
             "itemtype": "method",
@@ -1916,7 +1953,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 541,
             "description": "Determine the HTTP protocol version in the client request.",
             "itemtype": "method",
@@ -1929,7 +1966,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 554,
             "description": "Returns a reference to the net.Socket object associated with the current connection",
             "itemtype": "method",
@@ -1942,7 +1979,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 566,
             "description": "Returns the value for the Upgrade request header.",
             "itemtype": "method",
@@ -1955,7 +1992,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 578,
             "description": "Set the encoding for the request body.",
             "itemtype": "method",
@@ -1971,7 +2008,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 591,
             "description": "Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)",
             "itemtype": "method",
@@ -1987,7 +2024,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 603,
             "description": "Get the referrer URL",
             "itemtype": "method",
@@ -2000,7 +2037,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 615,
             "description": "Get the referrer URL. Same as <Referrer> but misspelled as it is in the specs",
             "itemtype": "method",
@@ -2013,7 +2050,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 625,
             "description": "Determine whether the client is sending a Do-Not-Track request header",
             "itemtype": "method",
@@ -2026,7 +2063,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 637,
             "description": "Get the value of the `Connection` header field of client request",
             "itemtype": "method",
@@ -2039,7 +2076,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 649,
             "description": "Get values of the `Upgrade` field of the request header",
             "itemtype": "method",
@@ -2052,7 +2089,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 668,
             "description": "Determine whether the client is asking for a protocol upgrade",
             "itemtype": "method",
@@ -2065,7 +2102,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 680,
             "description": "Get the value of a specified HTTP request header",
             "itemtype": "method",
@@ -2078,7 +2115,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 692,
             "description": "Get the value of a HTTP header as a Date object.. if it is a valid representaion of a date",
             "itemtype": "method",
@@ -2103,7 +2140,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 716,
             "description": "Parse the cookies sent by the client and create a `Cookie` object for each of them",
             "itemtype": "method",
@@ -2114,7 +2151,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 742,
             "description": "Get the specified cookie as a `Cookie` object",
             "itemtype": "method",
@@ -2134,7 +2171,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 756,
             "description": "Pause a client request. Calls native request.pause() method. Stops the request from\n           emmiting any new events until `resume` is called. Usefull to make sure \n           events not be missed while performing IO operationa.",
             "itemtype": "method",
@@ -2143,7 +2180,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 770,
             "description": "Resume a paused request",
             "itemtype": "method",
@@ -2152,7 +2189,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 781,
             "description": "Set the reference to the route object for the request, useful for getting quick \n       access to the route object",
             "itemtype": "method",
@@ -2172,7 +2209,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 795,
             "description": "Get a reference to the route object for the request, useful for getting\n       quick access to the route object",
             "itemtype": "method",
@@ -2185,7 +2222,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 808,
             "description": "Set a reference to the applet object to which the Router has assigned this Request",
             "itemtype": "method",
@@ -2205,7 +2242,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 821,
             "description": "Get a reference to the applet instance object this request is assigned to",
             "itemtype": "method",
@@ -2218,7 +2255,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Request.js",
+            "file": "src/Http/Request.js",
             "line": 832,
             "description": "Get a reference to the form data sent with user request",
             "itemtype": "method",
@@ -2231,7 +2268,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 54,
             "description": "Creates a string represnetaion of the response object including both \n           content and header sections. **This is broken**",
             "itemtype": "method",
@@ -2247,7 +2284,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 67,
             "description": "Exposes the native Node response object",
             "itemtype": "method",
@@ -2263,7 +2300,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 79,
             "description": "Get age of the response",
             "itemtype": "method",
@@ -2276,7 +2313,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 96,
             "description": "Get the name of the encoding",
             "itemtype": "method",
@@ -2289,7 +2326,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 108,
             "description": "Change the value of the response's encoding, default is `utf8`",
             "itemtype": "method",
@@ -2302,7 +2339,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 120,
             "description": "Get content of the response object",
             "itemtype": "method",
@@ -2315,7 +2352,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 131,
             "description": "Set the value of the `Date` HTTP header",
             "itemtype": "method",
@@ -2331,7 +2368,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 143,
             "description": "Get a Date object with the value of the `Date` HTTP header",
             "itemtype": "method",
@@ -2344,7 +2381,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 155,
             "description": "Get the value of a HTTP header as a Date object.. if it is a valid representaion of a date",
             "itemtype": "method",
@@ -2369,7 +2406,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 179,
             "description": "Set the value of the specified header to the value of the specified Date object (UTC representation)",
             "itemtype": "method",
@@ -2394,7 +2431,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 193,
             "description": "Get the value of the Etag header value",
             "itemtype": "method",
@@ -2407,7 +2444,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 205,
             "description": "Get the value of the `Expires` header as a Date object",
             "itemtype": "method",
@@ -2420,7 +2457,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 217,
             "description": "Get the maximum time after which the response will be considered stale as a Date object.\n          First, it checks for a `s-maxage` directive, then a `max-age` directive, and then it falls\n          back on an `expires` header. `undefined` is returned when no maximum age can be established.",
             "itemtype": "method",
@@ -2433,7 +2470,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 241,
             "description": "Get the response's HTTP status code",
             "itemtype": "method",
@@ -2446,7 +2483,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 254,
             "description": "Get the lety HTTP header's values in an array",
             "itemtype": "method",
@@ -2459,7 +2496,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 268,
             "description": "Set the `lety` header",
             "itemtype": "method",
@@ -2475,7 +2512,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 281,
             "description": "Determin if the response is cachable",
             "itemtype": "method",
@@ -2488,7 +2525,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 293,
             "description": "Determine if the response is fresh",
             "itemtype": "method",
@@ -2501,7 +2538,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 305,
             "description": "Determine if the response includes headers that can be used to validate\n           the response with the origin server using a conditional GET request.",
             "itemtype": "method",
@@ -2514,7 +2551,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 322,
             "description": "Set the time to live for the Response's private cache. This method sets the \n          Cache-Control and max-age directives",
             "itemtype": "method",
@@ -2530,7 +2567,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 336,
             "description": "Set the time to live for the Response's shared cache. This method sets the \n          Cache-Control and s-maxage directives",
             "itemtype": "method",
@@ -2546,7 +2583,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 351,
             "description": "Set the response content",
             "itemtype": "method",
@@ -2562,7 +2599,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 363,
             "description": "Set the ETag header",
             "itemtype": "method",
@@ -2583,7 +2620,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 388,
             "description": "Set the vlaue of the `Expires` HTTP header.",
             "itemtype": "method",
@@ -2599,7 +2636,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 404,
             "description": "Marks the response stale by setting the Age header to be equal to the maximum age of the response.",
             "itemtype": "method",
@@ -2608,7 +2645,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 417,
             "description": "Set the value of the `Last-Modified` HTTP header with the specified Date object",
             "itemtype": "method",
@@ -2624,7 +2661,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 434,
             "description": "Sets the number of seconds after which the response should no longer be considered fresh",
             "itemtype": "method",
@@ -2640,7 +2677,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 447,
             "description": "Sets the number of seconds after which the response should no longer be \n           considered fresh by shared caches.\n           This methods sets the Cache-Control s-maxage directive.",
             "itemtype": "method",
@@ -2656,7 +2693,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 467,
             "description": "Set the response as a not modified (304). Will remove any HTTP headers that \n       might contradict this: 'Allow', 'Content-Encoding', 'Content-Language',\n       'Content-Length', 'Content-MD5', 'Content-Type', 'Last-Modified'",
             "itemtype": "method",
@@ -2665,7 +2702,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 487,
             "description": "Set reponse as private. This makes the response ineligible for serving other clients.",
             "itemtype": "method",
@@ -2674,7 +2711,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 499,
             "description": "Set reponse as public. This makes the response eligible for serving other clients.",
             "itemtype": "method",
@@ -2683,7 +2720,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 523,
             "description": "Set HTTP status code to response",
             "itemtype": "method",
@@ -2699,7 +2736,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 535,
             "description": "Send headers + content to client thus ending the client's request",
             "itemtype": "method",
@@ -2708,17 +2745,53 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 559,
-            "description": "Send headers + content to client thus ending the client's request",
+            "description": "write a chunk out to the client",
             "itemtype": "method",
-            "name": "send",
+            "name": "write",
+            "params": [
+                {
+                    "name": "chunk",
+                    "description": "Value for the chunk",
+                    "type": "String"
+                },
+                {
+                    "name": "encoding",
+                    "description": "Encoding for the chunk",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
             "class": "Response",
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
+            "file": "src/Http/Response.js",
             "line": 589,
+            "description": "End the resonse. This should be called for chunked responses.\n  if chunk parameter is given it will be sent and then the response is ended",
+            "itemtype": "method",
+            "name": "end",
+            "params": [
+                {
+                    "name": "chunk",
+                    "description": "Value for the chunk",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "encoding",
+                    "description": "Encoding for the chunk",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "Response",
+            "module": "Core"
+        },
+        {
+            "file": "src/Http/Response.js",
+            "line": 618,
             "description": "Get the value of the `Cache-Control` header",
             "itemtype": "method",
             "name": "_getCacheControlHeader",
@@ -2732,8 +2805,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 615,
+            "file": "src/Http/Response.js",
+            "line": 644,
             "description": "Add a cache directive to `Cache-Control` header",
             "itemtype": "method",
             "name": "addCacheControlDirective",
@@ -2754,8 +2827,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 633,
+            "file": "src/Http/Response.js",
+            "line": 662,
             "description": "Remove a cache directive to `Cache-Control` header",
             "itemtype": "method",
             "name": "removeCacheControlDirective",
@@ -2770,8 +2843,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 647,
+            "file": "src/Http/Response.js",
+            "line": 676,
             "description": "Get a cache directive to `Cache-Control` header",
             "itemtype": "method",
             "name": "getCacheControlDirective",
@@ -2790,8 +2863,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 660,
+            "file": "src/Http/Response.js",
+            "line": 689,
             "description": "Updates the `Cache-Control` header to user specified properties using Response's methods",
             "itemtype": "method",
             "name": "_updateCacheControl",
@@ -2812,8 +2885,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 675,
+            "file": "src/Http/Response.js",
+            "line": 704,
             "description": "Determines if the Response validators (ETag, Last-Modified) matches a conditional \n           value specified in the Request. If the response is not modified, it sets the \n           status code to 304 and removes the response content by calling the `setNotModified` method",
             "itemtype": "method",
             "name": "isNotModified",
@@ -2825,8 +2898,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 703,
+            "file": "src/Http/Response.js",
+            "line": 732,
             "description": "Determine if the response is invalid by looking at the status code",
             "itemtype": "method",
             "name": "isInvalid",
@@ -2838,8 +2911,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 715,
+            "file": "src/Http/Response.js",
+            "line": 744,
             "description": "Determine if the response is just informative by looking at the status code",
             "itemtype": "method",
             "name": "isInformational",
@@ -2851,8 +2924,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 727,
+            "file": "src/Http/Response.js",
+            "line": 756,
             "description": "Determine if the response is successful by looking at the status code",
             "itemtype": "method",
             "name": "isSuccessful",
@@ -2864,8 +2937,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 739,
+            "file": "src/Http/Response.js",
+            "line": 768,
             "description": "Determine if the response is a redirect by looking at the status code",
             "itemtype": "method",
             "name": "isRedirection",
@@ -2877,8 +2950,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 750,
+            "file": "src/Http/Response.js",
+            "line": 779,
             "description": "Determine if the response is a client error by looking at the status code",
             "itemtype": "method",
             "name": "isClientError",
@@ -2890,8 +2963,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 762,
+            "file": "src/Http/Response.js",
+            "line": 791,
             "description": "Determine if the response is a server error by looking at the status code",
             "itemtype": "method",
             "name": "isServerError",
@@ -2903,8 +2976,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 774,
+            "file": "src/Http/Response.js",
+            "line": 803,
             "description": "Determine if the response is OK by looking at the status code (200)",
             "itemtype": "method",
             "name": "isOk",
@@ -2916,8 +2989,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 786,
+            "file": "src/Http/Response.js",
+            "line": 815,
             "description": "Determine if the response is forbidden by looking at the status code",
             "itemtype": "method",
             "name": "isForbidden",
@@ -2929,8 +3002,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 798,
+            "file": "src/Http/Response.js",
+            "line": 827,
             "description": "Determine if the response is a `not found` by looking at the status code (404)",
             "itemtype": "method",
             "name": "isNotFound",
@@ -2942,8 +3015,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 809,
+            "file": "src/Http/Response.js",
+            "line": 838,
             "description": "Determine if the response is empty by looking at the status code",
             "itemtype": "method",
             "name": "isEmpty",
@@ -2955,8 +3028,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 822,
+            "file": "src/Http/Response.js",
+            "line": 851,
             "description": "Set HTTP header and it's value",
             "itemtype": "method",
             "name": "set",
@@ -2976,8 +3049,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 836,
+            "file": "src/Http/Response.js",
+            "line": 865,
             "description": "Get the specified HTTP header's value",
             "itemtype": "method",
             "name": "get",
@@ -2996,8 +3069,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 849,
+            "file": "src/Http/Response.js",
+            "line": 878,
             "description": "Remove the specified HTTP header",
             "itemtype": "method",
             "name": "remove",
@@ -3012,8 +3085,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 862,
+            "file": "src/Http/Response.js",
+            "line": 891,
             "description": "Set a cookie by passing in its properties, including it's name. \n           see <Cookie> for the supported properties",
             "itemtype": "method",
             "name": "addCookie",
@@ -3028,8 +3101,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 878,
+            "file": "src/Http/Response.js",
+            "line": 907,
             "description": "Get the specified cookie as a `Cookie` object",
             "itemtype": "method",
             "name": "getCookie",
@@ -3048,8 +3121,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 891,
+            "file": "src/Http/Response.js",
+            "line": 920,
             "description": "Remove a cookie from client browser by setting its `Expires` directive",
             "itemtype": "method",
             "name": "removeCookie",
@@ -3064,8 +3137,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 915,
+            "file": "src/Http/Response.js",
+            "line": 944,
             "description": "Render the response and end it",
             "itemtype": "method",
             "name": "render",
@@ -3085,8 +3158,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 931,
+            "file": "src/Http/Response.js",
+            "line": 960,
             "description": "Set response `Content-Type` header's value. firefly, by default sets it to text/html",
             "itemtype": "method",
             "name": "setContentType",
@@ -3101,8 +3174,8 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 943,
+            "file": "src/Http/Response.js",
+            "line": 972,
             "description": "Get response `Content-Type` header's value",
             "itemtype": "method",
             "name": "getContentType",
@@ -3117,16 +3190,23 @@
             "module": "Core"
         },
         {
-            "file": "src\\Http\\Response.js",
-            "line": 955,
-            "description": "Redirect user to another URL",
+            "file": "src/Http/Response.js",
+            "line": 984,
+            "description": "Redirect user to a URL",
             "itemtype": "method",
             "name": "redirect",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "URL to redirect to",
+                    "type": "String"
+                }
+            ],
             "class": "Response",
             "module": "Core"
         },
         {
-            "file": "src\\Logger\\Logger.js",
+            "file": "src/Logger/Logger.js",
             "line": 36,
             "description": "Log information",
             "itemtype": "method",
@@ -3148,7 +3228,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Logger\\Logger.js",
+            "file": "src/Logger/Logger.js",
             "line": 49,
             "description": "Log warnings",
             "itemtype": "method",
@@ -3170,7 +3250,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Logger\\Logger.js",
+            "file": "src/Logger/Logger.js",
             "line": 62,
             "description": "Log errors",
             "itemtype": "method",
@@ -3192,7 +3272,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\RenderManager\\RenderManager.js",
+            "file": "src/RenderManager/RenderManager.js",
             "line": 40,
             "description": "Creates a map of view names and view file path. [Performes sync IO]",
             "itemtype": "method",
@@ -3208,7 +3288,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\RenderManager\\RenderManager.js",
+            "file": "src/RenderManager/RenderManager.js",
             "line": 72,
             "description": "Get the rendered contents of a view with the given properties",
             "itemtype": "method",
@@ -3238,7 +3318,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 50,
             "description": "Build routing patterns for all available applets",
             "itemtype": "method",
@@ -3250,7 +3330,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 153,
             "description": "Rebuilds application route rules. Call this if application's routes are changed\n           post init.",
             "itemtype": "method",
@@ -3259,7 +3339,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 168,
             "description": "Create routes (callbacks for given event name) for a given websocket route. \n           No rich route rules for ws routes to reduce overhead",
             "itemtype": "method",
@@ -3282,7 +3362,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 193,
             "description": "Find the appropriate controller for the incoming client request",
             "itemtype": "method",
@@ -3303,7 +3383,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 253,
             "description": "Makes sure that the request meets all of the requirements of the route",
             "itemtype": "method",
@@ -3336,7 +3416,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 302,
             "description": "Find the appropriate controller for the WebSocket event",
             "itemtype": "method",
@@ -3362,7 +3442,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 337,
             "description": "Generate url based on the route name and specified URL parameters",
             "itemtype": "method",
@@ -3387,7 +3467,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 369,
             "description": "Test for the _method route rule",
             "itemtype": "method",
@@ -3415,7 +3495,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 398,
             "description": "Test for the _transport route rule",
             "itemtype": "method",
@@ -3443,7 +3523,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 426,
             "description": "Get a reference to the object holding the routes for websockets",
             "itemtype": "method",
@@ -3456,7 +3536,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 438,
             "description": "Method called by router if no route is found for the request",
             "itemtype": "method",
@@ -3477,7 +3557,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 454,
             "description": "Method called by router if no route is found for the websocket request",
             "itemtype": "method",
@@ -3498,7 +3578,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Router\\Router.js",
+            "file": "src/Router/Router.js",
             "line": 467,
             "description": "Set a function as the request handler for a service. If a route is registered to \n           the specified service, then this function will be called with an instance of \n           the Request and Response objects before calling the controller. Firefly will\n           prepend the",
             "example": [
@@ -3522,7 +3602,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Server\\Server.js",
+            "file": "src/Server/Server.js",
             "line": 47,
             "description": "Set the request handler for the server if it is not passed with the object constructor",
             "itemtype": "method",
@@ -3538,7 +3618,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Server\\Server.js",
+            "file": "src/Server/Server.js",
             "line": 59,
             "description": "Start the HTTP server",
             "itemtype": "method",
@@ -3554,7 +3634,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Server\\Server.js",
+            "file": "src/Server/Server.js",
             "line": 89,
             "description": "Shutdown http server",
             "itemtype": "method",
@@ -3563,7 +3643,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Server\\Server.js",
+            "file": "src/Server/Server.js",
             "line": 100,
             "description": "Returns a boolean value indicated whether or not the server is a secure one. i.e HTTPS or HTTP",
             "itemtype": "method",
@@ -3576,7 +3656,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Server\\Server.js",
+            "file": "src/Server/Server.js",
             "line": 112,
             "description": "Get a reference to the native HTTP/HTTPS server object",
             "itemtype": "method",
@@ -3589,7 +3669,7 @@
             "module": "Core"
         },
         {
-            "file": "src\\Server\\WSServer.js",
+            "file": "src/Server/WSServer.js",
             "line": 48,
             "description": "Close connection to all connected clients and shutdown WS server",
             "itemtype": "method",

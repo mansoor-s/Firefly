@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>services&#x2F;Renderer&#x2F;Handlebars.js - Firefly</title>
+    <title>services&#x2F;Database&#x2F;Mongoskin.js - Firefly</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -112,7 +112,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: services&#x2F;Renderer&#x2F;Handlebars.js</h1>
+                        <h1 class="file-heading">File: services&#x2F;Database&#x2F;Mongoskin.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -136,111 +136,53 @@
 
 &#x27;use strict&#x27;;
 
-var fs = require(&#x27;fs&#x27;);
-var Handlebars = require(&#x27;handlebars&#x27;);
+var mongoskin = require(&#x27;mongoskin&#x27;);
+
 
 &#x2F;**
-* Wrapper for Handlebars
+* Initialize Mongoskin and set it as a service named &#x27;Mongoskin&#x27; with Firefly
 *
-* @class Handlebars
+* @class Mongoose
 * @module Services
 * @constructor
-* @param {Object} firefly Reference to the application Firefly object
+* @param {Object} firefly reference to Firefly instance
+* @param {Object} opts mongodb connection options
+* @param {String} [serviceName=&#x27;Mongoose&#x27;] name for the service
 *&#x2F;
-var Renderer = module.exports = function(firefly) {
-   
-    this._views = undefined;
-    
-     &#x2F;* cache structure:
-       
-        cache: {
-            path: content
-        }
-    *&#x2F;
-    this.cache = {};
-    
-    &#x2F;&#x2F;firefly.addInitDependency(this._onInit());
+var Mongoskin = module.exports = function(firefly, opts, serviceName) {
+    if (!firefly || !opts) {
+        throw Error(&#x27;&#x60;Mongoskin&#x60; service requires Firefly instance and configuration options as parameters in constructor&#x27;);
+    }
+
+    this.app = firefly;
+    this.opts = opts;
+
+    this.db = mongoose.createConnection();
+
+    this.app.set(serviceName || &#x27;Mongoose&#x27;, this.db);  
+
+    this.app.addInitDependency(this._onInit());
 };
 
 
+
 &#x2F;**
-* function to be called on application initialization. *Not* registered with firefly.
-*   No use for it at this time
+* The function returned by this method gets called on application init
 *
 * @method _onInit
 * @private
+* @return {Function} will return a callback function which itself takes a callback function
 *&#x2F;
-Renderer.prototype._onInit = function() {
+Mongoose.prototype._onInit = function() {
     var self = this;
     return function(fn) {
-        fn();
+        self.db.open(self.opts.HOST, self.opts.DB_NAME, self.opts.PORT, self.opts.OPTS, function() {
+            console.log(&#x27;Connected to MongoDB&#x27;);
+
+            &#x2F;&#x2F;initialize models
+            &#x2F;&#x2F;self._initModels(fn);
+        });
     };
-};
-
-
-&#x2F;**
-* Set an internal map of view names and file paths. This function will call buildCache
-*
-* @method setViews
-* @param{ Object} views Object containing map of view names and file paths
-* @param {Function} fn Callback
-*&#x2F;
-Renderer.prototype.setViews = function(views, fn) {
-    this._views = views;
-    this.buildCache(fn);
-};
-
-
-
-&#x2F;**
-* Build a cache of filepaths and its contents in memory. So not to hit the disk for every request.
-*
-* @method buildCache
-* @param{Object} views Object containing map of view names and file paths
-* @param {Function} fn Callback
-*&#x2F;
-Renderer.prototype.buildCache = function(fn) {
-    for (var i = 0, len = this._views.length; i &lt; len; ++i) {
-        var viewPath = this._views[i];
-        var data = fs.readFileSync(viewPath, &#x27;utf8&#x27;);
-        var template = Handlebars.compile(data);
-        
-        this.cache[viewPath] = template;
-    }
-
-    fn();
-};
-
-
-
-&#x2F;**
-* Rebuild cache. Clears the file contents cach and calls buildCache
-*
-* @method rebuildCache
-* @param{Object} views Object containing map of view names and file paths
-* @param {Function} fn Callback
-*&#x2F;
-Renderer.prototype.rebuildCache = function(fn) {
-    this.cache = {};
-    this.buildCache(fn);
-};
-
-
-
-&#x2F;**
-* Render a view
-*
-* @method render
-* @param{String} view file path 
-* @param {Function} fn Callback
-*&#x2F;
-Renderer.prototype.render = function(path, opts) {
-    var template = this.cache[path];
-    if (!template) {
-        throw new Error(&#x27;View &#x60;&#x27; + path + &#x27;&#x60; not found&#x27;);
-    }
-    
-    return template(opts);
 };
     </pre>
 </div>

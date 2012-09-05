@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src\Http\Response.js - Firefly</title>
+    <title>src&#x2F;Http&#x2F;Response.js - Firefly</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -15,7 +15,7 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="..&#x2F;assets/css/logo.png" title="Firefly"></h1>
+                <h1><img src=".&#x2F;firefly.png" title="Firefly"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
@@ -112,7 +112,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src\Http\Response.js</h1>
+                        <h1 class="file-heading">File: src&#x2F;Http&#x2F;Response.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -675,31 +675,60 @@ Response.prototype.send = function() {
 
 
 &#x2F;**
-* Send headers + content to client thus ending the client&#x27;s request
+* write a chunk out to the client
 *
-* @method send
+* @method write
+* @param {String} chunk Value for the chunk
+* @param {String} [encoding] Encoding for the chunk
 *&#x2F;
 Response.prototype.write = function( chunk, encoding ) {
+    if ( this._sent !== true ) {
+        &#x2F;&#x2F;setup response cookies
+        var cookies = [];
+        for ( var cookie in this._cookies ) {
+            cookies.push( this._cookies[ cookie ].toString() );
+        }
+        
+        if ( cookies.length &gt; 0 ) {
+            this._response.setHeader(&#x27;Set-Cookie&#x27;, cookies);
+        }
 
-    &#x2F;&#x2F;setup response cookies
-    var cookies = [];
-    for ( var cookie in this._cookies ) {
-        cookies.push( this._cookies[ cookie ].toString() );
+        
+        this._response.setHeader(&#x27;Content-Type&#x27;, this._contentType);
     }
     
-    if ( cookies.length &gt; 0 ) {
-        this._response.setHeader(&#x27;Set-Cookie&#x27;, cookies);
-    }
+    this._response.write( chunk, this._encoding );
     
-    this._response.setHeader(&#x27;Content-Type&#x27;, this._contentType);
-    this._response.end( this._content, this._encoding );
-    
-    
-    this._response.write(chunk, this._encoding);
+    this._sent = true;
 };
 
-Response.prototype.end = function() {
+
+
+&#x2F;**
+* End the resonse. This should be called for chunked responses.
+*   if chunk parameter is given it will be sent and then the response is ended
+*
+* @method end
+* @param {String} [chunk] Value for the chunk
+* @param {String} [encoding] Encoding for the chunk
+*&#x2F;
+Response.prototype.end = function( chunk, encoding ) {
+    if ( this._sent !== true ) {
+        &#x2F;&#x2F;setup response cookies
+        var cookies = [];
+        for ( var cookie in this._cookies ) {
+            cookies.push( this._cookies[ cookie ].toString() );
+        }
+        
+        if ( cookies.length &gt; 0 ) {
+            this._response.setHeader(&#x27;Set-Cookie&#x27;, cookies);
+        }
+
+        
+        this._response.setHeader(&#x27;Content-Type&#x27;, this._contentType);
+    }
     
+    this._response.end( chunk, encoding );
 };
 
 
@@ -1039,7 +1068,7 @@ Response.prototype.removeCookie = function( name ) {
 *&#x2F;
 Response.prototype.render = function( viewName, props ) {
     var applet = this._request.getApplet();
-    var content = this._firefly.renderer.render( applet, viewName, props );
+    var content = this._firefly.renderManager.render( applet, viewName, props );
     this.setContent( content );
     this.send();
 };
@@ -1071,9 +1100,10 @@ Response.prototype.getContentType = function() {
 
 
 &#x2F;**
-* Redirect user to another URL
+* Redirect user to a URL
 *
 * @method redirect
+* @param {String} url URL to redirect to
 *&#x2F;
 Response.prototype.redirect = function( url ) {
     this.setStatusCode(303);
