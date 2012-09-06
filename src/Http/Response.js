@@ -949,10 +949,12 @@ Response.prototype.removeCookie = function( name ) {
 * @param {Object} props Object holding values to pass to rendering engine
 */
 Response.prototype.render = function( viewName, props ) {
+    var self = this;
     var applet = this._request.getApplet();
-    var content = this._firefly.renderManager.render( applet, viewName, props );
-    this.setContent( content );
-    this.send();
+    this._firefly.renderManager.render( applet, viewName, props, function( content ) {
+        self.setContent( content );
+        self.send();
+    });
 };
 
 

@@ -36,17 +36,18 @@ var fs = require('fs'),
 * @param {Object} opts mongodb connection options
 * @param {String} [serviceName='Mongoose'] name for the service
 */
-var Mongoose = module.exports = function(firefly, opts, serviceName) {
-    if (!firefly || !opts) {
-        throw Error('`Mongoose` service requires Firefly instance and configuration options as parameters in constructor');
+var Mongoose = module.exports = function(firefly, serviceName) {
+    if (!firefly) {
+        throw Error('`Mongoose` service requires Firefly instance as its first parameters in constructor');
     }
 
     this.app = firefly;
-    this.opts = opts;
-
+    this.opts = firefly.config.MongoDB.OPTS;
+    
     this.db = mongoose.createConnection();
-
-    this.app.set(serviceName || 'Mongoose', this.db);  
+    
+    
+    this.app.set('Mongoose', this.db);
 
     this.app.addInitDependency(this._onInit());
 };
@@ -83,13 +84,13 @@ Mongoose.prototype._onInit = function() {
 */
 Mongoose.prototype._initModels = function(fn) {
     var self = this;
-
-    dive(this.opts.MODELS_DIR, { all: true }, function(err, filePath) {
+    
+    dive(this.app.config.MODELS_DIR, { all: true }, function(err, filePath) {
         if (err) {
             throw err
         }
         
-        var filePathParts = file.split(path.sep),
+        var filePathParts = filePath.split(path.sep),
             len = filePathParts.length,
             fileName = filePathParts[len - 1],
             nameParts = fileName.split('.');

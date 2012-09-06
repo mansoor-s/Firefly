@@ -14,9 +14,10 @@ Site.prototype.homeAction = function( request, response ) {
 
 Site.prototype.loginAction = function(req, res) {
     if (req.getMethod() === 'POST') {
-        var fields = rq.getFormData().fields;
+        var fields = req.getFormData().fields;
         
         if (!this.fieldsExist(fields, ['username', 'password'])) {
+            console.log(1);
             res.render('login.html', {error: 'Incorrect credentials'});
             return;
         }
@@ -32,12 +33,14 @@ Site.prototype.loginAction = function(req, res) {
             } 
             
             if (!user) {
+                console.log(2);
                 res.render('login.html', {error: 'Incorrect credentials'});
                 return;
             }
             
             user.authenticate(password, function(result) {
                 if (result === false) {
+                    console.log(3);
                     res.render('login.html', {error: 'Incorrect credentials'});
                 } else {
                     //auth successful redirect to referrer. if it exists, otherwise
@@ -47,6 +50,7 @@ Site.prototype.loginAction = function(req, res) {
             });
         });
     } else {
+        console.log(4);
         res.render('login.html');
     }
     
@@ -56,7 +60,7 @@ Site.prototype.fieldsExist = function(fields, fieldNames) {
     var len = fieldNames.length;
     for (var i = 0; i < len; ++i) {
         var name = fieldNames[i];
-        if (fields[name] === undefined) {
+        if (fields[name] === undefined || fields[name] === '') {
             return false;
         }
     }
@@ -64,7 +68,7 @@ Site.prototype.fieldsExist = function(fields, fieldNames) {
 };
 
 Site.prototype.registerAction = function(req, res) {
-    if (this.req.getMethod() === 'POST') {
+    if (req.getMethod() === 'POST') {
         var fields = req.getFormData().fields;
         var fieldNames = [
             'username',

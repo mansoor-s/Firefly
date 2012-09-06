@@ -106,9 +106,9 @@ var Request = module.exports = function( req ) {
     *@type Object
     *@property _formData
     */
-    this._formData = {
-        fields: [],
-        files: []
+    this._formFields = {
+        fields: {},
+        files: {}
     };
     
     this._routeObject = undefined;
@@ -126,8 +126,14 @@ Request.prototype.parseForm =  function(fn) {
     var form = new Formidable.IncomingForm();
     var self = this;
     form.parse( this._request, function( err, fields, files ) {
-        self._formData.fields = fields || [];
-        self._formData.files = files || [];
+        
+        self._formFields = {
+            fields: fields,
+            files: files
+        }
+        
+        console.log(self._formFields);
+        console.log('calling parse callback');
         fn();
     });
 };
@@ -837,5 +843,5 @@ Request.prototype.getApplet = function() {
             Both are arrays
 */
 Request.prototype.getFormData = function() {
-    return this._formData;
+    return this._formFields;
 };   

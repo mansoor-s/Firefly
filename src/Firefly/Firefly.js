@@ -336,7 +336,9 @@ Firefly.prototype.getRequestHandler = function() {
             }
 
             if(request.getMethod() === 'POST') {
+                console.log('request handler. post');
                 request.parseForm(function() {
+                    console.log('parseForm callback');
                     self.router.findRoute( request, response );
                 });
             } else {

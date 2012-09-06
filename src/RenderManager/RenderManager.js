@@ -76,9 +76,13 @@ RenderManager.prototype.buildViewMap = function( fn ) {
 * @param {String} applet Name of the raw applet to which the view belongs
 * @param {String} viewName Name of the view
 * @param {Object} props Object to pass to pass to view engine for the current view
+* @param {Function} callback function that takes the rendered content as first parameter
 * @returns {String} Rendered contents of the view
 */
-RenderManager.prototype.render = function( applet, viewName, props ) {
+RenderManager.prototype.render = function( applet, viewName, props, fn ) {
     var path = applet.__appletProto.views[ viewName ];
-    return this._viewEngine.render( path, props );
+    if ( props === undefined ) {
+	props = {};
+    }
+    return this._viewEngine.render( path, props, fn );
 };

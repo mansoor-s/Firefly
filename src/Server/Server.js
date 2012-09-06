@@ -39,7 +39,6 @@ var Server = module.exports = function( firefly, requestHandler ) {
     this._config = firefly.config;
     this._requestHandler = requestHandler;
 
-    firefly.set('Server', this);
 };
 
 

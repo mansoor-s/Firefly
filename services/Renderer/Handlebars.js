@@ -30,6 +30,7 @@ var Handlebars = require('handlebars');
 * @param {Object} firefly Reference to the application Firefly object
 */
 var Renderer = module.exports = function(firefly) {
+    this.app = firefly
    
     this._views = undefined;
     
@@ -62,6 +63,7 @@ Renderer.prototype._onInit = function() {
 
 /**
 * Set an internal map of view names and file paths. This function will call buildCache
+* when application is not in `dev` mode
 *
 * @method setViews
 * @param{ Object} views Object containing map of view names and file paths
@@ -69,7 +71,10 @@ Renderer.prototype._onInit = function() {
 */
 Renderer.prototype.setViews = function(views, fn) {
     this._views = views;
-    this.buildCache(fn);
+    if (this.app.config.ENV !== 'dev') {
+        this.buildCache(fn);
+    }
+    
 };
 
 
@@ -114,13 +119,23 @@ Renderer.prototype.rebuildCache = function(fn) {
 *
 * @method render
 * @param{String} view file path 
+* @param {Object} object to send to handlebars along with template
 * @param {Function} fn Callback
 */
-Renderer.prototype.render = function(path, opts) {
-    var template = this.cache[path];
-    if (!template) {
-        throw new Error('View `' + path + '` not found');
-    }
+Renderer.prototype.render = function(path, opts, fn) {
+    var template;
     
-    return template(opts);
+    if (this.app.config.ENV === 'dev') {
+        fs.readFile(path, 'utf8', function(err, content) {
+            template = Handlebars.compile(content);
+            fn(template(opts));
+        });
+    } else {
+        template = this.cache[path];
+        if (!template) {
+            throw new Error('View `' + path + '` not found');
+        }
+        
+        fn(template(opts));
+    }
 };

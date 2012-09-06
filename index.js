@@ -43,7 +43,7 @@ var sessionManager = new SessionManager(firefly);
 var permission = new Permission(firefly);
 
 
-//var mongoose = new Mongoose(firefly, config.MongoDB);
+var mongoose = new Mongoose(firefly);
 
 
 
