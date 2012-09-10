@@ -37,10 +37,10 @@ UserSchema.methods.setPassword = function(password, fn) {
     var self = this;
     
     self._hashPassword(password, function(passwordHash) {
-        this.password = passwordHash;
+        self.password = passwordHash;
+	fn();
     });
 };
-
 
 UserSchema.methods._hashPassword = function(password, fn) {
     bcrypt.genSalt(12, function(err, salt) {
@@ -51,11 +51,11 @@ UserSchema.methods._hashPassword = function(password, fn) {
 };
 
 UserSchema.methods.authenticate = function(password, fn) {
-	// Load hash from your password DB.
-	bcrypt.compare(password, this.password, function(err, res) {
-	    if(err) {
-	        throw err
-	    }
-	    fn(res);
-	});
+    // Load hash from your password DB.
+    bcrypt.compare(password, this.password, function(err, res) {
+	if(err) {
+	    throw err
+	}
+	fn(res);
+    });
 };

@@ -42,7 +42,7 @@ var Mongoose = module.exports = function(firefly, serviceName) {
     }
 
     this.app = firefly;
-    this.opts = firefly.config.MongoDB.OPTS;
+    this.opts = firefly.config.MongoDB;
     
     this.db = mongoose.createConnection();
     

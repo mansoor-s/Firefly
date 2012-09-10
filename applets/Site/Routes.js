@@ -1,21 +1,37 @@
 module.exports = {
-    'site_home': {
-        pattern: '/',
-        controller: 'homeAction'
-    },
-    
-    'login': {
+    'loginAction': {
         pattern: '/login',
-        controller: 'loginAction'
+        controller: 'loginAction',
+        requirements: {
+            _method: 'POST'
+        }
     },
     
-    'register': {
+    'loginPage': {
+        pattern: '/login',
+        controller: 'loginPage'
+    },
+    
+    'registerAction': {
         pattern: '/register',
-        controller: 'registerAction'
+        controller: 'registerAction',
+        requirements: {
+            _method: 'POST'
+        }
+    },
+    
+    'registerPage': {
+        pattern: '/register',
+        controller: 'registerPage'
     },
     
     'profile': {
         pattern: '/profile',
         controller: 'profileAction'
+    },
+    
+    'site_home': {
+        pattern: '.*',
+        controller: 'homeAction'
     }
 };

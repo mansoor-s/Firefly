@@ -135,7 +135,7 @@ Router.prototype.buildRoutes = function() {
             routes[ route ]._actionController = applet.object[ controller ];
             
             //reference to instance of applet object
-            routes[ route ]._applet = applet.object
+            routes[ route ]._applet = applet.object;
             routes[ route ]._fullRoute = appletBasePattern + routes[ route ].pattern;
             
             //applet base route
