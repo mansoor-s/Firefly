@@ -19,7 +19,6 @@
 'use strict';
 
 var fs = require( 'fs' );
-var path = require( 'path' );
 
 
 /**
@@ -53,7 +52,7 @@ RenderManager.prototype.buildViewMap = function( fn ) {
         var applet = rawApplets[ name ];
         applet.views = {};
         //skip loaidng applet vies if the view folder does not exist
-        if ( !path.existsSync( applet.appletViewDir ) ) {
+        if ( !fs.existsSync( applet.appletViewDir ) ) {
             continue;
         }
         

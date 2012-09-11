@@ -3,16 +3,34 @@
 var Site = module.exports = function( app ) {
 	this._app = app;
         this._mongoose = app.get('Mongoose');
+        this._sessionManager = app.get('SessionManager');
         
         this._userModel = this._mongoose.model('User');
+        this._documentModel = this._mongoose.model('Document');
 };
 
 
 
 
-Site.prototype.homeAction = function( request, response ) {
-    response.setContent('MEW!!');
-    response.send();
+Site.prototype.homeAction = function( req, res ) {
+    var session = req.getSession();
+    
+    var pathParts = req.getBasePath().split('/');
+    var len = pathParts.length;
+    
+    for (var i = 0; i < len; ++i) {
+        if ( i === 0 ) {
+            continue;
+        }
+        var currSlug = pathParts[i];
+        
+        
+    }
+    
+    console.log(pathParts);
+    
+    res.end();
+    //this._documentModel.findOne({'slug': });
 };
 
 
@@ -20,6 +38,7 @@ Site.prototype.homeAction = function( request, response ) {
 
 
 Site.prototype.loginAction = function(req, res) {
+    var self = this;
     var fields = req.getFormData().fields;
     
     if (!this.fieldsExist(fields, ['username', 'password'])) {
@@ -46,9 +65,12 @@ Site.prototype.loginAction = function(req, res) {
             if (result === false) {
                 res.render('login.html', {error: 'Incorrect credentials'});
             } else {
-                //auth successful redirect to referrer. if it exists, otherwise
                 //go to homepage
-                res.redirect(request.getReferrer() || '/')
+                console.log('user authenticated!!!');
+                self._sessionManager.createSession(res, {groups: ['user', 'admin']}, function() {
+                    console.log('in session creation callback');
+                    res.redirect('/');
+                });
             }
         });
     });

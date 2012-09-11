@@ -1,6 +1,6 @@
 module.exports = {
     'loginAction': {
-        pattern: '/login',
+        pattern: 'login',
         controller: 'loginAction',
         requirements: {
             _method: 'POST'
@@ -8,12 +8,12 @@ module.exports = {
     },
     
     'loginPage': {
-        pattern: '/login',
+        pattern: 'login',
         controller: 'loginPage'
     },
     
     'registerAction': {
-        pattern: '/register',
+        pattern: 'register',
         controller: 'registerAction',
         requirements: {
             _method: 'POST'
@@ -21,17 +21,17 @@ module.exports = {
     },
     
     'registerPage': {
-        pattern: '/register',
+        pattern: 'register',
         controller: 'registerPage'
     },
     
     'profile': {
-        pattern: '/profile',
+        pattern: 'profile',
         controller: 'profileAction'
     },
     
     'site_home': {
-        pattern: '.*',
+        pattern: ':slug',
         controller: 'homeAction'
     }
 };

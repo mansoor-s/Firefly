@@ -39,6 +39,8 @@ var SessionManager = module.exports = function(firefly, serviceName) {
     
     //firefly.addInitDependency(this._onInit());
     
+    firefly.router.addRouteRequirement('session', this._getSessionInjecter());
+    
     this._client = redis.createClient();
     console.log('created redis client');
 };
@@ -57,6 +59,20 @@ SessionManager.prototype._onInit = function() {
         fn();
     };    
 };
+
+
+SessionManager.prototype._getSessionInjecter = function() {
+    var self = this;
+    return function(request, response, rule, fn) {
+        if (rule === true) {
+            self.getSession(request, function(session) {
+                request.setSession(session);
+                fn(true);
+            });
+        }
+    };
+};
+
 
 
 
@@ -83,7 +99,7 @@ SessionManager.prototype.getSession = function( request, fn ) {
             throw Error(err);
         }
         
-        fn(session);
+        fn(JSON.parse(session));
     });
 };
 
@@ -102,9 +118,10 @@ SessionManager.prototype.createSession = function(response, data, fn) {
     
     data = data || {};
 
-    response.setCookie({name: this._cookieName, value: id});
-    
-    this._client.hset(id, data, function(err, res) {
+    response.addCookie({name: this._cookieName, value: id});
+    console.log('settign session:');
+    console.log(JSON.stringify(data));
+    this._client.set(id, JSON.stringify(data), function(err, res) {
         if(err) {
             throw Error(err);
         }

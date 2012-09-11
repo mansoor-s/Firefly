@@ -86,7 +86,7 @@ Permission.prototype._getAuthenticatedChecker = function() {
             } else if (isValid === false && rule === false) {
                 fn(true, false);
             } else {
-                response.redirect('/user/login');
+                response.redirect('/login');
                 fn(false, true);
             }
         });

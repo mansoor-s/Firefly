@@ -111,6 +111,14 @@ var Request = module.exports = function( req ) {
         files: {}
     };
     
+    /**
+    *@private
+    *@type Object
+    *@property _session
+    */
+    this._session = {};
+    
+    
     this._routeObject = undefined;
 };
 
@@ -753,7 +761,7 @@ Request.prototype._parseCookies = function() {
 * @return {String} the value of the cookie
 */
 Request.prototype.getCookie = function( name ) {
-    return this._cookies[ name ].getValue();
+    return this._cookies[ name ];
 };
 
 
@@ -844,4 +852,14 @@ Request.prototype.getApplet = function() {
 */
 Request.prototype.getFormData = function() {
     return this._formFields;
-};   
+};
+
+
+Request.prototype.setSession = function( session ) {
+    this._session = session;
+};
+
+
+Request.prototype.getSession = function() {
+    return this._session;
+};

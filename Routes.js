@@ -1,7 +1,10 @@
 var Routes = module.exports = {
     'Site': {
-        basePattern: '',
-        applet: 'Site'
+        basePattern: '/?',
+        applet: 'Site',
+	requirements: {
+	    _session: true
+	}
     },
 
     'Admin': {
