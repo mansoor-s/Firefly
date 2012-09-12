@@ -51,7 +51,7 @@ RenderManager.prototype.buildViewMap = function( fn ) {
         var name = appletNames[ i ];
         var applet = rawApplets[ name ];
         applet.views = {};
-        //skip loaidng applet vies if the view folder does not exist
+        //skip loaidng applet views if the view folder does not exist
         if ( !fs.existsSync( applet.appletViewDir ) ) {
             continue;
         }
@@ -79,9 +79,17 @@ RenderManager.prototype.buildViewMap = function( fn ) {
 * @returns {String} Rendered contents of the view
 */
 RenderManager.prototype.render = function( applet, viewName, props, fn ) {
-    var path = applet.__appletProto.views[ viewName ];
+    var rawApplets = this._app.getAllRawApplets();
+	
+	var path = rawApplets[ applet.__protoAppletName ].views[ viewName ];
+	
+	if ( !path ) {
+		throw new Error('View `' + viewName + '` does not exist for an instance of `' + applet.__protoAppletName + '` applet!');
+	}
+
     if ( props === undefined ) {
-	props = {};
+		props = {};
     }
+	
     return this._viewEngine.render( path, props, fn );
 };

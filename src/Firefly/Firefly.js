@@ -95,6 +95,7 @@ var Firefly = module.exports = function( appRoutes, config ) {
     this.router = new Router( this, this.server );
 
     /**
+    * Reference to un initialized applet objects
     *@private
     *@type Object
     *@property _appletsRaw
@@ -166,6 +167,9 @@ Firefly.prototype.init = function ( fn ) {
             self.renderManager = new RenderManager( self, self._viewEngine );
             
             self.renderManager.buildViewMap(fn);
+            
+            //initialize applets
+            self.initializeApplets();
         });
     } );
 };
@@ -211,6 +215,14 @@ Firefly.prototype.autoloadApplets = function() {
             routes: require( appletPath + '/Routes.js' ),
             appletViewDir: appletPath + '/views/'
         };
+    }
+};
+
+
+Firefly.prototype.initializeApplets = function() {
+    for ( var appletName in this._applets ) {
+        this._applets[ appletName ] = new this._applets[ appletName ]( this );
+        this._applets[ appletName ].__protoAppletName = appletName;
     }
 };
 
@@ -285,18 +297,13 @@ Firefly.prototype.get = function( name ) {
 
 
 /**
-* Add an initialized applet object
+* Tell Firefly to add an instance of the given applet with the given name
 *
 * @method addApplet
-* @param {String} name Name of applet
-* @param {Object} applet reference to applet object
-* @return {Object} Requested service or undefined if none exist by that handle
+* @param {String} name Name of applet instance
+* @param {Object} applet reference to uninitialized applet object
 */
-Firefly.prototype.addApplet = function( name, applet ) {
-    if ( !name || !applet ) {
-        throw Error( 'name: "Bad Parameter", description: "Expected parameters of types `string` and `object`"' );
-    }
-
+Firefly.prototype.addAppletInstance = function( name, applet ) {
     this._applets[ name ] = applet;
 };
 

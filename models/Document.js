@@ -22,8 +22,11 @@ var Schema = require('mongoose').Schema;
 
 var DocumentSchema = module.exports = new Schema({
     creator: { type: Schema.Types.ObjectId, ref: 'User' },
-    created: { type : Date, default: Date.now() },
-    lastModified: { type : Date, default: Date.now() },
+    created: { type: Date, default: Date.now() },
+    lastModified: { type: Date, default: Date.now() },
+    children: [ { type: Schema.Types.ObjectId, ref: 'Document'} ],
+    topNode: { type: Boolean, default: true },
+    view: { type: String, default: ''},
     title: String,
     slug: String,
     content: String

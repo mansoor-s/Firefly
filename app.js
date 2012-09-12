@@ -19,7 +19,7 @@
 'use strict';
 
 var Firefly = require( './src/Firefly/Firefly.js' );
-var config = require( './Config.js' );
+var AppConfig = require( './AppConfig.js' );
 var routes = require( './Routes.js' );
 
 var HandleBars = require( './services/Renderer/Handlebars.js' );
@@ -30,7 +30,7 @@ var Mailer = require( './services/Mailer/Mailer.js' );
 
 
 //new instance of Firefly
-var firefly = new Firefly( routes, config );
+var firefly = new Firefly( routes, AppConfig );
 
 
 //set up renderer. wrapper for Handlebars

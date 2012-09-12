@@ -1,5 +1,8 @@
 'use strict';
 
+var async = require('async');
+
+
 var Site = module.exports = function( app ) {
 	this._app = app;
         this._mongoose = app.get('Mongoose');
@@ -15,22 +18,21 @@ var Site = module.exports = function( app ) {
 Site.prototype.homeAction = function( req, res ) {
     var session = req.getSession();
     
-    var pathParts = req.getBasePath().split('/');
-    var len = pathParts.length;
+    var basePath = req.getBasePath().substring(1);
     
-    for (var i = 0; i < len; ++i) {
-        if ( i === 0 ) {
-            continue;
-        }
-        var currSlug = pathParts[i];
-        
-        
+    if (basePath.substring(basePath.length - 1) === '/') {
+        basePath = basePath.substring(0, basePath.length - 1);
     }
     
-    console.log(pathParts);
-    
-    res.end();
-    //this._documentModel.findOne({'slug': });
+    this.findDocument(basePath, function(document) {
+        if (!document) {
+            res.render('404.html');
+            return;
+        }
+        
+        var view = document.view || 'page.html';
+        res.render(view, document);
+    });
 };
 
 
@@ -136,6 +138,7 @@ Site.prototype.registerAction = function(req, res) {
 
 
 
+
 Site.prototype.registerPage = function(req, res) {
     res.render('register.html');
 };
@@ -147,3 +150,23 @@ Site.prototype.registerPage = function(req, res) {
 Site.prototype.profileAction = function(req, res) {
     res.render('profile.html');
 }
+
+
+Site.prototype.findDocument = function(slug, fn) {
+    /*var slugParts = slug.split('/');
+    
+    if (slugParts.length === 1) {
+        this._documentModel.findOne({'slug': slug}, function(err, document) {
+            if (err) {
+                throw err;
+            }
+            fn(document);
+        });
+    } else {
+        
+    }
+    */
+    
+    fn();
+    
+};

@@ -51,102 +51,110 @@ var Router = module.exports = function( firefly ) {
 * Build routing patterns for all available applets
 *
 * @method buildRoutes
-* @TODO break this method up
 */
 Router.prototype.buildRoutes = function() {
-    var allAppletsRaw = this._firefly.getAllRawApplets();
+    var allRawApplets = this._firefly.getAllRawApplets();
     var appRoutes = this._firefly.getAppRoutes();
     
-    for ( var appRoute in appRoutes ) {
-        if ( allAppletsRaw[ appRoute.applet ] === undefined ) {
-            //check if route is registered to a service
-            var thisRoute = appRoutes[ appRoute ];
-            if ( thisRoute.service !== undefined ) {
-                this._serviceRoutes.push( {
-                    'pattern': new RegExp( thisRoute.basePattern + '.*' ),
-                    'handler': this._serviceHandlers[ thisRoute.service ],
-                    'service': this._firefly.get( thisRoute.service )
-                } );
-                continue;
+    for ( var appletInstanceName in appRoutes ) {
+        var thisTopLevelRoute = appRoutes[appletInstanceName];
+        
+        var appletBasePattern = thisTopLevelRoute.basePattern;
+        var rawAppletName = thisTopLevelRoute.applet;
+        
+        var thisRawApplet = allRawApplets[ rawAppletName ];
+        
+        if ( thisRawApplet === undefined ) {
+            throw new Error('Applet `' + appletName + '` is defined in route `' +
+                                appletInstanceName + '` but does not exist!'  );
+        }
+        
+        this._firefly.addAppletInstance(appletInstanceName, thisRawApplet.object);
+        
+        var thisApplet = this._firefly.getApplet(appletInstanceName);
+        
+        var appletRoutes = thisRawApplet.routes;
+        
+        
+        //ensure the route has `requirements` field of type object even if not specified
+        thisTopLevelRoute.requirements = thisTopLevelRoute.requirements || {};
+        
+        
+        //is route a websocket route
+        if ( ( thisTopLevelRoute.requirements._transport || '' ).toLowerCase() === 'ws' ) {
+            var routeObject = this._wsRoutes[ appletInstanceName ] = {
+                'applet': thisApplet,
+                'path': appletBasePattern,
+                'routes': {}
+            };
+            
+            for ( var wsRouteName in wsRoutes ) {
+                routeObject.routes[ wsRouteName ] = thisApplet[ wsRoutes[ wsRouteName ].controller ];
             }
-        }
-
-        var appletBasePattern = appRoutes[ appRoute ].basePattern;
-        var appletName = appRoutes[ appRoute ].applet;
-        
-        if ( allAppletsRaw[ appletName ] === undefined ) {
-            throw Error( 'Applet `' + appletName + '` does not exist!');
-        }
-
-        var routes = allAppletsRaw[ appletName ].routes;
-        
-        var applet = {
-            object: new allAppletsRaw[ appletName ].object( this._firefly ),
-            appletProto: allAppletsRaw[ appletName ]
-        };
-
-        applet.object.__appletProto = allAppletsRaw[ appletName ];
-        
-        //register the instance of the applet and name with firefly
-        this._firefly.addApplet( appRoute, applet );
-
-        appRoutes[ appRoute ].requirements = appRoutes[ appRoute ].requirements || {};
-
-        //if the route is for websocket connections, there is no need to create normal routes for it
-        if ( ( appRoutes[ appRoute ].requirements._transport || '' ).toLowerCase() === 'ws' ) {
-            appRoutes[ appRoute ]._applet = applet.object;
-            appRoutes[appRoute].applet = appRoute;
-            appRoutes[appRoute].appletRaw = allAppletsRaw[ appletName ];
-            this._buildWSRoute( appRoutes[ appRoute ], routes );
+            
             continue;
         }
         
-        for ( var route in routes ) {
-            if ( typeof routes[ route ].pattern !== 'string' ) {
+        
+        for ( var route in appletRoutes ) {
+            var thisRoute = appletRoutes[route];
+            
+            if ( typeof thisRoute.pattern !== 'string' ) {
                 throw Error( 'name: "Bad Route", description: "Expecting applet route rule to be of type `String`"' );
             }
-
-            routes[ route ].requirements = routes[ route ].requirements || {};
-             
-            //parse for route parameters
-            var params = routes[ route ].pattern.match( /:\w+/g ) || [];
-            var tempExp = routes[ route ].pattern;
-            for ( var i = 0, len = params.length; i < len; ++i ) {
-                var param = params[ i ].substr( 1 );
-                
-                // if a reqirement rule exists for the param, use it, otherwise, use /.*/
-                var paramRule;
-                if ( routes[ route ].requirements.hasOwnProperty( param ) ) {
-                    paramRule = routes[ route ].requirements[ param ];
-                    if ( !paramRule instanceof RegExp ) {
-                        throw Error( 'name: "Bad Route", description: "Expecting parameter letiable rule to be of type `RegExp`"' );
-                    }
-                    paramRule = '(' + paramRule.source + ')';
-                } else {
-                    paramRule = '(.*)';
-                }
-                tempExp = tempExp.replace( /:\w+/, paramRule );
-            }
             
-            var controller = routes[ route ].controller;
-            routes[ route ]._patternRegex = new RegExp( '^' +  appletBasePattern + tempExp + '$' );
+            thisRoute.requirements = thisRoute.requirements || {};
             
-            //action controller function
-            routes[ route ]._actionController = applet.object[ controller ];
+            thisRoute._patternRegex = this._creatRegex(appletBasePattern, thisRoute);
             
-            //reference to instance of applet object
-            routes[ route ]._applet = applet.object;
-            routes[ route ]._fullRoute = appletBasePattern + routes[ route ].pattern;
-            
-            //applet base route
-            routes[ route ]._baseRoute = appRoutes[ appRoute ];
-            
-            this._routes[ route ] = routes[ route ];
-
-            this.routeKeys = Object.keys( this._routes );
+            //set action controller
+            thisRoute._actionController = thisRoute.controller;
+            thisRoute._appletName = appletInstanceName;
+            thisRoute._fullRoute = appletBasePattern + thisRoute.pattern;
+            thisRoute._baseRoute = thisTopLevelRoute;
+            this._routes[route] = thisRoute;
         }
     }
+    
+    this.routeKeys = Object.keys( this._routes );
 };
+
+
+
+
+/**
+* Creates regular expression for a given route.
+*
+* @method _creatRegex
+* @private
+* @param
+*
+* @returns {RegExp} Regular expression representing the route
+*/
+Router.prototype._creatRegex = function(basePattern, route) {
+    var params = route.pattern.match( /:\w+/g ) || [];
+    var tempExp = route.pattern;
+    for ( var i = 0, len = params.length; i < len; ++i ) {
+        var param = params[ i ].substr( 1 );
+        
+        // if a reqirement rule exists for the param, use it, otherwise, use /.*/
+        var paramRule;
+        if ( route.requirements.hasOwnProperty( param ) ) {
+            paramRule = route.requirements[ param ];
+            if ( !paramRule instanceof RegExp ) {
+                throw Error( 'name: "Bad Route", description: "Expecting parameter variable rule to be of type `RegExp`"' );
+            }
+            paramRule = '(' + paramRule.source + ')';
+        } else {
+            paramRule = '(.*)';
+        }
+        tempExp = tempExp.replace( /:\w+/, paramRule );
+    }
+    
+    return new RegExp( '^' +  basePattern + tempExp + '$' );
+};
+
+
 
 
 
@@ -162,31 +170,6 @@ Router.prototype.rebuildRoutes = function() {
     this._wsRoutes = {};
     this.buildRoutes();
 };
-
-
-
-/**
-* Create routes (callbacks for given event name) for a given websocket route. 
-            No rich route rules for ws routes to reduce overhead
-*
-* @method _buildWSRoute
-* @private
-* @param {Object} appRoute Reference to application route object
-* @param {Object} routes Reference to the applet's routes object
-*/
-Router.prototype._buildWSRoute = function( appRoute, routes ) {
-    var allAppletsRaw = this._firefly.getAllRawApplets();
-    var wsRoutes = this._wsRoutes[ appRoute.applet ] = {
-        'applet': appRoute.applet,
-        'path': appRoute.basePattern,
-        'routes': {}
-    };
-    
-    for ( var route in routes ) {
-        wsRoutes.routes[ route ] = appRoute._applet[ routes[ route ].controller ];
-    }
-};
-
 
 
 
@@ -228,14 +211,14 @@ Router.prototype.findRoute = function( request, response ) {
             self._testRouteRules( request, response, route, function( pass ) {
                 if ( pass ) {
                     var params = route._patternRegex.exec( basePath ) || [];
-                    var applet = route._applet;
+                    var applet = self._firefly.getApplet(route._appletName);
                     params.unshift( request, response );
                     
                     request.setRouteObject( route );
                     request.setApplet( applet );
 
                     //call action controller
-                    route._actionController.apply( applet, params );
+                    applet[route._actionController].apply( applet, params );
                     
                 // if it is the last route and it's rules were not met, then give 404
                 } else if ( !pass && ( currRoute === self.routeKeys.length - 1 ) ) {
