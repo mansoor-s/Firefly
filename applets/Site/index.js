@@ -10,6 +10,8 @@ var Site = module.exports = function( app ) {
         
         this._userModel = this._mongoose.model('User');
         this._documentModel = this._mongoose.model('Document');
+        
+        this._appState = app.get('State');
 };
 
 
@@ -26,6 +28,7 @@ Site.prototype.homeAction = function( req, res ) {
     
     this.findDocument(basePath, function(document) {
         if (!document) {
+            res.setStatusCode(404);
             res.render('404.html');
             return;
         }
@@ -44,6 +47,7 @@ Site.prototype.loginAction = function(req, res) {
     var fields = req.getFormData().fields;
     
     if (!this.fieldsExist(fields, ['username', 'password'])) {
+        res.setStatusCode(401);
         res.render('login.html', {error: 'Incorrect credentials'});
         return;
     }
@@ -53,18 +57,19 @@ Site.prototype.loginAction = function(req, res) {
     
     this._userModel.findOne({'username': userName}, function(err, user) {
         if (err) {
-            console.log('There was an error!!');
-            console.log(err);
+            throw err;
             return;
         }
         
         if (!user) {
+            res.setStatusCode(401);
             res.render('login.html', {error: 'Incorrect credentials'});
             return;
         }
         
         user.authenticate(password, function(result) {
             if (result === false) {
+                res.setStatusCode(401);
                 res.render('login.html', {error: 'Incorrect credentials'});
             } else {
                 //go to homepage
@@ -153,7 +158,7 @@ Site.prototype.profileAction = function(req, res) {
 
 
 Site.prototype.findDocument = function(slug, fn) {
-    /*var slugParts = slug.split('/');
+    var slugParts = slug.split('/');
     
     if (slugParts.length === 1) {
         this._documentModel.findOne({'slug': slug}, function(err, document) {
@@ -163,10 +168,6 @@ Site.prototype.findDocument = function(slug, fn) {
             fn(document);
         });
     } else {
-        
+        fn();
     }
-    */
-    
-    fn();
-    
 };
