@@ -58,7 +58,15 @@ State.prototype._onInit = function() {
                 });
             }
         });
-    };    
+    };
 };
 
 
+State.prototype.update = function() {
+    
+};
+
+
+State.prototype.save = function() {
+    
+};

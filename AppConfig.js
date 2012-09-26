@@ -35,7 +35,7 @@ var Config = module.exports = {
         You must start it manually (See Docs)
 
     */
-    AUTO_START_WS_SERVER: false,
+    AUTO_START_WS_SERVER: true,
 
     MongoDB: {
         HOST: 'localhost',

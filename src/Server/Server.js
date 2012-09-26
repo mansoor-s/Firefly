@@ -89,9 +89,10 @@ Server.prototype.start = function( fn ) {
 * Shutdown http server
 *
 * @method stop
+* @param  {Function} fn function to call when server has shut down
 */
-Server.prototype.stop = function() {
-    this._webServer.close();
+Server.prototype.stop = function(fn) {
+    this._webServer.close(fn);
 };
 
 

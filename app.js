@@ -18,37 +18,57 @@
 
 'use strict';
 
-var Firefly = require( './src/Firefly/Firefly.js' );
-var AppConfig = require( './AppConfig.js' );
-var routes = require( './Routes.js' );
+var cluster         = require( 'cluster' );
+var numCPUs         = require('os').cpus().length;
 
-var HandleBars = require( './services/Renderer/Handlebars.js' );
-var SessionManager = require( './services/Security/SessionManager.js' );
-var Permission = require( './services/Security/Permission.js' );
-var Mongoose = require( './services/Database/Mongoose.js' );
-var Mailer = require( './services/Mailer/Mailer.js' );
+var Firefly         = require( './src/Firefly/Firefly.js' );
+var AppConfig       = require( './AppConfig.js' );
+var routes          = require( './Routes.js' );
+
+var HandleBars      = require( './services/Renderer/Handlebars.js' );
+var SessionManager  = require( './services/Security/SessionManager.js' );
+var Permission      = require( './services/Security/Permission.js' );
+var Mongoose        = require( './services/Database/Mongoose.js' );
+var Mailer          = require( './services/Mailer/Mailer.js' );
+var State           = require( './services/State/State.js' );
 
 
 //new instance of Firefly
-var firefly = new Firefly( routes, AppConfig );
+var app = new Firefly( routes, AppConfig );
 
 
 //set up renderer. wrapper for Handlebars
-var handlebars = new HandleBars(firefly);
+var handlebars = new HandleBars(app);
 
-firefly.setViewEngine(handlebars);
-
-
-var sessionManager = new SessionManager(firefly);
-var permission = new Permission(firefly);
+app.setViewEngine(handlebars);
 
 
-var mongoose = new Mongoose(firefly);
+var sessionManager = new SessionManager(app);
+var permission = new Permission(app);
 
 
+var mongoose = new Mongoose(app);
 
-//Initialize 
-firefly.init(function() {
-    //server initialized and awaiting requests  
-    console.log('Server Started');  
-});
+var state = new State(app);
+
+
+if (cluster.isMaster) {
+    // Fork workers.
+    for (var i = 0; i < numCPUs; i++) {
+        var worker = cluster.fork();
+        worker.on('message', function(msg) {
+            console.log(msg);
+        });
+    }
+
+    cluster.on('death', function(worker) {
+        console.log('worker ' + worker.pid + ' died');
+        cluster.fork();
+    });
+    
+} else {
+    //Initialize 
+    app.init(function() {
+        process.send('Server Started');  
+    });
+}

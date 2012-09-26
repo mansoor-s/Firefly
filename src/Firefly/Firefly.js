@@ -123,6 +123,17 @@ var Firefly = module.exports = function( appRoutes, config ) {
     */
     this._initSequence = [];
     
+    
+    
+    /**
+    *@private
+    *@type Array
+    *@property _shutdownSequence
+    */
+    this._shutdownSequence = [];
+    
+    
+    
     /**
     *@private
     *@type Object
@@ -169,7 +180,7 @@ Firefly.prototype.init = function ( fn ) {
             self.renderManager.buildViewMap(fn);
             
             //initialize applets
-            self.initializeApplets();
+            self._initializeApplets();
         });
     } );
 };
@@ -188,6 +199,25 @@ Firefly.prototype.initWS = function() {
             this._wsServers[ wsRoute ] = new WSServer( this, wsRoutes[ wsRoute ], this.getWSRequestHandler() );
         }
     }
+};
+
+
+
+
+/**
+* shutdown Firefly. This method will shut down the server and call any shutdown handlers for the services
+* that are registered and then call the passed function.
+*
+* @method shutdown
+* @param {Function} fn Callback function 
+*/
+Firefly.prototype.shutdown = function( fn ) {
+    var self = this;
+    this._server.stop( function() {
+        self._shutdownSequence.reverse();
+        
+        async.series(self._shutdownSequence, fn);
+    } );
 };
 
 
@@ -219,7 +249,14 @@ Firefly.prototype.autoloadApplets = function() {
 };
 
 
-Firefly.prototype.initializeApplets = function() {
+
+/**
+* initialize all applets regitered with FIrefly
+*
+* @private
+* @method _initializeApplets
+*/
+Firefly.prototype._initializeApplets = function() {
     for ( var appletName in this._applets ) {
         this._applets[ appletName ] = new this._applets[ appletName ]( this );
         this._applets[ appletName ].__protoAppletName = appletName;
@@ -433,7 +470,8 @@ Firefly.prototype.setViewEngine = function( engine ) {
 
 
 /**
-* Add a callback function to be called when Firefly is initialized. These functions are executed in sequence.
+* Add a callback function to be called when Firefly is initialized. These functions are called
+* in order of being added.
 *
 * @method addInitDependency
 * @param {Function} fn callback function to call with another callback function as its parameter which it must call
@@ -446,6 +484,22 @@ Firefly.prototype.addInitDependency = function( fn ) {
 
 
 /**
+* Add a callback function to be called when Firefly is shutting down. These functions
+* are calledin *reverse* order of being added.
+*
+* @method addInitDependency
+* @param {Function} fn callback function to call with another callback function as its parameter which it must call
+            to continue the init sequence
+*/
+Firefly.prototype.addShutdownDependency = function( fn ) {
+    this._shutdownSequence.push(fn);
+};
+
+
+
+
+
+/**
 * Should Firefly trust data coming from a proxy. (i.e `HTTP_X_FORWARDED_FOR` header)
 *
 * @method trustProxyData
@@ -454,3 +508,7 @@ Firefly.prototype.addInitDependency = function( fn ) {
 Firefly.prototype.trustProxyData = function( trust ) {
     this._trustProxyData = trust;
 };
+
+
+
+

@@ -140,8 +140,6 @@ Request.prototype.parseForm =  function(fn) {
             files: files
         }
         
-        console.log(self._formFields);
-        console.log('calling parse callback');
         fn();
     });
 };

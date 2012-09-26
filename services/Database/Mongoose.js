@@ -46,7 +46,6 @@ var Mongoose = module.exports = function(firefly, serviceName) {
     
     this.db = mongoose.createConnection();
     
-    
     this.app.set('Mongoose', this.db);
 
     this.app.addInitDependency(this._onInit());
