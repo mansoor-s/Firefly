@@ -1,5 +1,5 @@
 /*
-    Firefly - Node.js CMS
+    Firefly - Node.js Framework
     Copyright (C) <2012>  <Mansoor Sayed>
 
     This program is free software: you can redistribute it and/or modify
@@ -118,8 +118,21 @@ var Request = module.exports = function( req ) {
     */
     this._session = {};
     
-    
+    /**
+    *@private
+    *@type Object
+    *@property _routeObject
+    */
     this._routeObject = undefined;
+    
+    
+    /**
+    *@type Object
+    *@property _routeObject
+    */
+    this.state = undefined;
+    
+    Object.seal(this);
 };
 
 

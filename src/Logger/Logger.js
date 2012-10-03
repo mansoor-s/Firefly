@@ -1,5 +1,5 @@
 /*
-    Firefly - Node.js CMS
+    Firefly - Node.js Framework
     Copyright (C) <2012>  <Mansoor Sayed>
 
     This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@ var winston = require('winston');
 */
 var Logger = module.exports = function(firefly) {
 
+    Object.seal(this);
 };
 
 
@@ -68,4 +69,10 @@ Logger.prototype.warning = function( message, meta ) {
 */
 Logger.prototype.error = function( message, meta ) {
     winston.error(message, meta);
+};
+
+
+Logger.prototype.exception = function( e ) {
+    
+    console.log(e.stack());
 };

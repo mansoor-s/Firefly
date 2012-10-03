@@ -1,5 +1,5 @@
 /*
-    Firefly - Node.js CMS
+    Firefly - Node.js Framework
     Copyright (C) <2012>  <Mansoor Sayed>
 
     This program is free software: you can redistribute it and/or modify
@@ -29,6 +29,7 @@ var Request = require( '../Http/Request.js' );
 var Response = require( '../Http/Response.js' );
 var RenderManager = require( '../RenderManager/RenderManager.js' );
 var Logger = require( '../Logger/Logger.js' );
+var State = require( '../State/State.js' );
 
 
 /**
@@ -149,6 +150,8 @@ var Firefly = module.exports = function( appRoutes, config ) {
     this.logger = new Logger( this );
         
     this.autoloadApplets();
+    
+    Object.seal(this);
 };
 
 
@@ -378,6 +381,8 @@ Firefly.prototype.getRequestHandler = function() {
             if ( self._trustProxyData ) {
                 request.trustProxyData(true);
             }
+            
+            request.state = new State();
 
             if(request.getMethod() === 'POST') {
                 console.log('request handler. post');
@@ -447,7 +452,11 @@ Firefly.prototype.getWSRequestHandler = function() {
 * @param {Object} response Reference to response object
 */
 Firefly.prototype.catchException = function( err, request, response ) {
-    throw err;
+    response.setStatusCode( 500 );
+    response.setContent( '505' );
+    response.send();
+    
+    this.logger();
 
 };
 

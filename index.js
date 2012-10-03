@@ -1,5 +1,5 @@
 /*
-    Firefly - Node.js CMS
+    Firefly - Node.js Framework
     Copyright (C) <2012>  <Mansoor Sayed>
 
     This program is free software: you can redistribute it and/or modify
@@ -16,12 +16,4 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-'use strict';
-
-var Schema = require('mongoose').Schema;
-
-var StateSchema = module.exports = new Schema({
-    homePage: { type: Schema.Types.ObjectId, ref: 'Document'},
-	maxDepth: { type: Number, default: 1}
-
-});
+module.exports = require( './src/Firefly/Firefly.js' );
