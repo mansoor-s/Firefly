@@ -132,6 +132,19 @@ var Request = module.exports = function( req ) {
     */
     this.state = undefined;
     
+    /**
+    *@type String
+    *@property _method
+    */
+    this._method = undefined;
+    
+    
+    /**
+    *@type Object
+    *@property _appletObject
+    */
+    this._appletObject = undefined;
+    
     Object.seal(this);
 };
 

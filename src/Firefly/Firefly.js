@@ -115,7 +115,7 @@ var Firefly = module.exports = function( appRoutes, config ) {
     *@type Object
     *@property renderManager
     */
-    this.renderManager;
+    this.renderManager = undefined;
 
     /**
     *@private
@@ -140,7 +140,7 @@ var Firefly = module.exports = function( appRoutes, config ) {
     *@type Object
     *@property _viewEngine
     */
-    this._viewEngine;
+    this._viewEngine = undefined;
 
     /**
     * An instance of the Logger object
@@ -385,9 +385,7 @@ Firefly.prototype.getRequestHandler = function() {
             request.state = new State();
 
             if(request.getMethod() === 'POST') {
-                console.log('request handler. post');
                 request.parseForm(function() {
-                    console.log('parseForm callback');
                     self.router.findRoute( request, response );
                 });
             } else {
@@ -395,7 +393,7 @@ Firefly.prototype.getRequestHandler = function() {
             }
             
         } catch( e ) {
-            self.catchException( e );
+            self.catchException( e, request, response );
         }
     };
 };
@@ -456,7 +454,7 @@ Firefly.prototype.catchException = function( err, request, response ) {
     response.setContent( '505' );
     response.send();
     
-    this.logger();
+    this.logger.exception(err);
 
 };
 

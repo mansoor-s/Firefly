@@ -42,7 +42,7 @@ var Logger = module.exports = function(firefly) {
 * @param {Object} [meta] Metadata object to include witht the log 
 */
 Logger.prototype.info = function( message, meta ) {
-    
+    winston.info(message, meta);
 };
 
 
@@ -54,8 +54,8 @@ Logger.prototype.info = function( message, meta ) {
 * @param {String} message Messaage to log
 * @param {Object} [meta] Metadata object to include witht the log 
 */
-Logger.prototype.warning = function( message, meta ) {
-    
+Logger.prototype.warn = function( message, meta ) {
+    winston.warn();
 };
 
 
@@ -65,14 +65,20 @@ Logger.prototype.warning = function( message, meta ) {
 *
 * @method error
 * @param {String} message Messaage to log
-* @param {Object} [meta] Metadata object to include witht the log 
+* @param {Object} [meta] Metadata object to include with the log 
 */
 Logger.prototype.error = function( message, meta ) {
     winston.error(message, meta);
 };
 
 
-Logger.prototype.exception = function( e ) {
-    
-    console.log(e.stack());
+/**
+* Log errors
+*
+* @method exception
+* @param {String} message Messaage to log
+* @param {Object} [meta] Metadata object to include with the log 
+*/
+Logger.prototype.exception = function( message ) {
+    winston.error(message.stack);
 };
