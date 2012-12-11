@@ -21,6 +21,7 @@
 var fs = require( 'fs' );
 var async = require( 'async' );
 var util = require( 'util' );
+var domain = require('domain');
 
 var Server = require( '../Server/Server.js' );
 var WSServer = require( '../Server/WSServer.js' );
@@ -370,31 +371,32 @@ Firefly.prototype.getAppRoutes = function() {
 Firefly.prototype.getRequestHandler = function() {
     var self = this;
     return function( req, res ) {
-        try {
+        
+        domain.run(function() {
+           var requestDomain = domain.create();
+        
             var request = new Request( req );
-            var response = new Response( res, request, self );
-
-            if ( self.server.isSecure() ) {
-                request.setServerSecure( true );
-            }
-
-            if ( self._trustProxyData ) {
-                request.trustProxyData(true);
-            }
+            var response = new Response( res, request, self, requestDomain );
+    
+            request.setServerSecure( self.server.isSecure() );
+            request.trustProxyData(self._trustProxyData);
             
             request.state = new State();
-
-            if(request.getMethod() === 'POST') {
-                request.parseForm(function() {
-                    self.router.findRoute( request, response );
-                });
-            } else {
-                self.router.findRoute( request, response );
-            }
+    
+            self.router.findRoute( request, response, function(controller) {
+                if(request.getMethod() === 'POST') {
+                    request.parseForm(function() {
+                        controller();
+                    });
+                } else {
+                    controller();
+                }
+            });
             
-        } catch( e ) {
-            self.catchException( e, request, response );
-        }
+            domain.on('error', function(e) {
+                self.catchException(e, request, response, domain);
+            });
+        });
     };
 };
 

@@ -879,11 +879,24 @@ Request.prototype.getFormData = function() {
 };
 
 
+
+/**
+* Set the session object for this request
+*
+* @method setSession
+*/
 Request.prototype.setSession = function( session ) {
     this._session = session;
 };
 
 
+
+/**
+* Get the session object for this request
+*
+* @method getSession
+* @return {Object} reference to the session object for this request
+*/
 Request.prototype.getSession = function() {
     return this._session;
 };

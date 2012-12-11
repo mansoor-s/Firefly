@@ -179,8 +179,10 @@ Router.prototype.rebuildRoutes = function() {
 * @method findRoute
 * @param {Object} request Reference to Request object
 * @param {Object} response Reference to Response object
+* @param {Function} fn Callback function. If one is passed, the callback will be called with
+*   the `request`, `response`, and the `controller` function
 */
-Router.prototype.findRoute = function( request, response ) {
+Router.prototype.findRoute = function( request, response, fn ) {
     var routeFound;
     var basePath = request.getBasePath();
     var self = this;
@@ -216,9 +218,15 @@ Router.prototype.findRoute = function( request, response ) {
                     
                     request.setRouteObject( route );
                     request.setApplet( applet );
-
-                    //call action controller
-                    applet[route._actionController].apply( applet, params );
+                    
+                    if (fn instanceof Function) {
+                        fn(function() {
+                            applet[route._actionController].apply( applet, params );
+                        });
+                    } else {
+                        //call action controller
+                        applet[route._actionController].apply( applet, params );
+                    }
                     
                 // if it is the last route and it's rules were not met, then give 404
                 } else if ( !pass && ( currRoute === self.routeKeys.length - 1 ) ) {

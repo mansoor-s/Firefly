@@ -29,10 +29,11 @@ var Cookie = require( './Cookie.js' );
 * @constructor
 * @param {Object} res Native node response object
 */
-var Response = module.exports = function( resNative, fReq, firefly ) {
+var Response = module.exports = function( resNative, fReq, firefly, domain ) {
     this._response = resNative;
     this._request = fReq;
     this._firefly = firefly;
+    this._domain = domain;
     
     this._cookies = {};
     //default content type
@@ -611,6 +612,8 @@ Response.prototype.end = function( chunk, encoding ) {
     }
     
     this._response.end( chunk, encoding );
+    
+    this._domain.dispose();
 };
 
 
