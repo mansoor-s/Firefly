@@ -21,7 +21,7 @@
 /**
 * Handles application state. This is the default state manager; It will not persist, for multti-node setups,
 * It is advisable to have an external persistence layer such as Redis handle multi-node state.
-* This object has methods that MUST be implemented in a service that is providing state management
+* This methods in th is object MUST be implemented in a service that is providing mulit-node state management
 *
 * @class State
 * @module Core
@@ -41,7 +41,10 @@ var State = module.exports = function() {
 * @param {Function} callback function
 */
 State.prototype.persist = function( fn ) {
-    fn();
+    if ( fn instanceof Function ) {
+        fn();
+    }
+    
 };
 
 
@@ -51,6 +54,28 @@ State.prototype.persist = function( fn ) {
 *
 * @method get
 */
-State.prototype.get = function() {
-    return this._state;
+State.prototype.get = function( name ) {
+    return this._state[name];
+};
+
+
+/**
+* For a single node setup, this does nothing. Must be implemented in a service to handle multi-node application state
+*
+* @method set
+*/
+State.prototype.set = function( name, value ) {
+    return this._state[name] = value;
+};
+
+
+/**
+* For a single node setup, this does nothing. Must be implemented in a service to handle multi-node application state
+*
+* @method update
+*/
+State.prototype.update = function( fn ) {
+    if ( fn instanceof Function ) {
+        fn();
+    }
 };

@@ -149,6 +149,9 @@ var Firefly = module.exports = function( appRoutes, config ) {
     *@property logger
     */
     this.logger = new Logger( this );
+    
+    
+    this._stateManager = new State;
         
     this.autoloadApplets();
     
@@ -181,10 +184,14 @@ Firefly.prototype.init = function ( fn ) {
             
             self.renderManager = new RenderManager( self, self._viewEngine );
             
-            self.renderManager.buildViewMap(fn);
+            self.renderManager.buildViewMap( function() {
+                //initialize applets
+                self._initializeApplets();
+                
+                fn();
+            } );
             
-            //initialize applets
-            self._initializeApplets();
+            
         });
     } );
 };
@@ -381,7 +388,7 @@ Firefly.prototype.getRequestHandler = function() {
             request.setServerSecure( self.server.isSecure() );
             request.trustProxyData(self._trustProxyData);
             
-            request.state = new State();
+            request.setAppState(new State());
     
             self.router.findRoute( request, response, function(controller) {
                 if(request.getMethod() === 'POST') {
@@ -517,7 +524,3 @@ Firefly.prototype.addShutdownDependency = function( fn ) {
 Firefly.prototype.trustProxyData = function( trust ) {
     this._trustProxyData = trust;
 };
-
-
-
-

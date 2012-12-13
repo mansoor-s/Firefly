@@ -128,9 +128,9 @@ var Request = module.exports = function( req ) {
     
     /**
     *@type Object
-    *@property _routeObject
+    *@property _state
     */
-    this.state = undefined;
+    this._state = undefined;
     
     /**
     *@type String
@@ -899,4 +899,14 @@ Request.prototype.setSession = function( session ) {
 */
 Request.prototype.getSession = function() {
     return this._session;
+};
+
+
+Request.prototype.getAppState = function() {
+    return this._state;
+};
+
+
+Request.prototype.setAppState = function( state ) {
+    this._state = state;
 };
