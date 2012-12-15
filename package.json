@@ -1,6 +1,6 @@
 { 
     "name": "firefly",
-    "description": "A Node.js CMS",
+    "description": "A Node.js Framework",
     "version": "0.0.1",
     "url": "https://github.com/mansoor-s/Firefly",
     "author": "Mansoor Sayed <mansoor@mansoorsayed.com>",
