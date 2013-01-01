@@ -65,7 +65,7 @@ Router.prototype.buildRoutes = function() {
         var thisRawApplet = allRawApplets[ rawAppletName ];
         
         if ( thisRawApplet === undefined ) {
-            throw new Error('Applet `' + appletName + '` is defined in route `' +
+            throw new Error('Applet `' + rawAppletName + '` is defined in route `' +
                                 appletInstanceName + '` but does not exist!'  );
         }
         
@@ -100,7 +100,7 @@ Router.prototype.buildRoutes = function() {
             var thisRoute = appletRoutes[route];
             
             if ( typeof thisRoute.pattern !== 'string' ) {
-                throw Error( 'name: "Bad Route", description: "Expecting applet route rule to be of type `String`"' );
+                throw new Error( 'name: "Bad Route", description: "Expecting applet route rule to be of type `String`"' );
             }
             
             thisRoute.requirements = thisRoute.requirements || {};
@@ -141,8 +141,9 @@ Router.prototype._creatRegex = function(basePattern, route) {
         var paramRule;
         if ( route.requirements.hasOwnProperty( param ) ) {
             paramRule = route.requirements[ param ];
+            
             if ( !paramRule instanceof RegExp ) {
-                throw Error( 'name: "Bad Route", description: "Expecting parameter variable rule to be of type `RegExp`"' );
+                throw new Error( 'name: "Bad Route", description: "Expecting parameter variable `rule` to be of type `RegExp`"' );
             }
             paramRule = '(' + paramRule.source + ')';
         } else {
@@ -209,15 +210,25 @@ Router.prototype.findRoute = function( request, response, fn ) {
                 routesIttr( ++currRoute );
                 return;
             }
+            
 
             self._testRouteRules( request, response, route, function( pass ) {
                 if ( pass ) {
                     var params = route._patternRegex.exec( basePath ) || [];
                     var applet = self._firefly.getApplet(route._appletName);
+                    params.splice(0,1);
+                    console.log(params);
+                    delete params.input;
+                    delete params.index;
+                    console.log(params);
+                    console.log('ty0e; ' + typeof params);
                     params.unshift( request, response );
                     
                     request.setRouteObject( route );
                     request.setApplet( applet );
+                    
+                    
+                    
                     
                     if (fn instanceof Function) {
                         fn(function() {

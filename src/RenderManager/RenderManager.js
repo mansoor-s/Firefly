@@ -30,11 +30,11 @@ var fs = require( 'fs' );
 * @param {Object} app reference to Firefly object
 */
 var RenderManager = module.exports = function( app, viewEngine ) {
-	this._app = app;
+    this._app = app;
     this._viewEngine = viewEngine;
     this._views = [];
-	
-	Object.seal(this);
+    
+    Object.seal(this);
 };
 
 
@@ -64,8 +64,12 @@ RenderManager.prototype.buildViewMap = function( fn ) {
             this._views.push(applet.views[ viewFiles[ j ] ]);
         }
     }
-	
-	this._viewEngine.setViews( this._views, fn );
+    if ( this._viewEngine ) {
+        this._viewEngine.setViews( this._views, fn );
+    } else {
+        fn();
+    }
+    
 };
 
 
@@ -82,16 +86,22 @@ RenderManager.prototype.buildViewMap = function( fn ) {
 */
 RenderManager.prototype.render = function( applet, viewName, props, fn ) {
     var rawApplets = this._app.getAllRawApplets();
-	
-	var path = rawApplets[ applet.__protoAppletName ].views[ viewName ];
-	
-	if ( !path ) {
-		throw new Error('View `' + viewName + '` does not exist for an instance of `' + applet.__protoAppletName + '` applet!');
-	}
+    
+    var path = rawApplets[ applet.__protoAppletName ].views[ viewName ];
+    
+    if ( !path ) {
+        throw new Error('View `' + viewName + '` does not exist for an instance of `' + applet.__protoAppletName + '` applet!');
+    }
 
     if ( props === undefined ) {
-		props = {};
+        props = {};
     }
-	
+    
     return this._viewEngine.render( path, props, fn );
+};
+
+
+
+RenderManager.prototype.setViewEngine = function(engine) {
+    this._viewEngine = engine;
 };

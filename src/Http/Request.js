@@ -145,6 +145,8 @@ var Request = module.exports = function( req ) {
     */
     this._appletObject = undefined;
     
+    this._serverIsSecure = false;
+    
     Object.seal(this);
 };
 

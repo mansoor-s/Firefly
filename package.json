@@ -11,13 +11,6 @@
         "ws": "latest",
         "formidable": "latest",
         "async": "latest",
-        "nodemailer": "latest",
-        "bcrypt": "latest",
-        "handlebars": "latest",
-        "mongoose": "latest",
-        "dive": "latest",
-        "node-uuid": "latest",
-        "redis": "latest",
         "winston": "latest"
     },
     "repository": {

@@ -225,11 +225,11 @@ Response.prototype.getExpires = function() {
 */
 Response.prototype.getMaxAge = function() {
     var age;
-    if ( (age = getCacheControlDirective('s-maxage')) !== null ) {
+    if ( (age = this.getCacheControlDirective('s-maxage')) !== null ) {
         return age;    
     }
     
-    if ( (age = getCacheControlDirective( 'max-age' )) !== null ) {
+    if ( (age = this.getCacheControlDirective( 'max-age' )) !== null ) {
         return age;
     }
     
@@ -945,7 +945,7 @@ Response.prototype.removeCookie = function( name ) {
 
 
 /**
-* Render the response and end it
+* Render and end the response 
 *
 * @method render
 * @param {String} viewName Name of the view to render
@@ -958,6 +958,32 @@ Response.prototype.render = function( viewName, props ) {
         self.setContent( content );
         self.send();
     });
+};
+
+
+
+/**
+* Make and send a JSONP response
+*
+* @method jsonp
+* @param {String} functionName Name of the callback function
+* @param {Object|String} value Value to pass to the callback function.
+*   Function calles JSON.stringify() on anything other than a string. So, if you need to do
+*   anything fancy, do it yourself and pass a String
+*/
+Response.prototype.jsonp = function( functionName, value) {
+    if (!functionName || !value) {
+        throw Error("Function cannot have unspecified parameters");
+    }
+    var self = this;
+    var val = '';
+    if (typeof value !== 'string') {
+        value = JSON.stringify(value);
+    }
+    
+    
+    self.setContent( functionName + '(' + value + ');' );
+    self.send();
 };
 
 

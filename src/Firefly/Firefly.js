@@ -169,31 +169,30 @@ var Firefly = module.exports = function( appRoutes, config ) {
 */
 Firefly.prototype.init = function ( fn ) {
     var self = this;
-    
-    this.server.start( function() {
-        if ( self.config.AUTO_START_WS_SERVER === true ) {
-            var wsRoutes = self.router.getWSRoutes();
-            for ( var wsRoute in wsRoutes ) {
-                self._wsServers[ wsRoute ] = new WSServer( self, wsRoutes[ wsRoute ], self.getWSRequestHandler() );
-            }
-        }
-
-        //execute init sequence for services
-        async.series(self._initSequence, function() {
-            self.router.buildRoutes();
+    //execute init sequence for services
+    async.series(self._initSequence, function() {
+        self.router.buildRoutes();
+        
+        self.renderManager = new RenderManager( self, self._viewEngine );
+        
+        self.renderManager.buildViewMap( function() {
+            //initialize applets
+            self._initializeApplets();
             
-            self.renderManager = new RenderManager( self, self._viewEngine );
-            
-            self.renderManager.buildViewMap( function() {
-                //initialize applets
-                self._initializeApplets();
-                
-                fn();
+            self.server.start( function() {
+                if ( self.config.AUTO_START_WS_SERVER === true ) {
+                    var wsRoutes = self.router.getWSRoutes();
+                    for ( var wsRoute in wsRoutes ) {
+                        self._wsServers[ wsRoute ] = new WSServer( self, wsRoutes[ wsRoute ], self.getWSRequestHandler() );
+                    }
+                }
             } );
             
-            
-        });
-    } );
+            fn();
+        } );
+    });
+        
+    
 };
 
 
@@ -323,7 +322,7 @@ Firefly.prototype.getAllApplets = function() {
 */
 Firefly.prototype.set = function( name, obj ) {
     if ( !name || !obj ) {
-        throw Error( 'name: "Bad Parameter", discription: "Expected parameters of types `string` and `object`"' );
+        throw new Error( 'name: "Bad Parameter", discription: "Expected parameters of types `string` and `object`"' );
     }
     
     this._services[name] = obj;
@@ -379,8 +378,9 @@ Firefly.prototype.getRequestHandler = function() {
     var self = this;
     return function( req, res ) {
         
-        domain.run(function() {
-           var requestDomain = domain.create();
+        var requestDomain = domain.create();
+        requestDomain.run(function() {
+           
         
             var request = new Request( req );
             var response = new Response( res, request, self, requestDomain );
@@ -400,8 +400,8 @@ Firefly.prototype.getRequestHandler = function() {
                 }
             });
             
-            domain.on('error', function(e) {
-                self.catchException(e, request, response, domain);
+            requestDomain.on('error', function(e) {
+                self.catchException(e, request, response, requestDomain);
             });
         });
     };
@@ -458,7 +458,8 @@ Firefly.prototype.getWSRequestHandler = function() {
 * @param {Object} request Reference to request object
 * @param {Object} response Reference to response object
 */
-Firefly.prototype.catchException = function( err, request, response ) {
+Firefly.prototype.catchException = function( err, request, response, domain ) {
+    console.log('in catch exception!');
     response.setStatusCode( 500 );
     response.setContent( '505' );
     response.send();
@@ -476,10 +477,9 @@ Firefly.prototype.catchException = function( err, request, response ) {
 * @param {Object} engine reference to the templating engine object
 */
 Firefly.prototype.setViewEngine = function( engine ) {
+    this._viewEngine = engine;
     if (this._initialized === true) {
         this.renderManager.setViewEngine( engine );
-    } else {
-        this._viewEngine = engine;
     }
 };
 
@@ -488,12 +488,36 @@ Firefly.prototype.setViewEngine = function( engine ) {
 /**
 * Add a callback function to be called when Firefly is initialized. These functions are called
 * in order of being added.
+* Example usage:
+*   Connect to a remote service and provide access to that connection using the Firefly `Service` interface
 *
-* @method addInitDependency
-* @param {Function} fn callback function to call with another callback function as its parameter which it must call
-            to continue the init sequence
+* @method addServiceInit
+* @param {Function} fn function to call. The passed function must take a function as its first parameter.
+*   This function should then be called to continue the application initialization
 */
-Firefly.prototype.addInitDependency = function( fn ) {
+Firefly.prototype.addServiceInit = function( fn ) {
+    if (!fn instanceof Function) {
+        throw new Error('Expecting parameter to be of type `Function`');
+    }
+    
+    this._initSequence.push(fn);
+};
+
+
+/**
+* Add a callback function to be called when Firefly is initialized. These functions are called
+* in order of being added.
+* 
+*
+* @method addServiceInit
+* @param {Function} fn function to call. The passed function must take a function as its first parameter.
+*   This function should then be called to continue the application initialization
+*/
+Firefly.prototype.addModelInit = function( fn ) {
+    if (!fn instanceof Function) {
+        throw new Error('Expecting parameter to be of type `Function`');
+    }
+    
     this._initSequence.push(fn);
 };
 
