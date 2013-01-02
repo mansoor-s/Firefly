@@ -973,10 +973,9 @@ Response.prototype.render = function( viewName, props ) {
 */
 Response.prototype.jsonp = function( functionName, value) {
     if (!functionName || !value) {
-        throw Error("Function cannot have unspecified parameters");
+        throw new Error("Response::jsonp cannot have unspecified parameters `funcitonName` and `value`");
     }
     var self = this;
-    var val = '';
     if (typeof value !== 'string') {
         value = JSON.stringify(value);
     }

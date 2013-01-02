@@ -1,0 +1,1 @@
+make sure controllers defined in a route file actually exists before application startup
