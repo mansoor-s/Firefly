@@ -469,7 +469,7 @@ Firefly.prototype.getWSRequestHandler = function() {
 Firefly.prototype.catchException = function( err, request, response, domain ) {
     var controller500 = this.router.getController('500');
     
-    //fire off Logger. Even if it is IO, we don't care about its return
+    //fire off Logger. Even if it is IO, we don't care about its reply
     this.logger.exception(err);
     
     if (!controller500) {

@@ -503,6 +503,11 @@ Router.prototype.addRouteRequirement = function( name, fn ) {
 
 Router.prototype.getController = function(name) {    
     var route = this._routes[name];
+    
+    if (!route) {
+        return undefined;
+    }
+    
     var controller = route.controller;
     var applet = this._firefly.getApplet(controller);
     
