@@ -127,7 +127,8 @@ Router.prototype.buildRoutes = function() {
 *
 * @method _creatRegex
 * @private
-* @param
+* @param {String} basePatter
+* @param {Object} route route object
 *
 * @returns {RegExp} Regular expression representing the route
 */
@@ -345,7 +346,7 @@ Router.prototype.generateUrl = function( routeName, params ) {
     var route = this._routes[ routeName ];
     
     if ( route === undefined) {
-        throw Error( 'Name: "Bad Route Name", Description, "Specified route name `' 
+        throw new Error( 'Name: "Bad Route Name", Description, "Specified route name `' 
             + routeName + '` does not correspond to any routes"' );
     }
     
@@ -442,10 +443,18 @@ Router.prototype.getWSRoutes = function() {
 * @param {Object} response Reference to response object
 */
 Router.prototype.routeNotFound = function( request, response ) {
-    // give 404 error
-    response.setStatusCode(404)
-    response.setContent('<html><head></head><body><h1>404</h1></body></html>');
-    response.send();
+    //check if application has provided a 404 route
+    var controller404 = this.getController('404');
+    
+    if (!controller404) {
+        // give 404 error
+        response.setStatusCode(404);
+        response.setContent('404');
+        response.send();
+        return;
+    }
+    
+    controller404(request, response);
 };
 
 
@@ -487,4 +496,19 @@ Router.prototype.wsRouteNotFound = function( socket, data ) {
 */
 Router.prototype.addRouteRequirement = function( name, fn ) {
     this._routeRules[ '_' + name ] = fn;
+};
+
+
+
+
+Router.prototype.getController = function(name) {    
+    var route = this._routes[name];
+    var controller = route.controller;
+    var applet = this._firefly.getApplet(controller);
+    
+    if (!applet) {
+        return undefined;
+    }
+    
+    return applet[name];
 };

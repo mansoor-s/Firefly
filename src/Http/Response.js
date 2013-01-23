@@ -966,23 +966,25 @@ Response.prototype.render = function( viewName, props ) {
 * Make and send a JSONP response
 *
 * @method jsonp
-* @param {String} functionName Name of the callback function
 * @param {Object|String} value Value to pass to the callback function.
 *   Function calles JSON.stringify() on anything other than a string. So, if you need to do
 *   anything fancy, do it yourself and pass a String
 */
-Response.prototype.jsonp = function( functionName, value) {
-    if (!functionName || !value) {
-        throw new Error("Response::jsonp cannot have unspecified parameters `funcitonName` and `value`");
+Response.prototype.jsonp = function(value) {
+    var functionName = this._request.getQuery().callback;
+    
+    if (!value) {
+        throw new Error("Response::jsonp cannot have unspecified parameter `value`");
     }
-    var self = this;
+    
     if (typeof value !== 'string') {
         value = JSON.stringify(value);
     }
     
+    this.setContentType('text/javascript');
     
-    self.setContent( functionName + '(' + value + ');' );
-    self.send();
+    this.setContent( functionName + ' && ' + functionName + '(' + value + ');' );
+    this.send();
 };
 
 

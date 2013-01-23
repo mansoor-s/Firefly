@@ -44,7 +44,7 @@ var State = require( '../State/State.js' );
 */
 var Firefly = module.exports = function( appRoutes, config ) {
     if ( typeof appRoutes !== 'object' || typeof config !== 'object' ) {
-        throw Error( 'name: "Bad Parameter", description: "Expecting type `object` for parameters `routes` and `config`."' );
+        throw new Error( 'name: "Bad Parameter", description: "Expecting type `object` for parameters `routes` and `config`."' );
     }
     
     /**
@@ -419,7 +419,10 @@ Firefly.prototype.getWSRequestHandler = function() {
     var self = this;
     // connection handler
     return function( wsInfo, socket ) {
-        try {
+        
+        var requestDomain = domain.create();
+        requestDomain.run(function() {
+            
             //find correct connect controller
             self.router.findWSRoute( wsInfo, socket, {
                 'id': 'connection'
@@ -443,9 +446,11 @@ Firefly.prototype.getWSRequestHandler = function() {
                     'id': 'disconnect'
                 } );
             } );
-        } catch( e ) {
-            self.catchException( e );
-        }
+        
+            requestDomain.on('error', function(e) {
+                self.catchException(e, wsInfo, socket, requestDomain);
+            });
+        });
     };
 };
 
@@ -455,17 +460,26 @@ Firefly.prototype.getWSRequestHandler = function() {
 * Handle application-wide exceptions
 *
 * @method catchException
+* @param {Error} err Exception error object
 * @param {Object} request Reference to request object
 * @param {Object} response Reference to response object
+* @param {Object} domain Reference to the domain object
+* 
 */
 Firefly.prototype.catchException = function( err, request, response, domain ) {
-    console.log('in catch exception!');
-    response.setStatusCode( 500 );
-    response.setContent( '505' );
-    response.send();
+    var controller500 = this.router.getController('500');
     
+    //fire off Logger. Even if it is IO, we don't care about its return
     this.logger.exception(err);
-
+    
+    if (!controller500) {
+        response.setStatusCode( 500 );
+        response.setContent( '500' );
+        response.send();
+        return;
+    }
+    
+    controller500(request, response, err);
 };
 
 
