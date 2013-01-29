@@ -390,15 +390,21 @@ Firefly.prototype.getRequestHandler = function() {
             
             request.setAppState(new State());
     
-            self.router.findRoute( request, response, function(controller) {
-                if(request.getMethod() === 'POST') {
-                    request.parseForm(function() {
+            try {
+                self.router.findRoute( request, response, function(controller) {
+                    if(request.getMethod() === 'POST') {
+                        request.parseForm(function() {
+                            controller();
+                        });
+                    } else {
                         controller();
-                    });
-                } else {
-                    controller();
-                }
-            });
+                    }
+                });
+                
+            } catch(err) {
+                self.catchException(err, request, response);
+            }
+            
             
             requestDomain.on('error', function(e) {
                 self.catchException(e, request, response, requestDomain);

@@ -33,10 +33,7 @@ var Router = module.exports = function( firefly ) {
     this._firefly = firefly;
     this._routes = {};
     this._wsRoutes = {};
-    this._serviceRoutes = [];
     
-    this._serviceHandlers = {};
-
     this._routeRules = {
         '_method': this._methodRule,
         '_transport': this._transportRule
@@ -88,8 +85,8 @@ Router.prototype.buildRoutes = function() {
                 'routes': {}
             };
             
-            for ( var wsRouteName in wsRoutes ) {
-                routeObject.routes[ wsRouteName ] = thisApplet[ wsRoutes[ wsRouteName ].controller ];
+            for ( var wsRouteName in this._wsRoutes ) {
+                routeObject.routes[ wsRouteName ] = thisApplet[ this._wsRoutes[ wsRouteName ].controller ];
             }
             
             continue;
@@ -168,7 +165,6 @@ Router.prototype._creatRegex = function(basePattern, route) {
 */
 Router.prototype.rebuildRoutes = function() {
     this._routes = {};
-    this._serviceRoutes = {};
     this._wsRoutes = {};
     this.buildRoutes();
 };
@@ -185,67 +181,60 @@ Router.prototype.rebuildRoutes = function() {
 *   the `request`, `response`, and the `controller` function
 */
 Router.prototype.findRoute = function( request, response, fn ) {
-    var routeFound;
     var basePath = request.getBasePath();
     var self = this;
+    var routeKeysLength = this.routeKeys.length;
 
-    //test for service routes
-    for ( var i = 0, len = this._serviceRoutes.length; i < len; ++i ) {
-        var serviceRoute = this._serviceRoutes[ i ];
-        if ( serviceRoute.pattern.test( basePath ) ) {
-            serviceRoute.handler.call( serviceRoute.service, request, response );
-            routeFound = true;
-        }
+    if (!routeKeysLength) {
+        self.routeNotFound( request, response );
+        return;
     }
-
-    //test for normal routes
-    if ( !routeFound && self.routeKeys.length ) {
-        ( function routesIttr( currRoute ) {
-            var route = self._routes[ self.routeKeys[ currRoute ] ];
-            
-            var routeTest = route._patternRegex.test( basePath );
-            if ( !routeTest && ( currRoute === self.routeKeys.length - 1 ) ) {
-                self.routeNotFound( request, response );
-                return;
-            } else if ( !routeTest ) {
+    
+    ( function routesIttr( currRoute ) {
+        var route = self._routes[ self.routeKeys[ currRoute ] ];
+        
+        var routeTest = route._patternRegex.test( basePath );
+        if ( !routeTest && ( currRoute === routeKeysLength - 1 ) ) {
+            self.routeNotFound( request, response );
+            return;
+        } else if ( !routeTest ) {
+            routesIttr( ++currRoute );
+            return;
+        }
+        
+        self._testRouteRules( request, response, route, function( pass ) {
+            if (!pass) {
+                // if it is the last route and it's rules were not met, then give 404
+                if (currRoute === routeKeysLength - 1) {
+                    self.routeNotFound( request, response );
+                    return;
+                }
+                
                 routesIttr( ++currRoute );
                 return;
             }
             
-
-            self._testRouteRules( request, response, route, function( pass ) {
-                if ( pass ) {
-                    var params = route._patternRegex.exec( basePath ) || [];
-                    var applet = self._firefly.getApplet(route._appletName);
-                    params.splice(0,1);
-                    delete params.input;
-                    delete params.index;
-                    params.unshift( request, response );
-                    
-                    request.setRouteObject( route );
-                    request.setApplet( applet );
-                    
-                    
-                    
-                    
-                    if (fn instanceof Function) {
-                        fn(function() {
-                            applet[route._actionController].apply( applet, params );
-                        });
-                    } else {
-                        //call action controller
-                        applet[route._actionController].apply( applet, params );
-                    }
-                    
-                // if it is the last route and it's rules were not met, then give 404
-                } else if ( !pass && ( currRoute === self.routeKeys.length - 1 ) ) {
-                    self.routeNotFound( request, response ); 
-                } else {
-                    routesIttr( ++currRoute );
-                }
-            } );
-        } )( 0 );
-    }
+            var params = route._patternRegex.exec( basePath ) || [];
+            var applet = self._firefly.getApplet(route._appletName);
+            console.log(route._appletName);
+            params.splice(0,1);
+            delete params.input;
+            delete params.index;
+            params.unshift( request, response );
+            
+            request.setRouteObject( route );
+            request.setApplet( applet );
+            
+            if (fn instanceof Function) {
+                fn(function() {
+                    applet[route._actionController].apply( applet, params );
+                });
+                return;
+            } else {
+                applet[route._actionController].apply( applet, params );
+            }
+        } );
+    } )( 0 );
 };
 
 
@@ -263,38 +252,48 @@ Router.prototype.findRoute = function( request, response, fn ) {
 Router.prototype._testRouteRules = function( request, response, route, fn ) {
     var rules = Object.keys(this._routeRules);
     var self = this;
-    if ( rules.length ) {
-        ( function rulesIttr( curr ) {
-            var ruleName = rules[ curr ];
-            var rule;
-            if (route.requirements[ ruleName ] !== undefined) {
-                rule = route.requirements[ ruleName ];
-            } else {
-                rule = route._baseRoute.requirements[ ruleName ];
-            }
-
-            if ( rule !== undefined) {
-                self._routeRules[ ruleName ]( request, response, rule,  function( ruleSatisfied, end ) {
-                    if ( end ) {
-                        return;
-                    }
-
-                    if ( ( curr === rules.length - 1 ) && ruleSatisfied ) {
-                        fn( true );
-                    } else if ( ruleSatisfied ) {
-                        rulesIttr( ++curr );
-                    } else {
-                        fn( false );
-                    }
-                    
-                } );
-            } else if ( !rule && ( curr === rules.length - 1 ) ) {
-                fn( true );
-            } else {
-                rulesIttr( ++curr );
-            }
-        } )( 0 );
+    
+    if (!rules.length) {
+        fn(true);
     }
+    
+    ( function rulesIttr( curr ) {
+        var ruleName = rules[ curr ];
+        var rule;
+        
+        if (route.requirements[ ruleName ] !== undefined) {
+            rule = route.requirements[ ruleName ];
+        } else {
+            rule = route._baseRoute.requirements[ ruleName ];
+        }
+        
+
+        if (!rule) {
+            if (curr === rules.length - 1) {
+                fn( true );
+                return;
+            }
+            
+            rulesIttr(++curr);
+            return;
+        }
+        
+        self._routeRules[ ruleName ]( request, response, rule,  function( ruleSatisfied, end ) {
+            if ( end ) {
+                return;
+            }
+
+            if ( ( curr === rules.length - 1 ) && ruleSatisfied ) {
+                fn( true );
+            } else if ( ruleSatisfied ) {
+                rulesIttr( ++curr );
+            } else {
+                fn( false );
+            }
+                
+        } );
+        
+    } )( 0 );
 };
 
 
@@ -377,16 +376,10 @@ Router.prototype.generateUrl = function( routeName, params ) {
 */
 Router.prototype._methodRule = function( request, response, rule, fn ) {
     var method = request.getMethod();
-    if ( rule instanceof Array ) {
-        if ( rule.indexOf( method ) !== -1 ) {
-            fn(true);
-            return;
-        }
-    } else if ( typeof rule === 'string' ) {
-        if ( rule === method ) {
-            fn(true);
-            return;
-        }
+    
+    if ((rule === method) || rule instanceof Array && rule.indexOf( method ) !== -1) {
+        fn(true);
+        return;
     }
     
     fn(false);
@@ -406,16 +399,10 @@ Router.prototype._methodRule = function( request, response, rule, fn ) {
 */
 Router.prototype._transportRule = function( request, response, rule, fn ) {
     var transport = request.getTransport();
-    if ( rule instanceof Array ) {
-        if ( rule.indexOf( transport ) !== -1 ) {
-            fn(true);
-            return;   
-        }
-    } else if ( typeof rule === 'string' ) {
-        if ( rule === transport ) {
-            fn(true);
-            return;  
-        }
+    
+    if((rule === transport) || rule instanceof Array && rule.indexOf( transport ) !== -1 ) {
+        fn(true);
+        return;
     }
     
     fn(false);
@@ -504,16 +491,16 @@ Router.prototype.addRouteRequirement = function( name, fn ) {
 Router.prototype.getController = function(name) {    
     var route = this._routes[name];
     
-    if (!route) {
+    if (route === undefined) {
         return undefined;
     }
     
     var controller = route.controller;
-    var applet = this._firefly.getApplet(controller);
+    var applet = this._firefly.getApplet(route._appletName);
     
     if (!applet) {
         return undefined;
     }
     
-    return applet[name];
+    return applet[controller];
 };
