@@ -163,13 +163,13 @@ var Firefly = module.exports = function( appRoutes, config ) {
 Firefly.prototype.init = function ( fn ) {
     var self = this;
     //execute init sequence for services
-    var initSequence = [];
-    for (var i = 0; i < this.services.length - 1; ++i) {
-        var service = this.services[i];
+    var initSequence = [];    
+    for (var key in this.services) {
+        var service = this.services[key];
         if (typeof service.onInit === 'function') {
-            initSequence.puhs(service.onInit.bind(service));
+            initSequence.push(service.onInit.bind(service));
         }
-    };
+    }
 
     async.series(initSequence, function() {
         self.router.buildRoutes();
