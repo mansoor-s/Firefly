@@ -28,6 +28,7 @@ var fs = require( 'fs' );
 * @module Core
 * @constructor
 * @param {Object} app reference to Firefly object
+* @param {Object} viewEngine Optional reference to the render service
 */
 var RenderManager = module.exports = function( app, viewEngine ) {
     this._app = app;

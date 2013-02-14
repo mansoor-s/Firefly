@@ -216,7 +216,7 @@ Router.prototype.findRoute = function( request, response, fn ) {
             
             var params = route._patternRegex.exec( basePath ) || [];
             var applet = self._firefly.getApplet(route._appletName);
-            console.log(route._appletName);
+            
             params.splice(0,1);
             delete params.input;
             delete params.index;

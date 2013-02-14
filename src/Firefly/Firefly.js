@@ -28,7 +28,7 @@ var WSServer = require( '../Server/WSServer.js' );
 var Router = require( '../Router/Router.js' );
 var Request = require( '../Http/Request.js' );
 var Response = require( '../Http/Response.js' );
-var RenderManager = require( '../RenderManager/RenderManager.js' );
+var RenderManager = require( './RenderManager.js' );
 var Logger = require( '../Logger/Logger.js' );
 var State = require( '../State/State.js' );
 
@@ -118,13 +118,6 @@ var Firefly = module.exports = function( appRoutes, config ) {
     */
     this.renderManager = undefined;
 
-    /**
-    *@private
-    *@type Array
-    *@property _initSequence
-    */
-    this._initSequence = [];
-    
     
     
     /**
@@ -151,7 +144,7 @@ var Firefly = module.exports = function( appRoutes, config ) {
     this.logger = new Logger( this );
     
     
-    this._stateManager = new State;
+    this._stateManager = new State();
         
     this.autoloadApplets();
     
@@ -170,7 +163,15 @@ var Firefly = module.exports = function( appRoutes, config ) {
 Firefly.prototype.init = function ( fn ) {
     var self = this;
     //execute init sequence for services
-    async.series(self._initSequence, function() {
+    var initSequence = [];
+    for (var i = 0; i < this.services.length - 1; ++i) {
+        var service = this.services[i];
+        if (typeof service.onInit === 'function') {
+            initSequence.puhs(service.onInit.bind(service));
+        }
+    };
+
+    async.series(initSequence, function() {
         self.router.buildRoutes();
         
         self.renderManager = new RenderManager( self, self._viewEngine );
@@ -505,31 +506,13 @@ Firefly.prototype.setViewEngine = function( engine ) {
 
 
 
-/**
-* Add a callback function to be called when Firefly is initialized. These functions are called
-* in order of being added.
-* Example usage:
-*   Connect to a remote service and provide access to that connection using the Firefly `Service` interface
-*
-* @method addServiceInit
-* @param {Function} fn function to call. The passed function must take a function as its first parameter.
-*   This function should then be called to continue the application initialization
-*/
-Firefly.prototype.addServiceInit = function( fn ) {
-    if (!fn instanceof Function) {
-        throw new Error('Expecting parameter to be of type `Function`');
-    }
-    
-    this._initSequence.push(fn);
-};
-
 
 /**
 * Add a callback function to be called when Firefly is initialized. These functions are called
 * in order of being added.
 * 
 *
-* @method addServiceInit
+* @method addModelInit
 * @param {Function} fn function to call. The passed function must take a function as its first parameter.
 *   This function should then be called to continue the application initialization
 */
