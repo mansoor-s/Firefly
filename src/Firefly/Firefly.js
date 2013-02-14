@@ -143,7 +143,6 @@ var Firefly = module.exports = function( appRoutes, config ) {
     */
     this.logger = new Logger( this );
     
-    
     this._stateManager = new State();
         
     this.autoloadApplets();
@@ -163,9 +162,9 @@ var Firefly = module.exports = function( appRoutes, config ) {
 Firefly.prototype.init = function ( fn ) {
     var self = this;
     //execute init sequence for services
-    var initSequence = [];    
-    for (var key in this.services) {
-        var service = this.services[key];
+    var initSequence = [];
+    for (var key in this._services) {
+        var service = this._services[key];
         if (typeof service.onInit === 'function') {
             initSequence.push(service.onInit.bind(service));
         }
