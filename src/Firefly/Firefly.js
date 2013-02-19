@@ -32,6 +32,8 @@ var RenderManager = require( './RenderManager.js' );
 var Logger = require( '../Logger/Logger.js' );
 var State = require( '../State/State.js' );
 
+var ModelManager = require( '../ResourceManager/ModelManager.js' );
+
 
 /**
 * Firefly object constructor
@@ -144,6 +146,8 @@ var Firefly = module.exports = function( appRoutes, config ) {
     this.logger = new Logger( this );
     
     this._stateManager = new State();
+    
+    this._modelManager = new ModelManager(this);
         
     this.autoloadApplets();
     
@@ -161,36 +165,42 @@ var Firefly = module.exports = function( appRoutes, config ) {
 */
 Firefly.prototype.init = function ( fn ) {
     var self = this;
-    //execute init sequence for services
-    var initSequence = [];
-    for (var key in this._services) {
-        var service = this._services[key];
-        if (typeof service.onInit === 'function') {
-            initSequence.push(service.onInit.bind(service));
+    
+    this._modelManager.initModels(function() {
+        //execute init sequence for services
+        var initSequence = [];
+        for (var key in self._services) {
+            var service = self._services[key];
+            if (typeof service.onInit === 'function') {
+                initSequence.push(service.onInit.bind(service));
+            }
         }
-    }
-
-    async.series(initSequence, function() {
-        self.router.buildRoutes();
-        
-        self.renderManager = new RenderManager( self, self._viewEngine );
-        
-        self.renderManager.buildViewMap( function() {
-            //initialize applets
-            self._initializeApplets();
+    
+        async.series(initSequence, function() {
+            self.router.buildRoutes();
             
-            self.server.start( function() {
-                if ( self.config.AUTO_START_WS_SERVER === true ) {
-                    var wsRoutes = self.router.getWSRoutes();
-                    for ( var wsRoute in wsRoutes ) {
-                        self._wsServers[ wsRoute ] = new WSServer( self, wsRoutes[ wsRoute ], self.getWSRequestHandler() );
+            self.renderManager = new RenderManager( self, self._viewEngine );
+            
+            self.renderManager.buildViewMap( function() {
+                //initialize applets
+                self._initializeApplets();
+                
+                self.server.start( function() {
+                    if ( self.config.AUTO_START_WS_SERVER === true ) {
+                        var wsRoutes = self.router.getWSRoutes();
+                        for ( var wsRoute in wsRoutes ) {
+                            self._wsServers[ wsRoute ] = new WSServer( self, wsRoutes[ wsRoute ], self.getWSRequestHandler() );
+                        }
                     }
-                }
+                } );
+                
+                fn();
             } );
-            
-            fn();
-        } );
+        });
+        
     });
+    
+
         
     
 };

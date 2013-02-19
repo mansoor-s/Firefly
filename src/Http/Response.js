@@ -628,7 +628,7 @@ Response.prototype.end = function( chunk, encoding ) {
 Response.prototype._getCacheControlHeader = function() {
     var parts = [];
     for ( var directive in this._cacheControl ) {
-        var value = this.cacheControl[ directive ];
+        var value = this._cacheControl[ directive ];
         if ( value === true ) {
             parts.push( directive );
         } else {

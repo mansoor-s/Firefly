@@ -22,6 +22,8 @@ var fs = require( 'fs' ),
     path = require('path'),
     dive = require('dive');
 
+var BaseModel = require( './BaseModel.js' ),
+    BaseModelInstance = require( './BaseModelInstance.js' );
 
 /**
 * ModelManager object constructor.
@@ -38,16 +40,16 @@ var ModelManager = module.exports = function( app ) {
 };
 
 /**
-* Initialize mongoose models from schema directory
+* Initialize models from schema directory
 *
 * @method _initModels
 * @private
 * @param {Function} fn callback
 */
-ModelManager.prototype._initModels = function(fn) {
+ModelManager.prototype.initModels = function(fn) {
     var self = this;
     
-    dive(this.app.config.MODELS_DIR, { all: true }, function(err, filePath) {
+    dive(this._app.config.MODELS_DIR, { all: true }, function(err, filePath) {
         if (err) {
             throw new Error(err);
         }
@@ -69,8 +71,17 @@ ModelManager.prototype._initModels = function(fn) {
         }
 
         var schema = require(filePath);
+        
         console.log(name);
         console.log(schema);
-        self.db.model(name, schema);
+        
+        self.processSchema(name, schema);
     }, fn);
+};
+
+
+ModelManager.prototype.processSchema = function(name, schema) {
+    var base = function() {};
+    
+    
 };

@@ -20,39 +20,39 @@
 
 
 /**
-* ModelManager object constructor.
+* BaseModelInstance object constructor.
 *
-* @class ModelManager
+* @class BaseModelInstance
 * @module Core
 * @constructor
 * @param {Object} app reference to Firefly object
 */
-var BaseModel = module.exports = function() {
+var BaseModelInstance = module.exports = function() {
     this._id;
     Object.seal(this);
 };
 
 
 
-BaseModel.prototype.save = function( fn ) {
+BaseModelInstance.prototype.save = function( fn ) {
 
 };
 
 
-BaseModel.prototype.delete = function( fn ) {
+BaseModelInstance.prototype.remove = function( fn ) {
 
 };
 
-BaseModel.prototype.deepDelete = function( fn ) {
+BaseModelInstance.prototype.deepRemove = function( fn ) {
 
 }
 
 
-BaseModel.prototype.update = function( obj, fn ) {
+BaseModelInstance.prototype.update = function( obj, fn ) {
 
 };
 
 
-BaseModel.prototype.reload = function( fn ) {
+BaseModelInstance.prototype.reload = function( fn ) {
 
 };

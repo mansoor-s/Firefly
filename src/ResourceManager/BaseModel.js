@@ -20,9 +20,9 @@
 
 
 /**
-* ModelManager object constructor.
+* BaseModel object constructor.
 *
-* @class ModelManager
+* @class BaseModel
 * @module Core
 * @constructor
 * @param {Object} app reference to Firefly object
