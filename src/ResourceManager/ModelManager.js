@@ -51,7 +51,7 @@ ModelManager.prototype.initModels = function(fn) {
     
     dive(this._app.config.MODELS_DIR, { all: true }, function(err, filePath) {
         if (err) {
-            throw new Error(err);
+            return;
         }
         
         var filePathParts = filePath.split(path.sep),
@@ -77,6 +77,8 @@ ModelManager.prototype.initModels = function(fn) {
         
         self.processSchema(name, schema);
     }, fn);
+    
+    fn();
 };
 
 
