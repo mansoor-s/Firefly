@@ -11,7 +11,8 @@
         "ws": "latest",
         "formidable": "latest",
         "async": "latest",
-        "winston": "latest"
+        "winston": "latest",
+        "dive": "latest"
     },
     "repository": {
         "type" : "git",
